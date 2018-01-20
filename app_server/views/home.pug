@@ -1,0 +1,10 @@
+extends boilerplate.pug
+
+block vars
+	- var title = "Home"
+
+block content
+	div.container
+		h1.page-header Home
+		p= user.username
+		a.btn.btn-default(href="/logout") Logout
