@@ -16,7 +16,8 @@ module.exports.postRegister = (req, res) => {
 		json: {},
 		qs: {
 			username: req.body.username,
-			password: req.body.password
+			password: req.body.password,
+			role: req.body.role
 		}
 	}
 	request(requestOptions, (err, response, body) => {

@@ -1,0 +1,18 @@
+mixin navbar(user)
+	nav.navbar.navbar-default
+		div.container-fluid
+			div.navbar-header
+				a.navbar-brand(href="/home") Scouting
+			ul.nav.navbar-nav
+				li.active
+					a(href="/home") Home
+			ul.nav.navbar-nav.navbar-right
+				if user.role=="administrator"
+					li
+						a(href="/users") Users Administration
+				li.dropdown
+					a.dropdown-toggle(data-toggle="dropdown")=user.username
+						span.glyphicon.glyphicon-user(style="margin-left: .5em")
+						ul.dropdown-menu
+							li
+								a(href="/logout") Logout

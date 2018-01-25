@@ -36,7 +36,7 @@ module.exports.findUserByUsername = (req, res) => {
 }
 
 module.exports.registerUser = (req, res) => {
-	if(req.query.username && req.query.password){
+	if(req.query.username && req.query.password && req.query.role){
 		common.hashPassword(req.query.password, (bcryptError, hashedPassword) => {
 			if(bcryptError){
 				common.jsonResponse(res, common.statusCodes.SERVER_ERROR, {
@@ -48,7 +48,8 @@ module.exports.registerUser = (req, res) => {
 			}
 			userModel.create({
 				username: req.query.username,
-				password: hashedPassword
+				password: hashedPassword,
+				role: req.query.role.toLowerCase()
 			}, (err, user) => {
 				if(err){
 					var errorObjects = Object.values(err.errors).map((err) => {
@@ -85,7 +86,9 @@ module.exports.registerUser = (req, res) => {
 	}else{
 		common.jsonResponse(res, common.statusCodes.CLIENT_ERROR, {
 			success: false,
-			err: "Invalid request parameters."
+			err: {
+				database: "Invalid request parameters."
+			}
 		});
 		return;
 	}

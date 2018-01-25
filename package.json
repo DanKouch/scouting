@@ -1,7 +1,6 @@
 {
-  "name": "classmates",
+  "name": "scouting",
   "version": "1.0.0",
-  "description": "A way for classmates to share resources and connect",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

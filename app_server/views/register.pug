@@ -8,6 +8,8 @@ block content
 		div.page-header
 			h1 Register New Account
 		div.col-md-offset-5.col-md-3.login-form
+			if errorMessages && errorMessages.database
+				div.alert.alert-danger= "Database Error: " + errorMessages.database
 			form.form-validate(method="post")
 				div.form-group(class=(errorMessages && errorMessages.username) ? "has-error" : "")
 					label(for="usernameInput") Username
@@ -18,8 +20,8 @@ block content
 					input.form-control#passwordInput(minlength="6", required, name="password", type="password", placeholder="Enter Password")
 					div.help-block= errorMessages && errorMessages.password ? errorMessages.password : ""
 				div.form-group(class=(errorMessages && errorMessages.accountType) ? "has-error" : "")
-					label(for="accountType") Account Type
-					select.form-control#accountTypeInput(name="accountType")
+					label(for="role") Role
+					select.form-control#accountTypeInput(name="role")
 						option User
 						option Administrator
 					div.help-block= errorMessages && errorMessages.accountType ? errorMessages.accountType : ""

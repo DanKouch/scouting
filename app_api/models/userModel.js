@@ -13,7 +13,7 @@ const sanitizer = require("mongo-sanitize")
 let userSchema = new Schema({
 	password: 				{type: String, required: true, minlength: 6},
 	username: 				{type: String, required: true, unique: true, minlength: 5, maxlength:20, validate: [validate.alphanumeric, 'username must be alphanumeric']},
-	role: 					{type: String, enum: ["admin", "user"], default: "user"}
+	role: 					{type: String, enum: ["administrator", "user"], default: "user"}
 });
 
 userSchema.plugin(sanitizer)
