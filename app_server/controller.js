@@ -29,6 +29,29 @@ module.exports.postRegister = (req, res) => {
 		}
 		res.render("register", {
 			user: req.user,
+			success: body.success,
+			errorMessages: body.err
+		})
+	})
+}
+
+module.exports.postPitScoutingReport = (req, res) => {
+	const requestOptions = {
+		url: apiOptions.server + "/api/pit-scouting-report",
+		method: "POST",
+		json: {},
+		qs: req.body
+	}
+	request(requestOptions, (err, response, body) => {
+		if(err){
+			winston.error("API Request Error (pit-scouting-report - post): " + err);
+		}
+		if(body.success){
+			winston.verbose("Pit scouting report on team " + body + req.body.teamNumber + ".");
+		}
+		res.render("pitScoutingReport", {
+			user: req.user,
+			success: body.success,
 			errorMessages: body.err
 		})
 	})
@@ -48,6 +71,24 @@ module.exports.users = (req, res) => {
 		res.render("userAdministration", {
 			user: req.user,
 			users: body
+		})
+	})
+}
+
+module.exports.pitScoutingReports = (req, res) => {
+	const requestOptions = {
+		url: apiOptions.server + "/api/pit-scouting-reports",
+		method: "GET",
+		json: {},
+		qs: {}
+	}
+	request(requestOptions, (err, response, body) => {
+		if(err){
+			winston.error("API Request Error (users - get): " + err);
+		}
+		res.render("pitScoutingReports", {
+			user: req.user,
+			reports: body
 		})
 	})
 }

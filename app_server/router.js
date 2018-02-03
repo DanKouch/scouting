@@ -52,7 +52,16 @@ router.get('/home', ensureLoggedIn, function(req, res){
 
 // Administrator pages
 router.get('/users', ensureAdministrator, controller.users);
+router.get('/pit-scouting-reports', ensureAdministrator, controller.pitScoutingReports);
 
+// Forms
+router.get('/pit-scouting-report', ensureLoggedIn, function(req, res){
+	res.render('pitScoutingReport', { user: req.user });
+});
+
+
+
+router.post("/pit-scouting-report", controller.postPitScoutingReport);
 
 
 

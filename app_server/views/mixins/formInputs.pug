@@ -1,0 +1,27 @@
+mixin simpleInput(prettyName, codeName, errorMessages, settings)
+	div.form-group(class=(errorMessages && errorMessages[codeName]) ? "has-error" : "")
+		label(for=(codeName + "Input"))= (prettyName+ ((settings && settings.note) ? (" ("+settings.note+")") : ""))
+		div(class=(settings && settings.postfix ? "input-group" : ""))
+			block inputArea
+				input.form-control(id=(codeName + "Input"), minlength=((settings && settings.minLength) ? settings.minLength : 0), maxLength=((settings && settings.maxLength) ? settings.maxLength : 500), required=(settings && settings.required), name=(codeName), type=((settings && settings.type) ? settings.type : "text"), placeholder=("Enter " + prettyName))
+			if settings && settings.postfix && true
+				span.input-group-addon= settings.postfix
+		div.help-block= errorMessages && errorMessages[codeName] ? errorMessages[codeName] : ""
+
+
+mixin dropDownInput(prettyName, codeName, errorMessages, options, settings)
+	div.form-group(class=(errorMessages && errorMessages[codeName]) ? "has-error" : "")
+		label(for=(codeName + "Input"))= (prettyName+ ((settings && settings.note) ? (" ("+settings.note+")") : ""))
+		select.form-control(id=(codeName + "Input"), name=(codeName))
+			each option in options
+				option= option
+		div.help-block= errorMessages && errorMessages[codeName] ? errorMessages[codeName] : ""
+
+mixin textAreaInput(prettyName, codeName, errorMessages, options, settings)
+	div.form-group(class=(errorMessages && errorMessages[codeName]) ? "has-error" : "")
+		label(for=(codeName + "Input"))= (prettyName+ ((settings && settings.note) ? (" ("+settings.note+")") : ""))
+		textarea.form-control(id=(codeName + "Input"), name=(codeName), required=(settings && settings.required))
+		div.help-block= errorMessages && errorMessages[codeName] ? errorMessages[codeName] : ""
+
+mixin yesNoInput(prettyName, codeName, errorMessages, settings)
+	+dropDownInput(prettyName, codeName, errorMessages, ["Unknown", "Yes", "No"], settings)

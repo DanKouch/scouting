@@ -25,3 +25,4 @@ mongoose.connection.on("disconnected", () => {
 
 // Load models
 require("./app_api/models/userModel.js");
+require("./app_api/models/pitScoutingReportModel.js");

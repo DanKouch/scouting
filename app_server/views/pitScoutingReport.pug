@@ -1,0 +1,62 @@
+extends boilerplate.pug
+include mixins/navbar.pug
+include mixins/formInputs.pug
+
+block vars
+	- var title = "Pit Scouting Report"
+
+block content
+	+navbar(user)
+	div.container
+		h1.page-header Pit Scouting Report
+		if success
+			div.alert.alert-success#successAlert Report successfully submited
+		form.form-validate(method="post")
+			h3 Team Information
+			br
+			+simpleInput("Team Number", "teamNumber", errorMessages, {type: "number", required: true})
+			+simpleInput("Team Name", "teamName", errorMessages, {minLength: 5, required: true})
+			hr
+			h3 Basic Robot Information
+			br
+			+simpleInput("Robot Speed", "robotSpeed", errorMessages, {postfix: "ft/s"})
+			+yesNoInput("Transmission", "transmission")
+			+simpleInput("Wheels Count", "wheelsCount", errorMessages, {type: "number", postfix: "Wheels"})
+			+dropDownInput("Drive Type", "driveType", errorMessages, ["Unknown", "West Coast", "Swerve", "Mecanum", "Omni", "Other"])
+			+simpleInput("Custom Transmission Type", "customDriveType", errorMessages, {note: "If you selected other above"})
+			hr
+			h3 Game Elements
+			br
+			// REMOVE? (not in model) +dropDownInput("Switches", "switches", errorMessages, ["Unknown", "Neither", "Both", "Own Team", "Other Team"])
+			+yesNoInput("Using Scale", "usingScale", errorMessages)
+			+yesNoInput("Using Portal", "usingPortal", errorMessages)
+			// ????  +yesNoInput("Cross Line", "crossLine", errorMessages)
+			hr
+			h3 Abilities
+			br
+			+yesNoInput("Capable of Autonomous", "canAutonomous", errorMessages)
+			+textAreaInput("Comments on Autonomous", "autonomousComments", errorMessages)
+			hr
+			h3 Defence
+			br
+			+dropDownInput("Will Play Defence", "willPlayDefence", errorMessages, ["Unknown", "Yes", "No", "Other"], settings)
+			+simpleInput("Description of Defence", "defenceDescription", errorMessages, {note: "If you selected other above"})
+			hr
+			h3 Rope Climbing
+			br
+			+yesNoInput("Can Climb Rope", "canClimbRope", errorMessages)
+			+simpleInput("Attatch Time", "ropeAttatchTime", errorMessages, {type: "number", postfix: "seconds", note: "IF YES WAS SELECTED ABOVE"})
+			+simpleInput("Climb Time", "ropeClimbTime", errorMessages, {type: "number", postfix: "seconds", note: "IF YES WAS SELECTED ABOVE"})
+			hr
+			h3 Other Tournaments
+			br
+			+yesNoInput("Going to SF Regional", "goingToSFRegional", errorMessages)
+			+yesNoInput("Going to Sacramento Regional", "goingToSacRegional", errorMessages)
+			hr
+			+textAreaInput("Other Comments", "otherComments", errorMessages)
+
+			br
+			button.btn.btn-primary.submit(type="submit") Submit
+
+block scripts
+	script(src="/form.js")

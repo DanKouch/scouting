@@ -2,19 +2,32 @@ mixin navbar(user)
 	nav.navbar.navbar-default
 		div.container-fluid
 			div.navbar-header
-				a.navbar-brand(href="/home") Scouting
+				a.navbar-brand(href="/home") Team 1458 Scouting
 			ul.nav.navbar-nav
-				li.active
+				li
 					a(href="/home") Home
+				li.dropdown
+					a.dropdown-toggle(data-toggle="dropdown") Submit Report
+					ul.dropdown-menu
+						li
+							a(href="/pit-scouting-report") Pit Scouting Report
 			ul.nav.navbar-nav.navbar-right
 				if user.role=="administrator"
+					li.dropdown
+						a.dropdown-toggle(data-toggle="dropdown", role="button")
+							span.text-danger Reports
+						ul.dropdown-menu
+							li
+								a(href="/pit-scouting-reports") Pit Scouting Reports
 					li
-						a(href="/register") Users Registration
+						a(href="/register")
+							span.text-danger User Registration
 					li
-						a(href="/users") Users Administration
+						a(href="/users")
+							span.text-danger Users Administration
 				li.dropdown
 					a.dropdown-toggle(data-toggle="dropdown")=user.username
 						span.glyphicon.glyphicon-user(style="margin-left: .5em")
-						ul.dropdown-menu
-							li
-								a(href="/logout") Logout
+					ul.dropdown-menu
+						li
+							a(href="/logout") Logout

@@ -10,6 +10,8 @@ block content
 		div.page-header
 			h1 Register New Account
 		div.col-md-offset-5.col-md-3.login-form
+			if success
+				div.alert.alert-success#successAlert User successfully added
 			if errorMessages && errorMessages.database
 				div.alert.alert-danger= "Database Error: " + errorMessages.database
 			form.form-validate(method="post")
@@ -30,3 +32,6 @@ block content
 				button.btn.btn-primary.submit(type="submit") Register
 				br
 				br
+
+block scripts
+	script(src="/form.js")

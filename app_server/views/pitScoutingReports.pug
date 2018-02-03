@@ -1,0 +1,59 @@
+extends boilerplate.pug
+include mixins/navbar.pug
+
+block vars
+	- var title = "Pit Scouting Reports"
+
+block content
+	+navbar(user)
+	div.container-fluid
+		h1.page-header Pit Scouting Reports
+
+		if reports && reports.length > 0
+			table.table
+				thead
+					th(scope="col") Team #
+					th(scope="col") Team Name
+					th(scope="col") Robot Speed (ft/s)
+					th(scope="col") Transmission
+					th(scope="col") Wheels Count
+					th(scope="col") Drive Type
+					th(scope="col") Custom Drive Type
+					th(scope="col") Using Scale
+					th(scope="col") Using Portal
+					th(scope="col") Can Autono.
+					th(scope="col") Will Play Defence
+					th(scope="col") Defence Description
+					th(scope="col") Can Climb Rope
+					th(scope="col") Rope Attatch Time
+					th(scope="col") Rope Climb Time
+					th(scope="col") Going to SF Regional
+					th(scope="col") Going to Sacramento Regional
+					th(scope="col") Other Comments
+				tbody
+					each r in reports
+						tr
+							th(scope="row")= r.teamNumber
+							td= r.teamName
+							td= r.robotSpeed
+							td= r.transmission
+							td= r.wheelCount
+							td= r.driveType
+							td= r.customDriveType
+							td= r.usingScale
+							td= r.usingPortal
+							td= r.canAutonomous
+							td= r.willPlayDefence
+							td= r.defenceDescription
+							td= r.canClimbRope
+							td= r.ropeAttatchTime
+							td= r.ropeClimbTime
+							td= r.goingToSFRegional
+							td= r.goingToSacRegional
+							td= r.otherComments
+		else
+			p
+				i No scouting reports found.
+
+block scripts
+	script(src="/userAdministration.js")
