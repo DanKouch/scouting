@@ -11,7 +11,7 @@ const userModel = mongoose.model("User");
 
 module.exports.findUserByUsername = (req, res) => {
 	if(req.querry && req.query.username){
-		userModel.findOne({'username': req.query.username}, "username accountDescription dateJoined").exec((err, user) => {
+		userModel.findOne({'username': req.query.username.toLowerCase()}, "username accountDescription dateJoined").exec((err, user) => {
 			if(!user){
 				common.jsonResponse(res, common.statusCodes.DOES_NOT_EXIST, {
 					message: "This document does not exist."
@@ -19,24 +19,36 @@ module.exports.findUserByUsername = (req, res) => {
 				return;
 			}
 			if(err){
-				common.jsonResponse(res, common.statusCodes.SERVER_ERROR, {
-					message: "Server error. Please contact the system administrator."
-				});
-				winston.error("Database Error: " + err);
-				return;
+				sendDatabaseError(res, err);
 			}
 			common.jsonResponse(res, common.statusCodes.OK, user)
 		})
 	}else{
-		common.jsonResponse(res, common.statusCodes.CLIENT_ERROR, {
-			message: "Client error. Invalid request parameters."
-		});
+		sendInvalidParametersError(res);
 		return;
 	}
 }
 
+module.exports.findAllUsers = (req, res) => {
+	userModel.find({}, (err, users) => {
+		if(err){
+			sendDatabaseError(res, err);
+			return;
+		}
+		var refinedUsers = users.map((user) => {
+			return {
+				username: user.username,
+				role: user.role,
+				id: user.id
+			}
+		})
+		common.jsonResponse(res, common.statusCodes.OK, refinedUsers);
+	})
+}
+
 module.exports.registerUser = (req, res) => {
 	if(req.query.username && req.query.password && req.query.role){
+		req.query.username = req.query.username.toLowerCase();
 		common.hashPassword(req.query.password, (bcryptError, hashedPassword) => {
 			if(bcryptError){
 				common.jsonResponse(res, common.statusCodes.SERVER_ERROR, {
@@ -67,13 +79,8 @@ module.exports.registerUser = (req, res) => {
 							err: errorObject
 						})
 					}else{
-						common.jsonResponse(res, common.statusCodes.SERVER_ERROR, {
-							success: false,
-							err: {
-								database: "A database error has occoured."
-							}
-						})
-						winston.error("Database Error: " + err);
+						sendDatabaseError(res, err);
+						return;
 					}
 				}else{
 					common.jsonResponse(res, common.statusCodes.OK, {
@@ -84,12 +91,81 @@ module.exports.registerUser = (req, res) => {
 			});
 		});
 	}else{
-		common.jsonResponse(res, common.statusCodes.CLIENT_ERROR, {
-			success: false,
-			err: {
-				database: "Invalid request parameters."
-			}
-		});
+		sendInvalidParametersError(res);
 		return;
 	}
+}
+
+module.exports.deleteUser = (req, res) => {
+	if(req.query.id){
+		userModel.findByIdAndRemove(req.query.id).exec((err, user) => {
+			if(err){
+				sendDatabaseError(res, err);
+				return;
+			}
+			common.jsonResponse(res, common.statusCodes.OK, {
+				success: true
+			});
+		})
+	}else{
+		sendInvalidParametersError(res);
+		return;
+	}
+}
+
+module.exports.changePassword = (req, res) => {
+	if(req.query.id && req.query.password){
+		common.hashPassword(req.query.password, (bcryptError, hashedPassword) => {
+			if(bcryptError){
+				common.jsonResponse(res, common.statusCodes.SERVER_ERROR, {
+					success: false,
+					err: "A server error has occoured."
+				})
+				winston.error("Bcrypt Error: " + bcryptError);
+				return;
+			}
+
+			winston.info(req.query.id);
+			userModel.findById(mongoose.Types.ObjectId(req.query.id), (err, user) => {
+				if(err){
+					sendDatabaseError(res, err);
+					return;
+				}
+				if(!user){
+					common.jsonResponse(res, common.statusCodes.SERVER_ERROR, {
+						success: false,
+						err: "No user with that ID could be found."
+					})
+					return;
+				}
+				user.password = hashedPassword;
+				user.save();
+				common.jsonResponse(res, common.statusCodes.OK, {
+					success: true
+				});
+			});
+		});
+	}else{
+		sendInvalidParametersError(res);
+		return;
+	}
+}
+
+function sendDatabaseError(res, err){
+	common.jsonResponse(res, common.statusCodes.SERVER_ERROR, {
+		success: false,
+		err: {
+			database: "A database error has occoured."
+		}
+	})
+	winston.error("Database Error: " + err);
+}
+
+function sendInvalidParametersError(res){
+	common.jsonResponse(res, common.statusCodes.CLIENT_ERROR, {
+		success: false,
+		err: {
+			database: "Invalid request parameters."
+		}
+	});
 }

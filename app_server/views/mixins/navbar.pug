@@ -9,6 +9,8 @@ mixin navbar(user)
 			ul.nav.navbar-nav.navbar-right
 				if user.role=="administrator"
 					li
+						a(href="/register") Users Registration
+					li
 						a(href="/users") Users Administration
 				li.dropdown
 					a.dropdown-toggle(data-toggle="dropdown")=user.username

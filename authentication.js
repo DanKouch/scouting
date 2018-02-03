@@ -5,7 +5,7 @@ const appApiCommon = require("./app_api/apiControllersCommon.js");
 const winston = require("winston");
 
 module.exports.authenticate = function(username, password, done) {
-	userModel.findOne({ username: username }, function (err, user) {
+	userModel.findOne({ username: username.toLowerCase() }, function (err, user) {
 		if (err) {
 			return done(err); 
 		}

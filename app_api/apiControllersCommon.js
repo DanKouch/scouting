@@ -32,5 +32,8 @@ module.exports.generateValidatorErrorObject = (error) => {
 	if(error.kind == "unique"){
 		errorObject.message = "That " + error.path + " is already in use. Please select another."
 	}
+	if(error.message == "alphanumeric"){
+		errorObject.message = "Your " + error.path + " must be alphanumeric."
+	}
 	return errorObject;
 }

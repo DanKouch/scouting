@@ -28,7 +28,26 @@ module.exports.postRegister = (req, res) => {
 			winston.verbose("New user '" + req.body.username + "' has registered.");
 		}
 		res.render("register", {
+			user: req.user,
 			errorMessages: body.err
+		})
+	})
+}
+
+module.exports.users = (req, res) => {
+	const requestOptions = {
+		url: apiOptions.server + "/api/users",
+		method: "GET",
+		json: {},
+		qs: {}
+	}
+	request(requestOptions, (err, response, body) => {
+		if(err){
+			winston.error("API Request Error (users - get): " + err);
+		}
+		res.render("userAdministration", {
+			user: req.user,
+			users: body
 		})
 	})
 }

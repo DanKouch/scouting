@@ -1,9 +1,11 @@
 extends boilerplate.pug
+include mixins/navbar.pug
 
 block vars
 	- var title = "Scouting Registration"
 
 block content
+	+navbar(user)
 	div.container
 		div.page-header
 			h1 Register New Account
@@ -28,4 +30,3 @@ block content
 				button.btn.btn-primary.submit(type="submit") Register
 				br
 				br
-				a(href="/login") Already have an account? Login.
