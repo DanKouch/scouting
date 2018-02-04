@@ -10,7 +10,7 @@ block content
 		h1.page-header Pit Scouting Reports
 
 		if reports && reports.length > 0
-			table.table
+			table.table#report-table
 				thead
 					th(scope="col") Team #
 					th(scope="col") Team Name
@@ -56,4 +56,4 @@ block content
 				i No scouting reports found.
 
 block scripts
-	script(src="/userAdministration.js")
+	script(src="/reportTables.js")
