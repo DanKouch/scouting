@@ -5,6 +5,7 @@ const express = require('express');
 const passport = require("passport");
 const winston = require("winston");
 const flash = require("connect-flash");
+const secret = require("../secret.js")
 const controller = require("./controller");
 var router = express.Router();
 
@@ -63,6 +64,8 @@ router.get('/pit-scouting-report', ensureLoggedIn, function(req, res){
 
 router.post("/pit-scouting-report", controller.postPitScoutingReport);
 
+// Webdata
+router.get("/"+secret.webDataPath, controller.getWebData)
 
 
 

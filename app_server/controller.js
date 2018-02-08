@@ -92,3 +92,20 @@ module.exports.pitScoutingReports = (req, res) => {
 		})
 	})
 }
+
+module.exports.getWebData = (req, res) => {
+	const requestOptions = {
+		url: apiOptions.server + "/api/pit-scouting-reports",
+		method: "GET",
+		json: {},
+		qs: {}
+	}
+	request(requestOptions, (err, response, body) => {
+		if(err){
+			winston.error("API Request Error (webData - get): " + err);
+		}
+		res.render("webData", {
+			reports: body
+		})
+	})
+}
