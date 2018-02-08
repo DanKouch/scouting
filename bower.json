@@ -12,6 +12,8 @@
   ],
   "dependencies": {
     "datatables.net-bs": "^2.1.1",
-    "datatables.net": "^1.10.16"
+    "datatables.net": "^1.10.16",
+    "bootstrap": "^3.3.7",
+    "jquery-validation": "^1.17.0"
   }
 }
