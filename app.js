@@ -13,6 +13,7 @@ const passportLocal = require('passport-local');
 const winston = require('winston');
 
 const app = express();
+const apiApp = express();
 
 // Configure Winston logging
 winston.remove(winston.transports.Console);
@@ -72,10 +73,16 @@ app.set('views', './app_server/views');
 
 // Routing
 app.use("/", require("./app_server/router.js"));
-app.use("/", require("./app_api/router.js"));
+apiApp.use("/", require("./app_api/router.js"));
 
 // Start HTTP server
 app.set('port', process.env.PORT || 3001);
+apiApp.set('port', process.env.API_PORT || 3005);
+
 app.listen(app.get('port'), () => {
 	winston.info("HTTP server started on port " + app.get('port'));
+});
+
+apiApp.listen(apiApp.get('port'), () => {
+  winston.info("HTTP API server started on port " + apiApp.get('port'));
 });

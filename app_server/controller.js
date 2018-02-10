@@ -2,7 +2,7 @@ const request = require('request');
 const winston = require("winston")
 
 const apiOptions = {
-	server : "http://localhost:" + (process.env.PORT || 3001)
+	server : "http://localhost:" + (process.env.API_PORT || 3005)
 };
 
 if (process.env.NODE_ENV === 'production') {
