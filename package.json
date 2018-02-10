@@ -6,6 +6,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
+  "engines": {
+    "node": "8.4.0"
+  },
   "author": "Daniel B. Kouchekinia",
   "license": "ISC",
   "dependencies": {
