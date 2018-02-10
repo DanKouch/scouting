@@ -1,0 +1,54 @@
+extends boilerplate.pug
+include mixins/navbar.pug
+include mixins/formInputs.pug
+
+block vars
+	- var title = "Match Scouting Report"
+
+block content
+	+navbar(user)
+	div.container
+		h1.page-header Match Scouting Report
+		if success
+			div.alert.alert-success#successAlert Report successfully submited
+		form.form-validate(method="post")
+			h3 Pre-Match
+			br
+			+simpleInput("Team Number", "teamNumber", errorMessages, {type: "number", required: true})
+			+simpleInput("Team Name", "teamName", errorMessages, {minLength: 5, required: true})
+			hr
+			+dropDownInput("Competition", "competition", errorMessages, ["San Fransisco Regional", "Sacramento Regional"])
+			hr
+			h3 Autonomous
+			br
+			+yesNoInput("Crossed Line", "crossedLineInAutonomous", errorMessages)
+			+dropDownInput("Cubes Placed", "cubesPlacedInAutonomous", errorMessages, ["Unknown", "Own switch", "Other team's switch", "Both", "Neither"])
+			hr
+			+simpleInput("Cubes Delivered to Switch", "cubesDeliveredToSwitchInAutonomous", errorMessages, {type: "number"})
+			+simpleInput("Cubes Delivered to Portal", "cubesDeliveredToPortalInAutonomous", errorMessages, {type: "number"})
+			+textAreaInput("Autonomous Comments", "autonomousComments", errorMessages)
+			hr
+			h3 Teleop
+			br
+			+dropDownInput("Cubes Placed", "cubesPlacedInTeleop", errorMessages, ["Unknown", "Own switch", "Other team's switch", "Both", "Neither"])
+			+yesNoInput("Powerup", "powerupInTeleop", errorMessages)
+			+yesNoInput("Exchange", "exchangeInTeleop", errorMessages)
+			+yesNoInput("Does Scale Tip", "doesScaleTipInTeleop", errorMessages)
+			+yesNoInput("Used Levitate", "usedLevitateInTeleop", errorMessages)
+			+yesNoInput("Climbed Rope", "climbedRopeInTeleop", errorMessages)
+			+yesNoInput("Exchange", "exchangeInTeleop", errorMessages)
+			+yesNoInput("Attempted Defence", "attemptedDefenceInTeleop", errorMessages)
+			hr
+			+simpleInput("Cubes Delivered to Switch", "cubesDeliveredToSwitchInTeleop", errorMessages, {type: "number"})
+			+simpleInput("Cubes Delivered to Portal", "cubesDeliveredToPortalInTeleop", errorMessages, {type: "number"})
+			+textAreaInput("Teleop Comments", "teleopComments", errorMessages)
+			hr
+			h3 Comments
+			br
+			+textAreaInput("Suggestions for Team", "suggestionsForTeam", errorMessages)
+			+textAreaInput("New Strategies", "newStrategies", errorMessages)
+			+textAreaInput("General Comments", "generalComments", errorMessages)
+
+			br
+			button.btn.btn-primary.submit(type="submit") Submit
+			

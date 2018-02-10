@@ -10,6 +10,10 @@ const mongooseUniqueValidator = require("mongoose-unique-validator")
 const sanitizer = require("mongo-sanitize")
 
 let pitScoutingReportSchema = new Schema({
+
+	// Submission Info
+	submittedAt: 			{type : Date, default: Date.now},
+
 	// Team Information
 	teamNumber: 			{type: Number, required: true},
 	teamName: 				{type: String, required: true},

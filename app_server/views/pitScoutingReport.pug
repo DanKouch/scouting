@@ -19,7 +19,7 @@ block content
 			hr
 			h3 Basic Robot Information
 			br
-			+simpleInput("Robot Speed", "robotSpeed", errorMessages, {postfix: "ft/s"})
+			+simpleInput("Robot Speed", "robotSpeed", errorMessages, {postfix: "ft/s", type:"number"})
 			+yesNoInput("Transmission", "transmission")
 			+simpleInput("Wheels Count", "wheelsCount", errorMessages, {type: "number", postfix: "Wheels"})
 			+dropDownInput("Drive Type", "driveType", errorMessages, ["Unknown", "West Coast", "Swerve", "Mecanum", "Omni", "Other"])

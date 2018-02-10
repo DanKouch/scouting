@@ -30,6 +30,7 @@ block content
 					th(scope="col") Going to SF Regional
 					th(scope="col") Going to Sacramento Regional
 					th(scope="col") Other Comments
+					th(scope="col") Submitted At
 				tbody
 					each r in reports
 						tr
@@ -51,6 +52,7 @@ block content
 							td= r.goingToSFRegional
 							td= r.goingToSacRegional
 							td= r.otherComments
+							td= r.submittedAt
 		else
 			p
 				i No scouting reports found.

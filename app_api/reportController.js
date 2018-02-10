@@ -8,37 +8,74 @@ const util = require("util");
 const passport = require("passport");
 
 const pitScoutingReportModel = mongoose.model("PitScoutingReport");
+const matchScoutingReportModel = mongoose.model("MatchScoutingReport");
 
 
 module.exports.addPitScoutingReport = (req, res) => {
 	if(req.query.teamName && req.query.teamNumber){
-			pitScoutingReportModel.create(req.query, (err, report) => {
-				if(err){
-					var errorObjects = Object.values(err.errors).map((err) => {
-						return (common.generateValidatorErrorObject(err));
-					});
+		pitScoutingReportModel.create(req.query, (err, report) => {
+			if(err){
+				var errorObjects = Object.values(err.errors).map((err) => {
+					return (common.generateValidatorErrorObject(err));
+				});
 
-					var errorObject = errorObjects.reduce((acc, cur, i) => {
-						acc[cur.field] = cur.message;
-						return acc
-					}, {})
+				var errorObject = errorObjects.reduce((acc, cur, i) => {
+					acc[cur.field] = cur.message;
+					return acc
+				}, {})
 
-					if(errorObjects.length > 0){
-						common.jsonResponse(res, common.statusCodes.CLIENT_ERROR, {
-							success: false,
-							err: errorObject
-						})
-					}else{
-						sendDatabaseError(res, err);
-						return;
-					}
+				if(errorObjects.length > 0){
+					common.jsonResponse(res, common.statusCodes.CLIENT_ERROR, {
+						success: false,
+						err: errorObject
+					})
 				}else{
-					common.jsonResponse(res, common.statusCodes.OK, {
-						success: true,
-						report: report
-					});
+					sendDatabaseError(res, err);
+					return;
 				}
-			});
+			}else{
+				common.jsonResponse(res, common.statusCodes.OK, {
+					success: true,
+					report: report
+				});
+			}
+		});
+
+	}else{
+		sendInvalidParametersError(res);
+		return;
+	}
+}
+
+module.exports.addMatchScoutingReport = (req, res) => {
+	if(req.query.teamName && req.query.teamNumber && req.query.competition){
+		matchScoutingReportModel.create(req.query, (err, report) => {
+			if(err){
+				var errorObjects = Object.values(err.errors).map((err) => {
+					return (common.generateValidatorErrorObject(err));
+				});
+
+				var errorObject = errorObjects.reduce((acc, cur, i) => {
+					acc[cur.field] = cur.message;
+					return acc
+				}, {})
+
+				if(errorObjects.length > 0){
+					common.jsonResponse(res, common.statusCodes.CLIENT_ERROR, {
+						success: false,
+						err: errorObject
+					})
+				}else{
+					sendDatabaseError(res, err);
+					return;
+				}
+			}else{
+				common.jsonResponse(res, common.statusCodes.OK, {
+					success: true,
+					report: report
+				});
+			}
+		});
 
 	}else{
 		sendInvalidParametersError(res);
@@ -48,6 +85,16 @@ module.exports.addPitScoutingReport = (req, res) => {
 
 module.exports.findAllPitScoutingReports = (req, res) => {
 	pitScoutingReportModel.find({}, (err, reports) => {
+		if(err){
+			sendDatabaseError(res, err);
+			return;
+		}
+		common.jsonResponse(res, common.statusCodes.OK, reports);
+	})
+}
+
+module.exports.findAllMatchScoutingReports = (req, res) => {
+	matchScoutingReportModel.find({}, (err, reports) => {
 		if(err){
 			sendDatabaseError(res, err);
 			return;

@@ -54,15 +54,18 @@ router.get('/home', ensureLoggedIn, function(req, res){
 // Administrator pages
 router.get('/users', ensureAdministrator, controller.users);
 router.get('/pit-scouting-reports', ensureAdministrator, controller.pitScoutingReports);
+router.get('/match-scouting-reports', ensureAdministrator, controller.matchScoutingReports);
 
 // Forms
 router.get('/pit-scouting-report', ensureLoggedIn, function(req, res){
 	res.render('pitScoutingReport', { user: req.user });
 });
-
-
-
 router.post("/pit-scouting-report", controller.postPitScoutingReport);
+
+router.get('/match-scouting-report', ensureLoggedIn, function(req, res){
+	res.render('matchScoutingReport', { user: req.user });
+});
+router.post("/match-scouting-report", controller.postMatchScoutingReport);
 
 // Webdata
 router.get("/"+secret.webDataPath, controller.getWebData)

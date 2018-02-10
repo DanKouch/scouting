@@ -16,8 +16,11 @@ router.delete("/api/user", accountController.deleteUser);
 router.get("/api/users", accountController.findAllUsers);
 router.get("/api/user/:username", accountController.findUserByUsername);
 
-// Forms
+// Reports
 router.post("/api/pit-scouting-report", reportController.addPitScoutingReport);
 router.get("/api/pit-scouting-reports", reportController.findAllPitScoutingReports);
+
+router.post("/api/match-scouting-report", reportController.addMatchScoutingReport);
+router.get("/api/match-scouting-reports", reportController.findAllMatchScoutingReports);
 
 module.exports = router;

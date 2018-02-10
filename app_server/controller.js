@@ -47,9 +47,31 @@ module.exports.postPitScoutingReport = (req, res) => {
 			winston.error("API Request Error (pit-scouting-report - post): " + err);
 		}
 		if(body.success){
-			winston.verbose("Pit scouting report on team " + body + req.body.teamNumber + ".");
+			winston.verbose("Pit scouting report on team " + body + req.body.teamNumber + " submitted.");
 		}
 		res.render("pitScoutingReport", {
+			user: req.user,
+			success: body.success,
+			errorMessages: body.err
+		})
+	})
+}
+
+module.exports.postMatchScoutingReport = (req, res) => {
+	const requestOptions = {
+		url: apiOptions.server + "/api/match-scouting-report",
+		method: "POST",
+		json: {},
+		qs: req.body
+	}
+	request(requestOptions, (err, response, body) => {
+		if(err){
+			winston.error("API Request Error (pit-scouting-report - post): " + err);
+		}
+		if(body.success){
+			winston.verbose("Match scouting report on team " + body + req.body.teamNumber + " submitted.");
+		}
+		res.render("matchScoutingReport", {
 			user: req.user,
 			success: body.success,
 			errorMessages: body.err
@@ -93,6 +115,24 @@ module.exports.pitScoutingReports = (req, res) => {
 	})
 }
 
+module.exports.matchScoutingReports = (req, res) => {
+	const requestOptions = {
+		url: apiOptions.server + "/api/match-scouting-reports",
+		method: "GET",
+		json: {},
+		qs: {}
+	}
+	request(requestOptions, (err, response, body) => {
+		if(err){
+			winston.error("API Request Error (users - get): " + err);
+		}
+		res.render("matchScoutingReports", {
+			user: req.user,
+			reports: body
+		})
+	})
+}
+
 module.exports.getWebData = (req, res) => {
 	const requestOptions = {
 		url: apiOptions.server + "/api/pit-scouting-reports",
@@ -100,12 +140,24 @@ module.exports.getWebData = (req, res) => {
 		json: {},
 		qs: {}
 	}
-	request(requestOptions, (err, response, body) => {
+	request(requestOptions, (err, response, pitScoutingReports) => {
 		if(err){
 			winston.error("API Request Error (webData - get): " + err);
 		}
-		res.render("webData", {
-			reports: body
+		const requestOptions = {
+			url: apiOptions.server + "/api/match-scouting-reports",
+			method: "GET",
+			json: {},
+			qs: {}
+		}
+		request(requestOptions, (err, response, matchScoutingReports) => {
+			if(err){
+				winston.error("API Request Error (webData - get): " + err);
+			}
+			res.render("webData", {
+				pitScoutingReports: pitScoutingReports,
+				matchScoutingReports: matchScoutingReports
+			})
 		})
 	})
 }
