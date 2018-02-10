@@ -27,7 +27,7 @@ const config = require("./config.js");
 // Configure body parser
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(cookieParser(secret.passportSessionSecret));
+app.use(cookieParser(process.env.PASSPORT_SESSION_SECRET || secret.passportSessionSecret));
 
 // Import local modules
 const databaseScript = require("./database.js");
@@ -35,7 +35,7 @@ const authenticationScript = require("./authentication.js");
 
 // Sessions
 app.use(session({
-  secret: secret.passportSessionSecret,
+  secret: secret.passportSessionSecret || process.env.PASSPORT_SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   store: new MongoStore({

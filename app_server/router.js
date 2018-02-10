@@ -68,7 +68,7 @@ router.get('/match-scouting-report', ensureLoggedIn, function(req, res){
 router.post("/match-scouting-report", controller.postMatchScoutingReport);
 
 // Webdata
-router.get("/"+secret.webDataPath, controller.getWebData)
+router.get("/"+(secret.webDataPath || process.env.WEB_DATA_PATH), controller.getWebData)
 
 
 

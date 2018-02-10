@@ -32,7 +32,7 @@ userModel.findOne({'username': "root"}, "username").exec((err, user) => {
 		winston.warn("Root user not found. Creating now.")
 		userModel.create({
 				username: "root",
-				password: secret.rootPassword,
+				password: secret.rootPassword || process.env.ROOT_PASSWORD,
 				role: "administrator"
 		}, (err, user) => {
 			if(err){
@@ -40,7 +40,7 @@ userModel.findOne({'username': "root"}, "username").exec((err, user) => {
 			}
 		});
 	}else{
-		common.hashPassword(secret.rootPassword, (bcryptError, hashedPassword) => {
+		common.hashPassword((secret.rootPassword || process.env.ROOT_PASSWORD), (bcryptError, hashedPassword) => {
 			if(bcryptError){
 				winston.error("Bcrypt Error Setting Root Password: " + bcryptError);
 				return;

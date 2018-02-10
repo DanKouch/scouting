@@ -19,3 +19,12 @@ module.exports = {
 ```
 
 *Note: When starting a server for the first time, any values can be entered into these fields. However, the session secret should not be changed after this point, unless you delete all sessions from the database.*
+
+## Enviroment Configuration Variables
+	- NODE_ENV - "production" for MONGODB_URI connection
+	- MONGODB_URI - Production URI - Overrides "localhost"
+	- PORT - Overrides config.js
+	- API_PORT - Overrides config.js
+	- PASSPORT_SESSION_SECRET - Overriden by secret.js
+	- ROOT_PASSWORD - Overriden by secret.js
+	- WEB_DATA_PATH - Overriden by secret.js
