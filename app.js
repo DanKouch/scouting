@@ -21,13 +21,12 @@ winston.add(winston.transports.Console, {'timestamp': true, 'colorize': true, 'l
 
 
 // Used for reference
-const secret = require("./secret.js");
 const config = require("./config.js");
 
 // Configure body parser
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(cookieParser(process.env.PASSPORT_SESSION_SECRET || secret.passportSessionSecret));
+app.use(cookieParser(config.secret.passportSessionSecret));
 
 // Import local modules
 const databaseScript = require("./database.js");
@@ -35,7 +34,7 @@ const authenticationScript = require("./authentication.js");
 
 // Sessions
 app.use(session({
-  secret: secret.passportSessionSecret || process.env.PASSPORT_SESSION_SECRET,
+  secret: config.secret.passportSessionSecret,
   resave: false,
   saveUninitialized: false,
   store: new MongoStore({
@@ -77,14 +76,14 @@ app.use("/", require("./app_server/router.js"));
 api.use("/", require("./app_api/router.js"));
 
 // Start App HTTP server
-app.set('port', process.env.PORT || config.appPort);
+app.set('port', config.appPort);
 
 app.listen(app.get('port'), () => {
   winston.info("App HTTP server started on port " + app.get('port'));
 });
 
 // Start API HTTP server
-api.set('port', process.env.API_PORT || config.apiPort);
+api.set('port', config.apiPort);
 
 api.listen(api.get('port'), () => {
   winston.info("API HTTP server started on port " + api.get('port'));

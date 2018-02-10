@@ -3,10 +3,9 @@
 // Require modules
 const mongoose = require('mongoose')
 const winston = require('winston')
+const config = require("./config.js")
 
-const dbURI = (process.env.NODE_ENV === "production") ? process.env.MONGOLAB_URI : 'mongodb://localhost/scouting'
-
-mongoose.connect(dbURI, {useMongoClient: true}).then(
+mongoose.connect(config.databaseURI, {useMongoClient: true}).then(
 	() => {
 		winston.info("Connected to mongodb server at '" + dbURI + "'");
 	},

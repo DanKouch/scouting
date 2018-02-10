@@ -5,8 +5,8 @@ const express = require('express');
 const passport = require("passport");
 const winston = require("winston");
 const flash = require("connect-flash");
-const secret = require("../secret.js")
 const controller = require("./controller");
+const config = require("../config.js");
 var router = express.Router();
 
 const ensureLoggedIn = (req, res, next) => { req.isAuthenticated() ? next() : res.redirect("/login"); }
@@ -68,7 +68,7 @@ router.get('/match-scouting-report', ensureLoggedIn, function(req, res){
 router.post("/match-scouting-report", controller.postMatchScoutingReport);
 
 // Webdata
-router.get("/"+(secret.webDataPath || process.env.WEB_DATA_PATH), controller.getWebData)
+router.get("/"+config.secret.webDataPath, controller.getWebData)
 
 
 

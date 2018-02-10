@@ -102,6 +102,7 @@ module.exports.deleteUser = (req, res) => {
 			if(err){
 				sendDatabaseError(res, err);
 				return;
+
 			}
 			common.jsonResponse(res, common.statusCodes.OK, {
 				success: true

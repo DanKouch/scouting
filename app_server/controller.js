@@ -1,17 +1,10 @@
 const request = require('request');
 const winston = require("winston")
-
-const apiOptions = {
-	server : "http://localhost:" + (process.env.API_PORT || 3005)
-};
-
-if (process.env.NODE_ENV === 'production') {
-	// Set server to production thing
-} 
+const config = require("../config.js");
 
 module.exports.postRegister = (req, res) => {
 	const requestOptions = {
-		url: apiOptions.server + "/api/user",
+		url: config.apiURL + "/api/user",
 		method: "POST",
 		json: {},
 		qs: {
@@ -37,7 +30,7 @@ module.exports.postRegister = (req, res) => {
 
 module.exports.postPitScoutingReport = (req, res) => {
 	const requestOptions = {
-		url: apiOptions.server + "/api/pit-scouting-report",
+		url: config.apiURL + "/api/pit-scouting-report",
 		method: "POST",
 		json: {},
 		qs: req.body
@@ -59,7 +52,7 @@ module.exports.postPitScoutingReport = (req, res) => {
 
 module.exports.postMatchScoutingReport = (req, res) => {
 	const requestOptions = {
-		url: apiOptions.server + "/api/match-scouting-report",
+		url: config.apiURL + "/api/match-scouting-report",
 		method: "POST",
 		json: {},
 		qs: req.body
@@ -81,7 +74,7 @@ module.exports.postMatchScoutingReport = (req, res) => {
 
 module.exports.users = (req, res) => {
 	const requestOptions = {
-		url: apiOptions.server + "/api/users",
+		url: config.apiURL + "/api/users",
 		method: "GET",
 		json: {},
 		qs: {}
@@ -99,7 +92,7 @@ module.exports.users = (req, res) => {
 
 module.exports.pitScoutingReports = (req, res) => {
 	const requestOptions = {
-		url: apiOptions.server + "/api/pit-scouting-reports",
+		url: config.apiURL + "/api/pit-scouting-reports",
 		method: "GET",
 		json: {},
 		qs: {}
@@ -117,7 +110,7 @@ module.exports.pitScoutingReports = (req, res) => {
 
 module.exports.matchScoutingReports = (req, res) => {
 	const requestOptions = {
-		url: apiOptions.server + "/api/match-scouting-reports",
+		url: config.apiURL + "/api/match-scouting-reports",
 		method: "GET",
 		json: {},
 		qs: {}
@@ -135,7 +128,7 @@ module.exports.matchScoutingReports = (req, res) => {
 
 module.exports.getWebData = (req, res) => {
 	const requestOptions = {
-		url: apiOptions.server + "/api/pit-scouting-reports",
+		url: config.apiURL + "/api/pit-scouting-reports",
 		method: "GET",
 		json: {},
 		qs: {}
@@ -145,7 +138,7 @@ module.exports.getWebData = (req, res) => {
 			winston.error("API Request Error (webData - get): " + err);
 		}
 		const requestOptions = {
-			url: apiOptions.server + "/api/match-scouting-reports",
+			url: config.apiURL + "/api/match-scouting-reports",
 			method: "GET",
 			json: {},
 			qs: {}

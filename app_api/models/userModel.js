@@ -1,7 +1,6 @@
 'use strict'
 
 const winston = require('winston');
-const secret = require("../../secret.js");
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
@@ -23,7 +22,10 @@ var userModel = mongoose.model("User", userSchema);
 
 
 // Reset root user
-var common = require("../apiControllersCommon.js")
+
+var common = require("../apiControllersCommon.js");
+const config = require("../../config.js");
+
 userModel.findOne({'username': "root"}, "username").exec((err, user) => {
 	if(err){
 		winston.error("Could not query for root: " + err);
@@ -32,7 +34,7 @@ userModel.findOne({'username': "root"}, "username").exec((err, user) => {
 		winston.warn("Root user not found. Creating now.")
 		userModel.create({
 				username: "root",
-				password: secret.rootPassword || process.env.ROOT_PASSWORD,
+				password: config.secret.rootPassword,
 				role: "administrator"
 		}, (err, user) => {
 			if(err){
@@ -40,7 +42,7 @@ userModel.findOne({'username': "root"}, "username").exec((err, user) => {
 			}
 		});
 	}else{
-		common.hashPassword((secret.rootPassword || process.env.ROOT_PASSWORD), (bcryptError, hashedPassword) => {
+		common.hashPassword(config.secret.rootPassword, (bcryptError, hashedPassword) => {
 			if(bcryptError){
 				winston.error("Bcrypt Error Setting Root Password: " + bcryptError);
 				return;

@@ -11,7 +11,7 @@ function deleteUser(id){
 			}
 			location.reload();
 		},
-		error: () => {
+		error: (err) => {
 			alert("Could not delete user.");
 		}
 	})
