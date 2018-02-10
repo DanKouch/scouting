@@ -8,9 +8,9 @@ module.exports = {
 
     // Do not edit anything beyond this point unless you know what you are doing
     secret: {
-	    passportSessionSecret: secretFile.passportSessionSecret || process.env.PASSPORT_SESSION_SECRET,
-	    rootPassword: secretFile.rootPassword || process.env.ROOT_PASSWORD,
-	    webDataPath: secretFile.webDataPath || process.env.WEB_DATA_PATH
+	    passportSessionSecret: secretFile ? secretFile.passportSessionSecret : process.env.PASSPORT_SESSION_SECRET,
+	    rootPassword: secretFile ? secretFile.rootPassword : process.env.ROOT_PASSWORD,
+	    webDataPath: secretFile ? secretFile.webDataPath : process.env.WEB_DATA_PATH
 	}
 };
 
