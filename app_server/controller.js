@@ -72,24 +72,6 @@ module.exports.postMatchScoutingReport = (req, res) => {
 	})
 }
 
-module.exports.users = (req, res) => {
-	const requestOptions = {
-		url: config.apiURL + "/api/users",
-		method: "GET",
-		json: {},
-		qs: {}
-	}
-	request(requestOptions, (err, response, body) => {
-		if(err){
-			winston.error("API Request Error (users - get): " + err);
-		}
-		res.render("userAdministration", {
-			user: req.user,
-			users: body
-		})
-	})
-}
-
 module.exports.pitScoutingReports = (req, res) => {
 	const requestOptions = {
 		url: config.apiURL + "/api/pit-scouting-reports",
@@ -152,5 +134,55 @@ module.exports.getWebData = (req, res) => {
 				matchScoutingReports: matchScoutingReports
 			})
 		})
+	})
+}
+
+// User administration routes
+
+module.exports.users = (req, res) => {
+	const requestOptions = {
+		url: config.apiURL + "/api/users",
+		method: "GET",
+		json: {},
+		qs: {}
+	}
+	request(requestOptions, (err, response, body) => {
+		if(err){
+			winston.error("API Request Error (users - get): " + err);
+		}
+		res.render("userAdministration", {
+			user: req.user,
+			users: body
+		})
+	})
+}
+
+module.exports.deleteUser = (req, res) => {
+	const requestOptions = {
+		url: config.apiURL + "/api/user",
+		method: "DELETE",
+		json: {},
+		qs: req.query
+	}
+	request(requestOptions, (err, response, body) => {
+		if(err){
+			winston.error("API Request Error (user - delete): " + err);
+		}
+		res.json({success: body.success})
+	})
+}
+
+module.exports.changeUserPassword = (req, res) => {
+	const requestOptions = {
+		url: config.apiURL + "/api/user/password",
+		method: "PUT",
+		json: {},
+		qs: req.query
+	}
+	request(requestOptions, (err, response, body) => {
+		if(err){
+			winston.error("API Request Error (user password - put): " + err);
+		}
+		res.json({success: body.success})
 	})
 }

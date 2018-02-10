@@ -3,11 +3,13 @@ function deleteUser(id){
 		return;
 	}
 	$.ajax({
-		url: "/api/user?id=" + id,
+		url: "/user?id=" + id,
 		type: "DELETE",
 		success: (data) => {
-			if(!data.success){
-				alert("Could not change password. (Server Error)")
+			if(!data){
+				alert("Could not delete user. (Server Error)")
+			}else{
+				alert("Successfully deleted user.")
 			}
 			location.reload();
 		},
@@ -27,11 +29,13 @@ function changePassword(id){
 		return;
 	}
 	$.ajax({
-		url: "/api/user/password?id="+id+"&password="+newPassword,
+		url: "/user/password?id="+id+"&password="+newPassword,
 		type: "PUT",
 		success: (data) => {
-			if(!data.success){
-				alert("Could not change password. (Server Error)")
+			if(!data || !data.success){
+				alert("Could not change user password. (Server Error)")
+			}else{
+				alert("Successfully changed user password.")
 			}
 			location.reload()
 		},

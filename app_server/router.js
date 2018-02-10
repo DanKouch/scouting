@@ -53,6 +53,10 @@ router.get('/home', ensureLoggedIn, function(req, res){
 
 // Administrator pages
 router.get('/users', ensureAdministrator, controller.users);
+router.delete('/user', ensureAdministrator, controller.deleteUser);
+router.put('/user/password', ensureAdministrator, controller.changeUserPassword);
+
+
 router.get('/pit-scouting-reports', ensureAdministrator, controller.pitScoutingReports);
 router.get('/match-scouting-reports', ensureAdministrator, controller.matchScoutingReports);
 
