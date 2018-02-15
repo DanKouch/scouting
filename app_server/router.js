@@ -23,6 +23,7 @@ router.get("/login", (req, res) => {
 		res.redirect("/");
 	}else{
 		res.render("login", {
+			teamName: config.teamName,
 			errorMessages: {
 				login: req.flash('error')
 			}
@@ -33,6 +34,7 @@ router.get("/login", (req, res) => {
 router.get("/register", ensureAdministrator, (req, res) => {
    res.render("register", {
    	user: req.user,
+   	teamName: config.teamName,
    	errorMessages: [],
    	errorFields: []
    });
@@ -48,7 +50,7 @@ router.post('/login', passport.authenticate('local', { successRedirect: '/home',
 
 // User pages
 router.get('/home', ensureLoggedIn, function(req, res){
-	res.render('home', { user: req.user });
+	res.render('home', { user: req.user, teamName: config.teamName });
 });
 
 // Administrator pages
@@ -62,12 +64,12 @@ router.get('/match-scouting-reports', ensureAdministrator, controller.matchScout
 
 // Forms
 router.get('/pit-scouting-report', ensureLoggedIn, function(req, res){
-	res.render('pitScoutingReport', { user: req.user });
+	res.render('pitScoutingReport', { user: req.user, teamName: config.teamName });
 });
 router.post("/pit-scouting-report", controller.postPitScoutingReport);
 
 router.get('/match-scouting-report', ensureLoggedIn, function(req, res){
-	res.render('matchScoutingReport', { user: req.user });
+	res.render('matchScoutingReport', { user: req.user, teamName: config.teamName });
 });
 router.post("/match-scouting-report", controller.postMatchScoutingReport);
 

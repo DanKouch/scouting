@@ -1,6 +1,7 @@
 module.exports = {
     appPort: process.env.PORT || 3001,
     apiPort: process.env.API_PORT || 3005,
+    teamName: process.env.TEAM_NAME || "",
     localDatabaseURI: "mongodb://localhost/scouting",
 
     // Do not edit anything beyond this point unless you know what you are doing

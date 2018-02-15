@@ -22,6 +22,7 @@ module.exports.postRegister = (req, res) => {
 		}
 		res.render("register", {
 			user: req.user,
+			teamName: config.teamName,
 			success: body.success,
 			errorMessages: body.err
 		})
@@ -44,6 +45,7 @@ module.exports.postPitScoutingReport = (req, res) => {
 		}
 		res.render("pitScoutingReport", {
 			user: req.user,
+			teamName: config.teamName,
 			success: body.success,
 			errorMessages: body.err
 		})
@@ -66,6 +68,7 @@ module.exports.postMatchScoutingReport = (req, res) => {
 		}
 		res.render("matchScoutingReport", {
 			user: req.user,
+			teamName: config.teamName,
 			success: body.success,
 			errorMessages: body.err
 		})
@@ -85,6 +88,7 @@ module.exports.pitScoutingReports = (req, res) => {
 		}
 		res.render("pitScoutingReports", {
 			user: req.user,
+			teamName: config.teamName,
 			reports: body
 		})
 	})
@@ -103,6 +107,7 @@ module.exports.matchScoutingReports = (req, res) => {
 		}
 		res.render("matchScoutingReports", {
 			user: req.user,
+			teamName: config.teamName,
 			reports: body
 		})
 	})
@@ -152,6 +157,7 @@ module.exports.users = (req, res) => {
 		}
 		res.render("userAdministration", {
 			user: req.user,
+			teamName: config.teamName,
 			users: body
 		})
 	})
