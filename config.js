@@ -2,7 +2,7 @@ module.exports = {
     appPort: process.env.PORT || 3001,
     apiPort: process.env.API_PORT || 3005,
     teamName: process.env.TEAM_NAME || "",
-    localDatabaseURI: "mongodb://localhost/scouting",
+    databaseURI: process.env.MONGODB_URI || process.env.MONGOLAB_URI || "mongodb://localhost/scouting",
 
     // Do not edit anything beyond this point unless you know what you are doing
     secret: {
@@ -13,4 +13,3 @@ module.exports = {
 };
 
 module.exports.apiURL = process.env.API_URL || "http://localhost:" + module.exports.apiPort;
-module.exports.databaseURI = process.env.NODE_ENV === "production" ? process.env.MONGOLAB_URI : module.exports.localDatabaseURI;

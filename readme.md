@@ -4,7 +4,8 @@ A web server used to communicate with a Mongo database to collect information fo
 
 ## Enviroment Configuration Variables
 	- NODE_ENV - "production" or "debug"
-	- MONGODB_URI - Production URI - Overrides "localhost"
+	- MONGODB_URI
+	- MONGOLAB_URI - Secondary URI
 	- PORT - App http port
 	- API_PORT - Api http port
 	- PASSPORT_SESSION_SECRET
