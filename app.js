@@ -15,6 +15,9 @@ const winston = require('winston');
 const app = express();
 const api = express();
 
+// Dot Env Configuration
+require('dotenv').config()
+
 // Configure Winston logging
 winston.remove(winston.transports.Console);
 winston.add(winston.transports.Console, {'timestamp': true, 'colorize': true, 'level': "silly"})
