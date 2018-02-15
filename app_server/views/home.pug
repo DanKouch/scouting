@@ -6,3 +6,15 @@ block vars
 block content
 	div.container
 		h1.page-header Home
+		p Welcome to the scouting app for 
+			span= teamName
+				span .
+		p To get started, you can submit reports by clicking an option on the "Submit Report" dropdown above.
+		p If you every have any difficulty accessing your account, constact a website adminstrator, 
+			span
+				b they are the only people who can change your password
+			span .
+		if user.role=="administrator"
+			br
+			h1.text-danger.page-header You are an  administrator
+			p As such, using the red links on the navbar you can view submitted reports by clicking on the "Reports" button, add new users using the "User Registration" button, and view/delete/change-the-password of all users by clicking on the "User Administration button."
