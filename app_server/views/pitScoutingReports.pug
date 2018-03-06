@@ -10,47 +10,77 @@ block content
 		if reports && reports.length > 0
 			table.table#report-table
 				thead
-					th(scope="col") Team #
-					th(scope="col") Team Name
+					th(scope="col") Team
+					th(scope="col") Tournament
+
 					th(scope="col") Robot Speed (ft/s)
 					th(scope="col") Transmission
-					th(scope="col") Wheels Count
-					th(scope="col") Drive Type
-					th(scope="col") Custom Drive Type
-					th(scope="col") Using Scale
-					th(scope="col") Using Portal
+					th(scope="col") Drive Train
+					th(scope="col") Custom Drive Train
+
+					th(scope="col") Can Use Scale at Top
+					th(scope="col") Can Use Scale at Mid
+					th(scope="col") Can Use Scale at Bottom
+					th(scope="col") Can Use Switch
+					th(scope="col") Can Use Exchange
+					th(scope="col") Can Pick Off Ground
+
 					th(scope="col") Can Autono.
+					th(scope="col") Theoretical Max Cubes In Switch In Autonomous
+					th(scope="col") Theoretical Max Cubes In Scale In Autonomous
+					th(scope="col") Authonomous Comments
+
 					th(scope="col") Will Play Defence
 					th(scope="col") Defence Description
-					th(scope="col") Can Climb Rope
-					th(scope="col") Rope Attatch Time
-					th(scope="col") Rope Climb Time
-					th(scope="col") Going to SF Regional
-					th(scope="col") Going to Sacramento Regional
-					th(scope="col") Other Comments
+
+					th(scope="col") Climber Type
+					th(scope="col") Custom Climber Type
+					th(scope="col") Climb Time
+
+					th(scope="col") Main Strengths
+					th(scope="col") Quality of Pit
+
+					th(scope="col") General Comments
+
 					th(scope="col") Submitted At
+					th(scope="col") Submitted By
 				tbody
 					each r in reports
 						tr
-							th(scope="row")= r.teamNumber
-							td= r.teamName
+							th(scope="row")= r.team
+							td= r.tournament
+
 							td= r.robotSpeed
 							td= r.transmission
-							td= r.wheelCount
-							td= r.driveType
-							td= r.customDriveType
-							td= r.usingScale
-							td= r.usingPortal
+							td= r.driveTrain
+							td= r.customDriveTrain
+
+							td= r.canUseScaleAtTop
+							td= r.canUseScaleAtMid
+							td= r.canUseScaleAtBottom
+							td= r.canUseSwitch
+							td= r.canUseExchange
+							td= r.canPickOffGround
+							
 							td= r.canAutonomous
+							td= r.theoreticalMaxCubesInSwitchInAutonomous
+							td= r.theoreticalMaxCubesInScaleInAutonomous
+							td= r.autonomousComments
+
 							td= r.willPlayDefence
 							td= r.defenceDescription
-							td= r.canClimbRope
-							td= r.ropeAttatchTime
-							td= r.ropeClimbTime
-							td= r.goingToSFRegional
-							td= r.goingToSacRegional
-							td= r.otherComments
+
+							td= r.climberType
+							td= r.customClimberType
+							td= r.climbTime
+
+							td= r.mainStrengths
+							td= r.qualityOfPit
+
+							td= r.generalComments
+
 							td= r.submittedAt
+							td= r.submittedBy
 		else
 			p
 				i No scouting reports found.

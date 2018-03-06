@@ -13,41 +13,45 @@ let pitScoutingReportSchema = new Schema({
 
 	// Submission Info
 	submittedAt: 			{type : Date, default: Date.now},
+	submittedBy: 			{type : String},
 
 	// Team Information
-	teamNumber: 			{type: Number, required: true},
-	teamName: 				{type: String, required: true},
+	team: 					{type: String, required: true},
+	tournament: 			{type: String, required: true},
 
 	// Basic Robot Information
 	robotSpeed: 			{type: String},
 	transmission: 			{type: String},
-	wheelsCount:			{type: Number},
-	driveType:				{type: String},
-	customDriveType: 		{type: String},
+	driveTrain: 			{type: String},
+	customDriveTrain: 		{type: String},
 
 	// Game Elements
-	switches: 				{type: String},
-	usingScale: 			{type: String},
-	usingPortal: 			{type: String},
+	canUseScaleAtTop: 		{type: Boolean},
+	canUseScaleAtMid: 		{type: Boolean},
+	canUseScaleAtBottom: 	{type: Boolean},
+	canUseSwitch: 			{type: Boolean},
+	canUseExchange: 		{type: Boolean},
+	canPickOffGround: 		{type: Boolean},
 
 	// Autonomous
 	canAutonomous: 			{type: String},
+	theoreticalMaxCubesInSwitchInAutonomous: {type: Number},
+	theoreticalMaxCubesInScaleInAutonomous: {type: Number},
 	autonomousComments: 	{type: String},
-
+	
 	// Defence
 	willPlayDefence: 		{type: String},
 	defenceDescription: 	{type: String},
 
-	// Rope Climbing
-	canClimbRope: 			{type: String},
-	ropeAttatchTime: 		{type: Number},
-	ropeClimbTime:			{type: Number},
+	// Climbing
+	climberType: 			{type: String},
+	customClimberType: 		{type: String},
+	climbTime: 				{type: Number},
 
-	// Other Tournaments
-	goingToSFRegional: 		{type: String},
-	goingToSacRegional: 	{type: String},
+	mainStrengths: 			{type: String},
+	qualityOfPit: 			{type: Number},
 
-	otherComments: 			{type: String}
+	generalComments: 		{type: String}
 
 });
 

@@ -12,7 +12,7 @@ const matchScoutingReportModel = mongoose.model("MatchScoutingReport");
 
 
 module.exports.addPitScoutingReport = (req, res) => {
-	if(req.query.teamName && req.query.teamNumber){
+	if(req.query.team){
 		pitScoutingReportModel.create(req.query, (err, report) => {
 			if(err){
 				var errorObjects = Object.values(err.errors).map((err) => {
@@ -48,7 +48,7 @@ module.exports.addPitScoutingReport = (req, res) => {
 }
 
 module.exports.addMatchScoutingReport = (req, res) => {
-	if(req.query.teamName && req.query.teamNumber && req.query.competition){
+	if(req.query.team && req.query.tournament){
 		matchScoutingReportModel.create(req.query, (err, report) => {
 			if(err){
 				var errorObjects = Object.values(err.errors).map((err) => {

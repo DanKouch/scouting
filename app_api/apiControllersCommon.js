@@ -35,5 +35,8 @@ module.exports.generateValidatorErrorObject = (error) => {
 	if(error.message == "alphanumeric"){
 		errorObject.message = "Your " + error.path + " must be alphanumeric."
 	}
+	if(!errorObject.message){
+		winston.error("Unrecognized api response error: " + error)
+	}
 	return errorObject;
 }

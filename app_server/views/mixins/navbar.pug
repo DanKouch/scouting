@@ -6,7 +6,7 @@ mixin navbar(user, teamName)
 			if user
 				ul.nav.navbar-nav
 					li.dropdown
-						a.dropdown-toggle(data-toggle="dropdown") Submit Report
+						a.dropdown-toggle(data-toggle="dropdown", role="button") Submit Report
 						ul.dropdown-menu
 							li
 								a(href="/pit-scouting-report") Pit Scouting Report
@@ -27,7 +27,8 @@ mixin navbar(user, teamName)
 							a(href="/users")
 								span.text-danger Users Administration
 					li.dropdown
-						a.dropdown-toggle(data-toggle="dropdown")=user.username
+						a.dropdown-toggle(data-toggle="dropdown")
+							i=user.username
 							span.glyphicon.glyphicon-user(style="margin-left: .5em")
 						ul.dropdown-menu
 							li

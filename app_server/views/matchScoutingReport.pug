@@ -9,43 +9,48 @@ block content
 		h1.page-header Match Scouting Report
 		if success
 			div.alert.alert-success#successAlert Report successfully submited
+		if errorMessages && errorMessages.database && (errorMessages.database != "")
+				div.alert.alert-danger
+					strong= (errorMessages && errorMessages.database ? errorMessages.database : "")
 		form.form-validate(method="post")
-			h3 Pre-Match
+			h3 Match Information
 			br
-			+simpleInput("Team Number", "teamNumber", errorMessages, {type: "number", required: true})
-			+simpleInput("Team Name", "teamName", errorMessages, {minLength: 5, required: true})
-			hr
-			+dropDownInput("Competition", "competition", errorMessages, ["San Fransisco Regional", "Sacramento Regional"])
+			+dropDownInput("Team", "team", errorMessages, teams, {required: true})
+			+simpleInput("Tournament", "tournament", errorMessages, {readonly: true, value: tournament})
+			+simpleInput("Match Number", "matchNumber", errorMessages, {type: "number", required: true})
 			hr
 			h3 Autonomous
 			br
 			+yesNoInput("Crossed Line", "crossedLineInAutonomous", errorMessages)
-			+dropDownInput("Cubes Placed", "cubesPlacedInAutonomous", errorMessages, ["Unknown", "Own switch", "Other team's switch", "Both", "Neither"])
+			+simpleInput("Cubes Delivered to Switch", "cubesDeliveredToSwitchInAutonomous", errorMessages, {type: "number", postfix: "Cubes"})
+			+simpleInput("Cubes Delivered to Scale", "cubesDeliveredToScaleInAutonomous", errorMessages, {type: "number", postfix: "Cubes"})
 			hr
-			+simpleInput("Cubes Delivered to Switch", "cubesDeliveredToSwitchInAutonomous", errorMessages, {type: "number"})
-			+simpleInput("Cubes Delivered to Portal", "cubesDeliveredToPortalInAutonomous", errorMessages, {type: "number"})
 			+textAreaInput("Autonomous Comments", "autonomousComments", errorMessages)
 			hr
 			h3 Teleop
 			br
-			+dropDownInput("Cubes Placed", "cubesPlacedInTeleop", errorMessages, ["Unknown", "Own switch", "Other team's switch", "Both", "Neither"])
-			+yesNoInput("Powerup", "powerupInTeleop", errorMessages)
-			+yesNoInput("Exchange", "exchangeInTeleop", errorMessages)
-			+yesNoInput("Does Scale Tip", "doesScaleTipInTeleop", errorMessages)
-			+yesNoInput("Used Levitate", "usedLevitateInTeleop", errorMessages)
-			+yesNoInput("Climbed Rope", "climbedRopeInTeleop", errorMessages)
-			+yesNoInput("Exchange", "exchangeInTeleop", errorMessages)
-			+yesNoInput("Attempted Defence", "attemptedDefenceInTeleop", errorMessages)
-			hr
-			+simpleInput("Cubes Delivered to Switch", "cubesDeliveredToSwitchInTeleop", errorMessages, {type: "number"})
-			+simpleInput("Cubes Delivered to Portal", "cubesDeliveredToPortalInTeleop", errorMessages, {type: "number"})
-			+textAreaInput("Teleop Comments", "teleopComments", errorMessages)
-			hr
-			h3 Comments
+			
+			+simpleInput("Cubes Delivered to Switch", "cubesDeliveredToSwitchInTeleop", errorMessages, {type: "number", postfix: "Cubes"})
+			+simpleInput("Cubes Delivered to Scale", "cubesDeliveredToScaleInTeleop", errorMessages, {type: "number", postfix: "Cubes"})
+			+simpleInput("Cubes Delivered to Exchange", "cubesDeliveredToExchangeInTeleop", errorMessages, {type: "number", postfix: "Cubes"})
+
+			+starInput("Switch Reliability", "switchReliabilityInTeleop", errorMessages)
+			+starInput("Scale Reliability", "scaleReliabilityInTeleop", errorMessages)
+			+starInput("Exchange Reliability", "exchangeReliabilityInTeleop", errorMessages)
+
+			+simpleInput("Climb Time", "climbTimeInTeleop", errorMessages, {type: "number", postfix: "seconds"})
+
+			+starInput("Defence Rating", "defenceRatingInTeleop", errorMessages)
+			+starInput("Driving Rating", "drivingRatingInTeleop", errorMessages)
+			+starInput("Evasion Rating", "evasionRatingInTeleop", errorMessages)
+			+starInput("Speed Rating", "speedRatingInTeleop", errorMessages)
+
+			h4 End Game
 			br
-			+textAreaInput("Suggestions for Team", "suggestionsForTeam", errorMessages)
-			+textAreaInput("New Strategies", "newStrategies", errorMessages)
-			+textAreaInput("General Comments", "generalComments", errorMessages)
+			+dropDownInput("Endgame", "endgame", errorMessages, ["Unknown", "None", "Used Ramp", "Deployed Ramp", "Climbed Rung"])
+			+yesNoInput("Did Robot Die", didRobotDie, errorMessages)
+
+			+textAreaInput("Teleop Comments", "teleopComments", errorMessages)
 
 			br
 			button.btn.btn-primary.submit(type="submit") Submit

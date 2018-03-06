@@ -30,22 +30,35 @@ module.exports.postRegister = (req, res) => {
 }
 
 module.exports.postPitScoutingReport = (req, res) => {
+	// Remove unknown and blanks
+	var query = {};
+	query.submittedBy = req.user.username;
+	for(var property in req.body){
+		if(req.body[property].trim() == "" || req.body[property].toUpperCase() == "UNKNOWN" || req.body[property] == -1){
+			//winston.info("skipped " + property);
+			continue;
+		}
+		query[property] = req.body[property];
+	}
+
 	const requestOptions = {
 		url: config.apiURL + "/api/pit-scouting-report",
 		method: "POST",
 		json: {},
-		qs: req.body
+		qs: query
 	}
 	request(requestOptions, (err, response, body) => {
 		if(err){
 			winston.error("API Request Error (pit-scouting-report - post): " + err);
 		}
 		if(body.success){
-			winston.verbose("Pit scouting report on team " + body + req.body.teamNumber + " submitted.");
+			winston.verbose("Pit scouting report on team '" + req.body.team + "' submitted.");
 		}
 		res.render("pitScoutingReport", {
 			user: req.user,
 			teamName: config.teamName,
+			teams: config.teams,
+			tournament: config.tournament,
 			success: body.success,
 			errorMessages: body.err
 		})
@@ -53,22 +66,34 @@ module.exports.postPitScoutingReport = (req, res) => {
 }
 
 module.exports.postMatchScoutingReport = (req, res) => {
+	// Remove unknown and blanks
+	var query = {};
+	query.submittedBy = req.user.username;
+	for(var property in req.body){
+		if(req.body[property].trim() == "" || req.body[property].toUpperCase() == "UNKNOWN" || req.body[property] == -1){
+			continue;
+		}
+		query[property] = req.body[property];
+	}
+
 	const requestOptions = {
 		url: config.apiURL + "/api/match-scouting-report",
 		method: "POST",
 		json: {},
-		qs: req.body
+		qs: query
 	}
 	request(requestOptions, (err, response, body) => {
 		if(err){
 			winston.error("API Request Error (pit-scouting-report - post): " + err);
 		}
 		if(body.success){
-			winston.verbose("Match scouting report on team " + body + req.body.teamNumber + " submitted.");
+			winston.verbose("Match scouting report on team '" + req.body.team + "' submitted.");
 		}
 		res.render("matchScoutingReport", {
 			user: req.user,
 			teamName: config.teamName,
+			teams: config.teams,
+			tournament: config.tournament,
 			success: body.success,
 			errorMessages: body.err
 		})

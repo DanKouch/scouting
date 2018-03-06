@@ -10,49 +10,55 @@ block content
 		h1.page-header Pit Scouting Report
 		if success
 			div.alert.alert-success#successAlert Report successfully submited
+		if errorMessages && errorMessages.database && (errorMessages.database != "")
+				div.alert.alert-danger
+					strong= (errorMessages && errorMessages.database ? errorMessages.database : "")
 		form.form-validate(method="post")
 			h3 Team Information
 			br
-			+simpleInput("Team Number", "teamNumber", errorMessages, {type: "number", required: true})
-			+simpleInput("Team Name", "teamName", errorMessages, {minLength: 5, required: true})
+			+dropDownInput("Team", "team", errorMessages, teams, {required: true})
+			+simpleInput("Tournament", "tournament", errorMessages, {readonly: true, value: tournament})
 			hr
 			h3 Basic Robot Information
 			br
 			+simpleInput("Robot Speed", "robotSpeed", errorMessages, {postfix: "ft/s", type:"number"})
 			+yesNoInput("Transmission", "transmission")
-			+simpleInput("Wheels Count", "wheelsCount", errorMessages, {type: "number", postfix: "Wheels"})
-			+dropDownInput("Drive Type", "driveType", errorMessages, ["Unknown", "West Coast", "Swerve", "Mecanum", "Omni", "Other"])
-			+simpleInput("Custom Transmission Type", "customDriveType", errorMessages, {note: "If you selected other above"})
+			+dropDownInput("Drive Train", "driveTrain", errorMessages, ["Unknown", "4 Wheel Tank", "6 Wheel Tank", "West Coast", "6 Wheel with 2 Omnis", "Swerve", "Mecanum", "Swervcanum", "Levitates", "Other"])
+			+simpleInput("Custom Drive Train", "customDriveTrain", errorMessages)
 			hr
 			h3 Game Elements
 			br
-			// REMOVE? (not in model) +dropDownInput("Switches", "switches", errorMessages, ["Unknown", "Neither", "Both", "Own Team", "Other Team"])
-			+yesNoInput("Using Scale", "usingScale", errorMessages)
-			+yesNoInput("Using Portal", "usingPortal", errorMessages)
-			// ????  +yesNoInput("Cross Line", "crossLine", errorMessages)
+			+yesNoInput("Can Use Scale at Top", "canUseScaleAtTop", errorMessages)
+			+yesNoInput("Can Use Scale at Mid", "canUseScaleAtMid", errorMessages)
+			+yesNoInput("Can Use Scale at Bottom", "canUseScaleAtBottom", errorMessages)
+			+yesNoInput("Can Use Switch", "canUseSwitch", errorMessages)
+			+yesNoInput("Can Use Exchange", "canUseExchange", errorMessages)
+			+yesNoInput("Can Pick Off Ground", "canPickOffGround", errorMessages)
 			hr
-			h3 Abilities
+			h3 Autonomous
 			br
 			+yesNoInput("Capable of Autonomous", "canAutonomous", errorMessages)
+			+simpleInput("Theoretical Max Cubes in Switch", "theoreticalMaxCubesInSwitchInAutonomous", errorMessages, {type: "number", postfix: "Cubes"})
+			+simpleInput("Theoretical Max Cubes in Scale", "theoreticalMaxCubesInScaleInAutonomous", errorMessages, {type: "number", postfix: "Cubes"})
 			+textAreaInput("Comments on Autonomous", "autonomousComments", errorMessages)
 			hr
 			h3 Defence
 			br
 			+dropDownInput("Will Play Defence", "willPlayDefence", errorMessages, ["Unknown", "Yes", "No", "Other"], settings)
-			+simpleInput("Description of Defence", "defenceDescription", errorMessages, {note: "If you selected other above"})
+			+simpleInput("Description of Defence", "defenceDescription", errorMessages)
 			hr
-			h3 Rope Climbing
+			h3 Climbing
 			br
-			+yesNoInput("Can Climb Rope", "canClimbRope", errorMessages)
-			+simpleInput("Attatch Time", "ropeAttatchTime", errorMessages, {type: "number", postfix: "seconds", note: "IF YES WAS SELECTED ABOVE"})
-			+simpleInput("Climb Time", "ropeClimbTime", errorMessages, {type: "number", postfix: "seconds", note: "IF YES WAS SELECTED ABOVE"})
+			+dropDownInput("Climber Type", "climberType", errorMessages, ["Unknown", "None", "Parks on Platform", "Deploys Ramp", "Climbs Bar", "Other"])
+			+simpleInput("Custom Climber Type", "customClimberType", errorMessages)
+			+simpleInput("Climb Time", "climbTime", errorMessages, {postfix: "seconds", type:"number"})
 			hr
-			h3 Other Tournaments
+			h3 Misc.
 			br
-			+yesNoInput("Going to SF Regional", "goingToSFRegional", errorMessages)
-			+yesNoInput("Going to Sacramento Regional", "goingToSacRegional", errorMessages)
+			+simpleInput("Main Strengths", "mainStrengths", errorMessages, {note: "Ask the team this!"})
+			+starInput("Quality of Pit", "qualityOfPit", errorMessages)
 			hr
-			+textAreaInput("Other Comments", "otherComments", errorMessages)
+			+textAreaInput("General Comments", "generalComments", errorMessages)
 
 			br
 			button.btn.btn-primary.submit(type="submit") Submit

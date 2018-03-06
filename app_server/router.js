@@ -64,12 +64,12 @@ router.get('/match-scouting-reports', ensureAdministrator, controller.matchScout
 
 // Forms
 router.get('/pit-scouting-report', ensureLoggedIn, function(req, res){
-	res.render('pitScoutingReport', { user: req.user, teamName: config.teamName });
+	res.render('pitScoutingReport', { user: req.user, teamName: config.teamName, tournament: config.tournament, teams: config.teams});
 });
 router.post("/pit-scouting-report", controller.postPitScoutingReport);
 
 router.get('/match-scouting-report', ensureLoggedIn, function(req, res){
-	res.render('matchScoutingReport', { user: req.user, teamName: config.teamName });
+	res.render('matchScoutingReport', { user: req.user, teamName: config.teamName, tournament: config.tournament, teams: config.teams});
 });
 router.post("/match-scouting-report", controller.postMatchScoutingReport);
 

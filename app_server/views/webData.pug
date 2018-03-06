@@ -26,6 +26,7 @@ html
 						th(scope="col") Going to Sacramento Regional
 						th(scope="col") Other Comments
 						th(scope="col") Submitted At
+						th(scope="col") Submitted By
 					tbody
 						each r in pitScoutingReports
 							tr
@@ -48,6 +49,7 @@ html
 								td= r.goingToSacRegional
 								td= r.otherComments
 								td= r.submittedAt
+								td= r.submittedBy
 
 				h3 Match Scouting Reports
 				table.table#report-table
@@ -75,6 +77,8 @@ html
 						th(scope="col") New Strategies
 						th(scope="col") General Comments
 						th(scope="col") Submitted At
+						th(scope="col") Submitted By
+
 					tbody
 						each r in matchScoutingReports
 							tr
@@ -101,3 +105,4 @@ html
 								td= r.newStrategies
 								td= r.generalComments
 								td= r.submittedAt
+								td= r.submittedBy

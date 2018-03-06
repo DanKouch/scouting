@@ -1,3 +1,8 @@
 body {
 	font-family: Trebuchet MS;
 }
+
+/* Prevents annoying mobile zooming into input fields */
+input, select, textarea {
+	font-size: 16px !important;
+}

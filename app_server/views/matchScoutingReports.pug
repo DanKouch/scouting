@@ -10,55 +10,71 @@ block content
 		if reports && reports.length > 0
 			table.table#report-table
 				thead
-					th(scope="col") Team #
-					th(scope="col") Team Name
-					th(scope="col") Competition
+					th(scope="col") Team
+					th(scope="col") Tournament
+					th(scope="col") Match Number
+
 					th(scope="col") Crossed Line In Autonomous
-					th(scope="col") Cubes Placed In Autonomous
 					th(scope="col") Cubes Delivered To Switch In Autonomous
-					th(scope="col") Cubes Delivered To Portal In Autonomous
+					th(scope="col") Cubes Delivered To Scale In Autonomous
 					th(scope="col") Autonomous Comments
-					th(scope="col") Cubes Placed In Teleop
-					th(scope="col") Powerup In Teleop
-					th(scope="col") Exchange In Teleop
-					th(scope="col") Does Scale Tip In Teleop
-					th(scope="col") Used Levitate In Teleop
-					th(scope="col") Climbed Rope In Teleop
-					th(scope="col") Exchange In Teleop
-					th(scope="col") Attempted Defence In Teleop
+
 					th(scope="col") Cubes Delivered To Switch In Teleop
-					th(scope="col") Cubes Delivered To Portal In Teleop
+					th(scope="col") Cubes Delivered To Scale In Teleop
+					th(scope="col") Cubes Delivered To Exchange In Teleop
+
+					th(scope="col") Switch Reliability in Teleop
+					th(scope="col") Scale Reliability in Teleop
+					th(scope="col") Exchange Reliability in Teleop
+
+					th(scope="col") Climb Time in Teleop
+
+					th(scope="col") Defence Rating in Teleop
+					th(scope="col") Driving Rating in Teleop
+					th(scope="col") Evasion Rating in Teleop
+					th(scope="col") Speed Rating in Teleop
+
+					th(scope="col") Endgame
+					th(scope="col") Did Robot Die
+
 					th(scope="col") Teleop Comments
-					th(scope="col") Suggestions For Team
-					th(scope="col") New Strategies
-					th(scope="col") General Comments
+					
 					th(scope="col") Submitted At
+					th(scope="col") Submitted By
 				tbody
 					each r in reports
 						tr
-							th(scope="row")= r.teamNumber
-							td= r.teamName
-							td= r.competition
+							th(scope="row")= r.team
+							td= r.tournament
+							td= r.matchNumber
+
+							
 							td= r.crossedLineInAutonomous
-							td= r.cubesPlacedInAutonomous
 							td= r.cubesDeliveredToSwitchInAutonomous
-							td= r.cubesDeliveredToPortalInAutonomous
+							td= r.cubesDeliveredToScaleInAutonomous
 							td= r.autonomousComments
-							td= r.cubesPlacedInTeleop
-							td= r.powerupInTeleop
-							td= r.exchangeInTeleop
-							td= r.doesScaleTipInTeleop
-							td= r.usedLevitateInTeleop
-							td= r.climbedRopeInTeleop
-							td= r.exchangeInTeleop
-							td= r.attemptedDefenceInTeleop
+
 							td= r.cubesDeliveredToSwitchInTeleop
-							td= r.cubesDeliveredToPortalInTeleop
+							td= r.cubesDeliveredToScaleInTeleop
+							td= r.cubesDeliveredToExchangeInTeleop
+
+							td= r.switchReliabilityInTeleop
+							td= r.scaleReliabilityInTeleop
+							td= r.exchangeReliabilityInTeleop
+
+							td= r.climbTimeInTeleop
+
+							td= r.defenceRatingInTeleop
+							td= r.drivingRatingInTeleop
+							td= r.evasionRatingInTeleop
+							td= r.speedRatingInTeleop
+
+							td= r.endgame
+							td= r.didRobotDie
 							td= r.teleopComments
-							td= r.suggestionsForTeam
-							td= r.newStrategies
-							td= r.generalComments
+	
 							td= r.submittedAt
+							td= r.submittedBy
 		else
 			p
 				i No scouting reports found.

@@ -4,6 +4,10 @@ module.exports = {
     teamName: process.env.TEAM_NAME || "",
     databaseURI: process.env.MONGODB_URI || process.env.MONGOLAB_URI || "mongodb://localhost/scouting",
 
+    // Tournament
+    tournament: process.env.TOURNAMENT || "Unknown",
+    teams: process.env.TEAMS.split(", "),
+
     // Do not edit anything beyond this point unless you know what you are doing
     secret: {
 	    passportSessionSecret: process.env.PASSPORT_SESSION_SECRET,
