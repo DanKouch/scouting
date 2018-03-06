@@ -32,15 +32,21 @@ userModel.findOne({'username': "root"}, "username").exec((err, user) => {
 	}
 	if(!user){
 		winston.warn("Root user not found. Creating now.")
-		userModel.create({
-				username: "root",
-				password: config.secret.rootPassword,
-				role: "administrator"
-		}, (err, user) => {
-			if(err){
-				winston.error("Error creating root: " + err);
+		common.hashPassword(config.secret.rootPassword, (bcryptError, hashedPassword) => {
+			if(bcryptError){
+				winston.error("Bcrypt Error Setting Root Password: " + bcryptError);
 			}
+			userModel.create({
+				username: "root",
+				password: hashedPassword,
+				role: "administrator"
+			}, (err, user) => {
+				if(err){
+					winston.error("Error creating root: " + err);
+				}
+			});
 		});
+		
 	}else{
 		common.hashPassword(config.secret.rootPassword, (bcryptError, hashedPassword) => {
 			if(bcryptError){
