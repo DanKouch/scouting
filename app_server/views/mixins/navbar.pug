@@ -11,15 +11,15 @@ mixin navbar(user, teamName)
 							li
 								a(href="/pit-scouting-report") Pit Scouting Report
 								a(href="/match-scouting-report") Match Scouting Report
+					li.dropdown
+						a.dropdown-toggle(data-toggle="dropdown", role="button")
+							span Reports
+						ul.dropdown-menu
+							li
+								a(href="/pit-scouting-reports") Pit Scouting Reports
+								a(href="/match-scouting-reports") Match Scouting Reports
 				ul.nav.navbar-nav.navbar-right
 					if user.role=="administrator"
-						li.dropdown
-							a.dropdown-toggle(data-toggle="dropdown", role="button")
-								span.text-danger Reports
-							ul.dropdown-menu
-								li
-									a(href="/pit-scouting-reports") Pit Scouting Reports
-									a(href="/match-scouting-reports") Match Scouting Reports
 						li
 							a(href="/register")
 								span.text-danger User Registration

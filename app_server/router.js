@@ -59,8 +59,8 @@ router.delete('/user', ensureAdministrator, controller.deleteUser);
 router.put('/user/password', ensureAdministrator, controller.changeUserPassword);
 
 
-router.get('/pit-scouting-reports', ensureAdministrator, controller.pitScoutingReports);
-router.get('/match-scouting-reports', ensureAdministrator, controller.matchScoutingReports);
+router.get('/pit-scouting-reports', ensureLoggedIn, controller.pitScoutingReports);
+router.get('/match-scouting-reports', ensureLoggedIn, controller.matchScoutingReports);
 
 // Forms
 router.get('/pit-scouting-report', ensureLoggedIn, function(req, res){
