@@ -20,9 +20,12 @@ mixin navbar(user, teamName)
 								a(href="/match-scouting-reports") Match Scouting Reports
 				ul.nav.navbar-nav.navbar-right
 					if user.role=="administrator"
-						li
-							a(href="/register")
-								span.text-danger User Registration
+						li.dropdown
+							a.dropdown-toggle(data-toggle="dropdown") Register User
+							ul.dropdown-menu
+								li
+									a(href="/register") Register User
+									a(href="/register?canChooseRole=true") Register User (Allow role selection)
 						li
 							a(href="/users")
 								span.text-danger Users Administration
