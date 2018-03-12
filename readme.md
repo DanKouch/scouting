@@ -11,5 +11,8 @@ A web server used to communicate with a Mongo database to collect information fo
 	- PASSPORT_SESSION_SECRET
 	- ROOT_PASSWORD
 	- WEB_DATA_PATH
+	- TEAM_NAME
+	- TOURNAMENT - Name of current tournament
+	- TEAMS - List of teams attending current tournament separated by ', '
 
 *Note: This project does support `.env` file integration.*
