@@ -76,7 +76,7 @@ html
 
 								td= r.generalComments
 
-								td= r.submittedAt
+								td= new Date(r.submittedAt).toLocaleString()
 								td= r.submittedBy
 
 				h3 Match Scouting Reports
@@ -146,5 +146,5 @@ html
 								td= r.didRobotDie
 								td= r.teleopComments
 		
-								td= r.submittedAt
+								td= new Date(r.submittedAt).toLocaleString()
 								td= r.submittedBy

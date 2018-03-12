@@ -79,7 +79,7 @@ block content
 
 							td= r.generalComments
 
-							td= r.submittedAt
+							td= new Date(r.submittedAt).toLocaleString()
 							td= r.submittedBy
 		else
 			p
