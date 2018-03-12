@@ -24,7 +24,7 @@ block content
 			+simpleInput("Robot Speed", "robotSpeed", errorMessages, {postfix: "ft/s", type:"number"})
 			+yesNoInput("Transmission", "transmission")
 			+dropDownInput("Drive Train", "driveTrain", errorMessages, ["Unknown", "4 Wheel Tank", "6 Wheel Tank", "West Coast", "6 Wheel with 2 Omnis", "Swerve", "Mecanum", "Swervcanum", "Levitates", "Other"])
-			+simpleInput("Custom Drive Train", "customDriveTrain", errorMessages)
+			+simpleInput("Custom Drive Train", "customDriveTrain", errorMessages, {disabled: true})
 			hr
 			h3 Game Elements
 			br
@@ -50,7 +50,7 @@ block content
 			h3 Climbing
 			br
 			+dropDownInput("Climber Type", "climberType", errorMessages, ["Unknown", "None", "Parks on Platform", "Deploys Ramp", "Climbs Bar", "Other"])
-			+simpleInput("Custom Climber Type", "customClimberType", errorMessages)
+			+simpleInput("Custom Climber Type", "customClimberType", errorMessages, {disabled: true})
 			+simpleInput("Climb Time", "climbTime", errorMessages, {postfix: "seconds", type:"number"})
 			hr
 			h3 Misc.
