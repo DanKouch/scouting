@@ -36,7 +36,8 @@ router.get("/register", ensureAdministrator, (req, res) => {
    	user: req.user,
    	teamName: config.teamName,
    	errorMessages: [],
-   	errorFields: []
+   	errorFields: [],
+   	canChooseRole: req.query.canChooseRole && req.query.canChooseRole == "true"
    });
 });
 

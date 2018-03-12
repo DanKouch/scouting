@@ -47,7 +47,7 @@ module.exports.findAllUsers = (req, res) => {
 }
 
 module.exports.registerUser = (req, res) => {
-	if(req.query.username && req.query.password && req.query.role){
+	if(req.query.username && req.query.password){
 		req.query.username = req.query.username.toLowerCase();
 		common.hashPassword(req.query.password, (bcryptError, hashedPassword) => {
 			if(bcryptError){
@@ -61,7 +61,7 @@ module.exports.registerUser = (req, res) => {
 			userModel.create({
 				username: req.query.username,
 				password: hashedPassword,
-				role: req.query.role.toLowerCase()
+				role:  req.query.role ? req.query.role.toLowerCase() : "user"
 			}, (err, user) => {
 				if(err){
 					var errorObjects = Object.values(err.errors).map((err) => {

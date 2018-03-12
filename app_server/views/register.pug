@@ -21,12 +21,13 @@ block content
 					label(for="passwordInput") Password
 					input.form-control#passwordInput(minlength="6", required, name="password", type="password", placeholder="Enter Password")
 					div.help-block= errorMessages && errorMessages.password ? errorMessages.password : ""
-				div.form-group(class=(errorMessages && errorMessages.accountType) ? "has-error" : "")
-					label(for="role") Role
-					select.form-control#accountTypeInput(name="role")
-						option User
-						option Administrator
-					div.help-block= errorMessages && errorMessages.accountType ? errorMessages.accountType : ""
+				if canChooseRole
+					div.form-group(class=(errorMessages && errorMessages.accountType) ? "has-error" : "")
+						label(for="role") Role
+						select.form-control#accountTypeInput(name="role")
+							option User
+							option Administrator
+						div.help-block= errorMessages && errorMessages.accountType ? errorMessages.accountType : ""
 				button.btn.btn-primary.submit(type="submit") Register
 				br
 				br
