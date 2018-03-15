@@ -89,6 +89,8 @@ module.exports.findAllPitScoutingReports = (req, res) => {
 			sendDatabaseError(res, err);
 			return;
 		}
+		console.log("pit scout")
+		console.log(reports)
 		common.jsonResponse(res, common.statusCodes.OK, reports);
 	})
 }
@@ -99,6 +101,8 @@ module.exports.findAllMatchScoutingReports = (req, res) => {
 			sendDatabaseError(res, err);
 			return;
 		}
+        console.log("match scout")
+        console.log(reports)
 		common.jsonResponse(res, common.statusCodes.OK, reports);
 	})
 }
