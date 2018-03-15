@@ -1,6 +1,7 @@
 const request = require('request');
 const winston = require("winston")
 const config = require("../config.js");
+const json2csv = require('json2csv').parse;
 
 module.exports.postRegister = (req, res) => {
 	const requestOptions = {
@@ -117,6 +118,36 @@ module.exports.pitScoutingReports = (req, res) => {
 			reports: body
 		})
 	})
+}
+
+module.exports.pitScoutingReportsCsv = (req, res) => {
+    const requestOptions = {
+        url: config.apiURL + "/api/pit-scouting-reports",
+        method: "GET",
+        json: {},
+        qs: {}
+    }
+    request(requestOptions, (err, response, body) => {
+        if(err){
+            winston.error("API Request Error (users - get): " + err);
+        }
+        console.log(json2csv(body), {fields: Object.keys(body)})
+    })
+}
+
+module.exports.matchScoutingReportsCsv = (req, res) => {
+    const requestOptions = {
+        url: config.apiURL + "/api/match-scouting-reports",
+        method: "GET",
+        json: {},
+        qs: {}
+    }
+    request(requestOptions, (err, response, body) => {
+        if(err){
+            winston.error("API Request Error (users - get): " + err);
+        }
+        console.log(json2csv(body), {fields: Object.keys(body)})
+    })
 }
 
 module.exports.matchScoutingReports = (req, res) => {

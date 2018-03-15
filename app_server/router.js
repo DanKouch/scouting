@@ -61,7 +61,9 @@ router.put('/user/password', ensureAdministrator, controller.changeUserPassword)
 
 
 router.get('/pit-scouting-reports', ensureLoggedIn, controller.pitScoutingReports);
-router.get('/match-scouting-reports', ensureLoggedIn, controller.matchScoutingReports);
+router.get('/pit-scouting-reports.csv', controller.pitScoutingReportsCsv);
+router.get('/match-scouting-reports', ensureLoggedIn, controller.matchScoutingReports)
+router.get('/match-scouting-reports.csv', controller.matchScoutingReportsCsv);
 
 // Forms
 router.get('/pit-scouting-report', ensureLoggedIn, function(req, res){
