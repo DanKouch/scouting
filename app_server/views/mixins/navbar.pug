@@ -18,6 +18,11 @@ mixin navbar(user, teamName)
 							li
 								a(href="/pit-scouting-reports") Pit Scouting Reports
 								a(href="/match-scouting-reports") Match Scouting Reports
+					li
+						a(href="/messages")
+							span Messages   
+								if user.hasNewMessages
+									span.text-primary ⬤
 				ul.nav.navbar-nav.navbar-right
 					if user.role=="administrator"
 						li.dropdown
@@ -36,3 +41,8 @@ mixin navbar(user, teamName)
 						ul.dropdown-menu
 							li
 								a(href="/logout") Logout
+	if user && user.hasNewMessages
+		.container
+			.alert.alert-warning
+				strong You have unread messages.
+				span  Click on "Messages" in the navbar to see whats new.

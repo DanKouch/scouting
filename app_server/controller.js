@@ -21,9 +21,7 @@ module.exports.postRegister = (req, res) => {
 		if(body.success){
 			winston.verbose("New user '" + req.body.username + "' has registered.");
 		}
-		res.render("register", {
-			user: req.user,
-			teamName: config.teamName,
+		module.exports.renderPage(req, res, "register", {
 			success: body.success,
 			errorMessages: body.err
 		})
@@ -55,11 +53,7 @@ module.exports.postPitScoutingReport = (req, res) => {
 		if(body.success){
 			winston.verbose("Pit scouting report on team '" + req.body.team + "' submitted.");
 		}
-		res.render("pitScoutingReport", {
-			user: req.user,
-			teamName: config.teamName,
-			teams: config.teams,
-			tournament: config.tournament,
+		module.exports.renderPage(req, res, "pitScoutingReport", {
 			success: body.success,
 			errorMessages: body.err
 		})
@@ -90,11 +84,7 @@ module.exports.postMatchScoutingReport = (req, res) => {
 		if(body.success){
 			winston.verbose("Match scouting report on team '" + req.body.team + "' submitted.");
 		}
-		res.render("matchScoutingReport", {
-			user: req.user,
-			teamName: config.teamName,
-			teams: config.teams,
-			tournament: config.tournament,
+		module.exports.renderPage(req, res, "matchScoutingReport", {
 			success: body.success,
 			errorMessages: body.err
 		})
@@ -112,9 +102,7 @@ module.exports.pitScoutingReports = (req, res) => {
 		if(err){
 			winston.error("API Request Error (users - get): " + err);
 		}
-		res.render("pitScoutingReports", {
-			user: req.user,
-			teamName: config.teamName,
+		module.exports.renderPage(req, res, "pitScoutingReports", {
 			reports: body
 		})
 	})
@@ -161,9 +149,7 @@ module.exports.matchScoutingReports = (req, res) => {
 		if(err){
 			winston.error("API Request Error (users - get): " + err);
 		}
-		res.render("matchScoutingReports", {
-			user: req.user,
-			teamName: config.teamName,
+		module.exports.renderPage(req, res, "matchScoutingReports", {
 			reports: body
 		})
 	})
@@ -190,11 +176,92 @@ module.exports.getWebData = (req, res) => {
 			if(err){
 				winston.error("API Request Error (webData - get): " + err);
 			}
-			res.render("webData", {
+			module.exports.renderPage(req, res, "webData", {
 				pitScoutingReports: pitScoutingReports,
 				matchScoutingReports: matchScoutingReports
 			})
 		})
+	})
+}
+
+module.exports.messages = (req, res) => {
+	// User list
+	const requestOptions = {
+		url: config.apiURL + "/api/users",
+		method: "GET",
+		json: {},
+		qs: {}
+	}
+	request(requestOptions, (err, response, users) => {
+		if(err){
+			winston.error("API Request Error (messages - get): " + err);
+		}
+		// User message list
+		const requestOptions = {
+			url: config.apiURL + "/api/message/user",
+			method: "GET",
+			json: {},
+			qs: {username: req.user.username}
+		}
+		request(requestOptions, (err, response, messages) => {
+			if(err){
+				winston.error("API Request Error (messages - get): " + err);
+			}
+			// Admin message list
+			const requestOptions = {
+				url: config.apiURL + "/api/message/administrators",
+				method: "GET",
+				json: {},
+				qs: {}
+			}
+			request(requestOptions, (err, response, administratorMessages) => {
+				if(err){
+					winston.error("API Request Error (messages - get): " + err);
+				}
+
+				// Update message status
+				const requestOptions = {
+					url: config.apiURL + "/api/message/user/status/update",
+					method: "POST",
+					json: {},
+					qs: {username: req.user.username}
+				}
+				request(requestOptions, (status) => {
+					if(!status){
+						winston.error("Could not update message status.")
+					}
+					module.exports.renderPage(req, res, "messages", {
+						users: users.map((user) => user.username).sort(),
+						messages: messages,
+						administratorMessages: administratorMessages
+					})
+				});
+
+				
+			})
+		})
+	})
+}
+
+module.exports.postMessage = (req, res) => {
+	winston.info(req.body);
+	const requestOptions = {
+		url: config.apiURL + "/api/message/send",
+		method: "POST",
+		json: {},
+		qs: {
+			sender: req.user.username,
+			recipient: req.user.role == "administrator" ? req.body.recipient : "Administrators",
+			sentByAdministrator: req.user.role == "administrator",
+			level: req.body.level || "info",
+			message: req.body.message
+		}
+	}
+	request(requestOptions, (err, response, messages) => {
+		if(err){
+			winston.error("API Request Error (messages - get): " + err);
+		}
+		res.redirect("/messages")
 	})
 }
 
@@ -211,9 +278,7 @@ module.exports.users = (req, res) => {
 		if(err){
 			winston.error("API Request Error (users - get): " + err);
 		}
-		res.render("userAdministration", {
-			user: req.user,
-			teamName: config.teamName,
+		module.exports.renderPage(req, res, "userAdministration", {
 			users: body
 		})
 	})
@@ -246,5 +311,25 @@ module.exports.changeUserPassword = (req, res) => {
 			winston.error("API Request Error (user password - put): " + err);
 		}
 		res.json({success: body.success})
+	})
+}
+
+module.exports.renderPage = (req, res, page, vars) => {
+	const requestOptions = {
+		url: config.apiURL + "/api/message/user/status",
+		method: "GET",
+		json: {},
+		qs: {username: req.user.username}
+	}
+	request(requestOptions, (err, response, messageStatus) => {
+		if(err){
+			winston.error("API Request Error (message status - get): " + err);
+		}
+		vars.user = req.user;
+		vars.user.hasNewMessages = messageStatus;
+		vars.teamName = config.teamName;
+		vars.teams = config.teams;
+		vars.tournament = config.tournament;
+		res.render(page, vars)
 	})
 }

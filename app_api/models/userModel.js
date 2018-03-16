@@ -13,7 +13,7 @@ let userSchema = new Schema({
 	password: 				{type: String, required: true, minlength: 6},
 	username: 				{type: String, required: true, unique: true, minlength: 4, maxlength:20, validate: [validate.alphanumeric, 'alphanumeric']},
 	role: 					{type: String, enum: ["administrator", "user"], default: "user"},
-	messages: 				[String]
+	lastMessageRead: 		{type : Date, default: Date.now}
 });
 
 userSchema.plugin(sanitizer)

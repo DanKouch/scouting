@@ -32,9 +32,7 @@ router.get("/login", (req, res) => {
 });
 
 router.get("/register", ensureAdministrator, (req, res) => {
-   res.render("register", {
-   	user: req.user,
-   	teamName: config.teamName,
+   controller.renderPage(req, res, "register", {
    	errorMessages: [],
    	errorFields: [],
    	canChooseRole: req.query.canChooseRole && req.query.canChooseRole == "true"
@@ -51,8 +49,11 @@ router.post('/login', passport.authenticate('local', { successRedirect: '/home',
 
 // User pages
 router.get('/home', ensureLoggedIn, function(req, res){
-	res.render('home', { user: req.user, teamName: config.teamName });
+	controller.renderPage(req, res, 'home', {});
 });
+
+router.get('/messages', ensureLoggedIn, controller.messages);
+router.post('/messages', ensureLoggedIn, controller.postMessage);
 
 // Administrator pages
 router.get('/users', ensureAdministrator, controller.users);
@@ -67,12 +68,12 @@ router.get('/match-scouting-reports.csv', controller.matchScoutingReportsCsv);
 
 // Forms
 router.get('/pit-scouting-report', ensureLoggedIn, function(req, res){
-	res.render('pitScoutingReport', { user: req.user, teamName: config.teamName, tournament: config.tournament, teams: config.teams});
+	controller.renderPage(req, res, 'pitScoutingReport', {});
 });
 router.post("/pit-scouting-report", controller.postPitScoutingReport);
 
 router.get('/match-scouting-report', ensureLoggedIn, function(req, res){
-	res.render('matchScoutingReport', { user: req.user, teamName: config.teamName, tournament: config.tournament, teams: config.teams});
+	controller.renderPage(req, res, 'matchScoutingReport', {});
 });
 router.post("/match-scouting-report", controller.postMatchScoutingReport);
 

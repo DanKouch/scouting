@@ -28,7 +28,7 @@ mixin datalistInput(prettyName, codeName, errorMessages, options, settings)
 		label(for=(codeName + "Input"))= (prettyName+ ((settings && settings.note) ? (" ("+settings.note+")") : ""))
 		div(class=(settings && settings.postfix ? "input-group" : ""))
 			block inputArea
-				input.form-control(id=(codeName + "Input"), list=(codeName+"s"), minlength=((settings && settings.minLength) ? settings.minLength : 0), maxLength=((settings && settings.maxLength) ? settings.maxLength : 500), required=(settings && settings.required), name=(codeName), placeholder=("Enter " + prettyName), readonly=(settings && settings.readonly), value=((settings&&settings.value) ? settings.value : ""))
+				input.form-control(id=(codeName + "Input"), list=(codeName+"s"), minlength=((settings && settings.minLength) ? settings.minLength : 0), maxLength=((settings && settings.maxLength) ? settings.maxLength : 500), required=(settings && settings.required), name=(codeName), placeholder=("Enter " + prettyName), readonly=(settings && settings.readonly), value=((settings && settings.value) ? settings.value : ""))
 				datalist(id=(codeName+"s"))
 					each o in options
 						option(value=o)
