@@ -10,6 +10,7 @@ block content
 		if reports && reports.length > 0
 			table.table#report-table
 				thead
+					th(scope="col")
 					th(scope="col") Team
 					th(scope="col") Tournament
 					th(scope="col") Match Number
@@ -44,7 +45,9 @@ block content
 				tbody
 					each r in reports
 						tr
-							th(scope="row")= r.team
+							th(scope="row")
+								button.btn.btn-default(type="button", onclick=("deleteMatchScoutingReport('" + r._id + "')")) Delete
+							td= r.team
 							td= r.tournament
 							td= r.matchNumber
 

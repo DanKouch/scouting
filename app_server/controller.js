@@ -155,6 +155,36 @@ module.exports.matchScoutingReports = (req, res) => {
 	})
 }
 
+module.exports.deleteMatchScoutingReport = (req, res) => {
+	const requestOptions = {
+		url: config.apiURL + "/api/match-scouting-report",
+		method: "DELETE",
+		json: {},
+		qs: req.query
+	}
+	request(requestOptions, (err, response, body) => {
+		if(err){
+			winston.error("API Request Error (user - delete): " + err);
+		}
+		res.json({success: body.success})
+	})
+}
+
+module.exports.deletePitScoutingReport = (req, res) => {
+	const requestOptions = {
+		url: config.apiURL + "/api/pit-scouting-report",
+		method: "DELETE",
+		json: {},
+		qs: req.query
+	}
+	request(requestOptions, (err, response, body) => {
+		if(err){
+			winston.error("API Request Error (user - delete): " + err);
+		}
+		res.json({success: body.success})
+	})
+}
+
 module.exports.getWebData = (req, res) => {
 	const requestOptions = {
 		url: config.apiURL + "/api/pit-scouting-reports",

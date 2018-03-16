@@ -47,6 +47,24 @@ module.exports.addPitScoutingReport = (req, res) => {
 	}
 }
 
+module.exports.deletePitScoutingReport = (req, res) => {
+	if(req.query.id){
+		pitScoutingReportModel.findByIdAndRemove(req.query.id).exec((err, user) => {
+			if(err){
+				sendDatabaseError(res, err);
+				return;
+
+			}
+			common.jsonResponse(res, common.statusCodes.OK, {
+				success: true
+			});
+		})
+	}else{
+		sendInvalidParametersError(res);
+		return;
+	}
+}
+
 module.exports.addMatchScoutingReport = (req, res) => {
 	if(req.query.team && req.query.tournament){
 		matchScoutingReportModel.create(req.query, (err, report) => {
@@ -77,6 +95,24 @@ module.exports.addMatchScoutingReport = (req, res) => {
 			}
 		});
 
+	}else{
+		sendInvalidParametersError(res);
+		return;
+	}
+}
+
+module.exports.deleteMatchScoutingReport = (req, res) => {
+	if(req.query.id){
+		matchScoutingReportModel.findByIdAndRemove(req.query.id).exec((err, user) => {
+			if(err){
+				sendDatabaseError(res, err);
+				return;
+
+			}
+			common.jsonResponse(res, common.statusCodes.OK, {
+				success: true
+			});
+		})
 	}else{
 		sendInvalidParametersError(res);
 		return;

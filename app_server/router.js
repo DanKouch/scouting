@@ -71,11 +71,14 @@ router.get('/pit-scouting-report', ensureLoggedIn, function(req, res){
 	controller.renderPage(req, res, 'pitScoutingReport', {});
 });
 router.post("/pit-scouting-report", controller.postPitScoutingReport);
+router.delete('/pit-scouting-report', ensureAdministrator, controller.deletePitScoutingReport);
+
 
 router.get('/match-scouting-report', ensureLoggedIn, function(req, res){
 	controller.renderPage(req, res, 'matchScoutingReport', {});
 });
 router.post("/match-scouting-report", controller.postMatchScoutingReport);
+router.delete('/match-scouting-report', ensureAdministrator, controller.deleteMatchScoutingReport);
 
 // Webdata
 router.get("/"+config.secret.webDataPath, controller.getWebData)

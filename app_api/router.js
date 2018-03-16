@@ -26,9 +26,11 @@ router.post("/api/message/user/status/update", messageController.updateLastMessa
 
 // Reports
 router.post("/api/pit-scouting-report", reportController.addPitScoutingReport);
+router.delete("/api/pit-scouting-report", reportController.deletePitScoutingReport);
 router.get("/api/pit-scouting-reports", reportController.findAllPitScoutingReports);
 
 router.post("/api/match-scouting-report", reportController.addMatchScoutingReport);
+router.delete("/api/match-scouting-report", reportController.deleteMatchScoutingReport);
 router.get("/api/match-scouting-reports", reportController.findAllMatchScoutingReports);
 
 module.exports = router;
