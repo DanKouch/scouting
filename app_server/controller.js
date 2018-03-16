@@ -119,7 +119,7 @@ module.exports.pitScoutingReportsCsv = (req, res) => {
         if(err){
             winston.error("API Request Error (users - get): " + err);
         }
-        console.log(json2csv(body), {fields: Object.keys(body)})
+        winston.info(json2csv(body), {fields: Object.keys(body)})
     })
 }
 
@@ -134,7 +134,7 @@ module.exports.matchScoutingReportsCsv = (req, res) => {
         if(err){
             winston.error("API Request Error (users - get): " + err);
         }
-        console.log(json2csv(body), {fields: Object.keys(body)})
+        winston.info(json2csv(body), {fields: Object.keys(body)})
     })
 }
 
