@@ -4,147 +4,148 @@ html
 	body
 		div.container-fluid
 			h1.page-header Web Data
-				h3 Pit Scouting Reports
-				table.table#report-table
-					thead
-						th(scope="col") Team
-						th(scope="col") Tournament
+				if showPitScouting == true
+					h3 Pit Scouting Reports
+					table.table#report-table
+						thead
+							th(scope="col") Team
+							th(scope="col") Tournament
 
-						th(scope="col") Robot Speed (ft/s)
-						th(scope="col") Transmission
-						th(scope="col") Drive Train
-						th(scope="col") Custom Drive Train
+							th(scope="col") Robot Speed (ft/s)
+							th(scope="col") Transmission
+							th(scope="col") Drive Train
+							th(scope="col") Custom Drive Train
 
-						th(scope="col") Can Use Scale at Top
-						th(scope="col") Can Use Scale at Mid
-						th(scope="col") Can Use Scale at Bottom
-						th(scope="col") Can Use Switch
-						th(scope="col") Can Use Exchange
-						th(scope="col") Can Pick Off Ground
+							th(scope="col") Can Use Scale at Top
+							th(scope="col") Can Use Scale at Mid
+							th(scope="col") Can Use Scale at Bottom
+							th(scope="col") Can Use Switch
+							th(scope="col") Can Use Exchange
+							th(scope="col") Can Pick Off Ground
 
-						th(scope="col") Can Autono.
-						th(scope="col") Theoretical Max Cubes In Switch In Autonomous
-						th(scope="col") Theoretical Max Cubes In Scale In Autonomous
-						th(scope="col") Authonomous Comments
+							th(scope="col") Can Autono.
+							th(scope="col") Theoretical Max Cubes In Switch In Autonomous
+							th(scope="col") Theoretical Max Cubes In Scale In Autonomous
+							th(scope="col") Authonomous Comments
 
-						th(scope="col") Will Play Defence
-						th(scope="col") Defence Description
+							th(scope="col") Will Play Defence
+							th(scope="col") Defence Description
 
-						th(scope="col") Climber Type
-						th(scope="col") Custom Climber Type
-						th(scope="col") Climb Time
+							th(scope="col") Climber Type
+							th(scope="col") Custom Climber Type
+							th(scope="col") Climb Time
 
-						th(scope="col") Main Strengths
-						th(scope="col") Quality of Pit
+							th(scope="col") Main Strengths
+							th(scope="col") Quality of Pit
 
-						th(scope="col") General Comments
+							th(scope="col") General Comments
 
-						th(scope="col") Submitted At
-						th(scope="col") Submitted By
-					tbody
-						each r in pitScoutingReports
-							tr
-								th(scope="row")= r.team
-								td= r.tournament
+							th(scope="col") Submitted At
+							th(scope="col") Submitted By
+						tbody
+							each r in pitScoutingReports
+								tr
+									th(scope="row")= r.team
+									td= r.tournament
 
-								td= r.robotSpeed
-								td= r.transmission
-								td= r.driveTrain
-								td= r.customDriveTrain
+									td= r.robotSpeed
+									td= r.transmission
+									td= r.driveTrain
+									td= r.customDriveTrain
 
-								td= r.canUseScaleAtTop
-								td= r.canUseScaleAtMid
-								td= r.canUseScaleAtBottom
-								td= r.canUseSwitch
-								td= r.canUseExchange
-								td= r.canPickOffGround
-								
-								td= r.canAutonomous
-								td= r.theoreticalMaxCubesInSwitchInAutonomous
-								td= r.theoreticalMaxCubesInScaleInAutonomous
-								td= r.autonomousComments
+									td= r.canUseScaleAtTop
+									td= r.canUseScaleAtMid
+									td= r.canUseScaleAtBottom
+									td= r.canUseSwitch
+									td= r.canUseExchange
+									td= r.canPickOffGround
+									
+									td= r.canAutonomous
+									td= r.theoreticalMaxCubesInSwitchInAutonomous
+									td= r.theoreticalMaxCubesInScaleInAutonomous
+									td= r.autonomousComments
 
-								td= r.willPlayDefence
-								td= r.defenceDescription
+									td= r.willPlayDefence
+									td= r.defenceDescription
 
-								td= r.climberType
-								td= r.customClimberType
-								td= r.climbTime
+									td= r.climberType
+									td= r.customClimberType
+									td= r.climbTime
 
-								td= r.mainStrengths
-								td= r.qualityOfPit
+									td= r.mainStrengths
+									td= r.qualityOfPit
 
-								td= r.generalComments
+									td= r.generalComments
 
-								td= new Date(r.submittedAt).toLocaleString()
-								td= r.submittedBy
+									td= new Date(r.submittedAt).toLocaleString()
+									td= r.submittedBy
+				if showMatchScouting == true
+					h3 Match Scouting Reports
+					table.table#report-table
+						thead
+							th(scope="col") Team
+							th(scope="col") Tournament
+							th(scope="col") Match Number
 
-				h3 Match Scouting Reports
-				table.table#report-table
-					thead
-						th(scope="col") Team
-						th(scope="col") Tournament
-						th(scope="col") Match Number
+							th(scope="col") Crossed Line In Autonomous
+							th(scope="col") Cubes Delivered To Switch In Autonomous
+							th(scope="col") Cubes Delivered To Scale In Autonomous
+							th(scope="col") Autonomous Comments
 
-						th(scope="col") Crossed Line In Autonomous
-						th(scope="col") Cubes Delivered To Switch In Autonomous
-						th(scope="col") Cubes Delivered To Scale In Autonomous
-						th(scope="col") Autonomous Comments
+							th(scope="col") Cubes Delivered To Switch In Teleop
+							th(scope="col") Cubes Delivered To Scale In Teleop
+							th(scope="col") Cubes Delivered To Exchange In Teleop
 
-						th(scope="col") Cubes Delivered To Switch In Teleop
-						th(scope="col") Cubes Delivered To Scale In Teleop
-						th(scope="col") Cubes Delivered To Exchange In Teleop
+							th(scope="col") Switch Reliability in Teleop
+							th(scope="col") Scale Reliability in Teleop
+							th(scope="col") Exchange Reliability in Teleop
 
-						th(scope="col") Switch Reliability in Teleop
-						th(scope="col") Scale Reliability in Teleop
-						th(scope="col") Exchange Reliability in Teleop
+							th(scope="col") Climb Time in Teleop
 
-						th(scope="col") Climb Time in Teleop
+							th(scope="col") Defence Rating in Teleop
+							th(scope="col") Driving Rating in Teleop
+							th(scope="col") Evasion Rating in Teleop
+							th(scope="col") Speed Rating in Teleop
 
-						th(scope="col") Defence Rating in Teleop
-						th(scope="col") Driving Rating in Teleop
-						th(scope="col") Evasion Rating in Teleop
-						th(scope="col") Speed Rating in Teleop
+							th(scope="col") Endgame
+							th(scope="col") Did Robot Die
 
-						th(scope="col") Endgame
-						th(scope="col") Did Robot Die
+							th(scope="col") Teleop Comments
+							
+							th(scope="col") Submitted At
+							th(scope="col") Submitted By
 
-						th(scope="col") Teleop Comments
-						
-						th(scope="col") Submitted At
-						th(scope="col") Submitted By
+						tbody
+							each r in matchScoutingReports
+								tr
+									th(scope="row")= r.team
+									td= r.tournament
+									td= r.matchNumber
 
-					tbody
-						each r in matchScoutingReports
-							tr
-								th(scope="row")= r.team
-								td= r.tournament
-								td= r.matchNumber
+									
+									td= r.crossedLineInAutonomous
+									td= r.cubesDeliveredToSwitchInAutonomous
+									td= r.cubesDeliveredToScaleInAutonomous
+									td= r.autonomousComments
 
-								
-								td= r.crossedLineInAutonomous
-								td= r.cubesDeliveredToSwitchInAutonomous
-								td= r.cubesDeliveredToScaleInAutonomous
-								td= r.autonomousComments
+									td= r.cubesDeliveredToSwitchInTeleop
+									td= r.cubesDeliveredToScaleInTeleop
+									td= r.cubesDeliveredToExchangeInTeleop
 
-								td= r.cubesDeliveredToSwitchInTeleop
-								td= r.cubesDeliveredToScaleInTeleop
-								td= r.cubesDeliveredToExchangeInTeleop
+									td= r.switchReliabilityInTeleop
+									td= r.scaleReliabilityInTeleop
+									td= r.exchangeReliabilityInTeleop
 
-								td= r.switchReliabilityInTeleop
-								td= r.scaleReliabilityInTeleop
-								td= r.exchangeReliabilityInTeleop
+									td= r.climbTimeInTeleop
 
-								td= r.climbTimeInTeleop
+									td= r.defenceRatingInTeleop
+									td= r.drivingRatingInTeleop
+									td= r.evasionRatingInTeleop
+									td= r.speedRatingInTeleop
 
-								td= r.defenceRatingInTeleop
-								td= r.drivingRatingInTeleop
-								td= r.evasionRatingInTeleop
-								td= r.speedRatingInTeleop
-
-								td= r.endgame
-								td= r.didRobotDie
-								td= r.teleopComments
-		
-								td= new Date(r.submittedAt).toLocaleString()
-								td= r.submittedBy
+									td= r.endgame
+									td= r.didRobotDie
+									td= r.teleopComments
+			
+									td= new Date(r.submittedAt).toLocaleString()
+									td= r.submittedBy

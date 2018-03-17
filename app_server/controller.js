@@ -207,6 +207,8 @@ module.exports.getWebData = (req, res) => {
 				winston.error("API Request Error (webData - get): " + err);
 			}
 			res.render("webData", {
+				showPitScouting: (!req.query.showPitScouting || req.query.showPitScouting == "true"),
+				showMatchScouting: (!req.query.showMatchScouting || req.query.showMatchScouting == "true"),
 				pitScoutingReports: pitScoutingReports,
 				matchScoutingReports: matchScoutingReports
 			})
