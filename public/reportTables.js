@@ -2,7 +2,7 @@ $(document).ready(function() {
     $('#report-table').DataTable({
     	"columnDefs": [ {
 	    	"targets": 0,
-	    	"orderable": false
+	    	"orderable": ($("#deleteReportButton").length == 0)
     	} ],
     	"order": [[ 1, "desc" ]]
     });
