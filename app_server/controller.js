@@ -216,6 +216,117 @@ module.exports.getWebData = (req, res) => {
 	})
 }
 
+Array.prototype.average = function () { var sum = 0, j = 0; for (var i = 0; i < this.length, isFinite(this[i]); i++) { sum += parseFloat(this[i]); ++j; } return j ? Math.round(10*(sum / j))/10 : 0; }
+
+Array.prototype.byCount= function(){
+    var itm, a= [], L= this.length, o= {};
+    for(var i= 0; i<L; i++){
+        itm= this[i];
+        if(!itm) continue;
+        if(o[itm]== undefined) o[itm]= 1;
+        else ++o[itm];
+    }
+    for(var p in o) a[a.length]= p;
+    return a.sort(function(a, b){
+        return o[b]-o[a];
+    });
+}
+
+Array.prototype.listOnLines= function(){
+    var output = "";
+    for(var i = 0; i < this.length; i++){
+    	output += (this[i] != "" && this[i] != null && this[i] != undefined) ? (this[i] + ((i != this.length - 1) ? ", " : ".")) : "";
+    }
+    var outputLength = output.length
+    return "[" + output.substring(0, outputLength-2) + "]";
+}
+
+module.exports.getWebDataConsolidated = (req, res) => {
+	const requestOptions = {
+		url: config.apiURL + "/api/pit-scouting-reports",
+		method: "GET",
+		json: {},
+		qs: {}
+	}
+	request(requestOptions, (err, response, pitScoutingReports) => {
+		if(err){
+			winston.error("API Request Error (webData - get): " + err);
+		}
+		const requestOptions = {
+			url: config.apiURL + "/api/match-scouting-reports",
+			method: "GET",
+			json: {},
+			qs: {}
+		}
+		request(requestOptions, (err, response, matchScoutingReports) => {
+			if(err){
+				winston.error("API Request Error (webData - get): " + err);
+			}
+
+			// Data consolidation
+			var matchScoutingData = [];
+			for(var i = 0; i < config.teams.length; i++){
+				var teamData = {};
+
+				var teamMatchScoutingReports = matchScoutingReports.filter(t => t.team == config.teams[i]);
+
+				teamData.teamName = config.teams[i];
+
+				teamData.numberOfReports = teamMatchScoutingReports.length;
+
+				// Actual consolidation here
+				teamData.crossedLineInAutonomousFrequency = teamMatchScoutingReports.map(t => t.crossedLineInAutonomous).map(t => t == "Yes" ? 1 : 0).average();
+				
+				teamData.averageCubesDeliveredToSwitchInAutonomous = teamMatchScoutingReports.map(t => t.cubesDeliveredToSwitchInAutonomous).average();
+				teamData.zeroedAverageCubesDeliveredToSwitchInAutonomous = teamMatchScoutingReports.map(t => t.cubesDeliveredToSwitchInAutonomous).filter((a) => a != 0).average()
+
+				teamData.averageCubesDeliveredToScaleInAutonomous = teamMatchScoutingReports.map(t => t.cubesDeliveredToScaleInAutonomous).average();
+				teamData.zeroedAverageCubesDeliveredToScaleInAutonomous = teamMatchScoutingReports.map(t => t.cubesDeliveredToScaleInAutonomous).filter((a) => a != 0).average();
+
+				teamData.autonomousComments = teamMatchScoutingReports.map(t => t.autonomousComments).listOnLines();
+
+				teamData.averageCubesDeliveredToSwitchInTeleop = teamMatchScoutingReports.map(t => t.cubesDeliveredToSwitchInTeleop).average();
+				teamData.zeroedAverageCubesDeliveredToSwitchInTeleop = teamMatchScoutingReports.map(t => t.cubesDeliveredToSwitchInTeleop).filter((a) => a != 0).average();
+
+				teamData.averageCubesDeliveredToScaleInTeleop = teamMatchScoutingReports.map(t => t.cubesDeliveredToScaleInTeleop).average();
+				teamData.zeroedAverageCubesDeliveredToScaleInTeleop = teamMatchScoutingReports.map(t => t.cubesDeliveredToScaleInTeleop).filter((a) => a != 0).average();
+
+				teamData.averageCubesDeliveredToExchangeInTeleop = teamMatchScoutingReports.map(t => t.cubesDeliveredToExchangeInTeleop).average();
+				teamData.zeroedAverageCubesDeliveredToExchangeInTeleop = teamMatchScoutingReports.map(t => t.cubesDeliveredToExchangeInTeleop).filter((a) => a != 0).average();
+
+				teamData.averageSwitchReliabilityInTeleop = teamMatchScoutingReports.map(t => t.switchReliabilityInTeleop).average();
+				teamData.averageScaleReliabilityInTeleop = teamMatchScoutingReports.map(t => t.scaleReliabilityInTeleop).average();
+				teamData.averageExchangeReliabilityInTeleop = teamMatchScoutingReports.map(t => t.exchangeReliabilityInTeleop).average();
+
+				teamData.averageClimbTimeInTeleop = teamMatchScoutingReports.map(t => t.climbTimeInTeleop).average();
+				teamData.zeroedAverageClimbTimeInTeleop = teamMatchScoutingReports.map(t => t.climbTimeInTeleop).filter((a) => a != 0).average();
+				
+				teamData.averageDefenceRatingInTeleop = teamMatchScoutingReports.map(t => t.defenceRatingInTeleop).average();
+				teamData.averageDrivingRatingInTeleop = teamMatchScoutingReports.map(t => t.drivingRatingInTeleop).average();
+				teamData.averageEvasionRatingInTeleop = teamMatchScoutingReports.map(t => t.evasionRatingInTeleop).average();
+				teamData.averageSpeedRatingInTeleop = teamMatchScoutingReports.map(t => t.speedRatingInTeleop).average();
+
+				teamData.endgamesSortedByFrequency = teamMatchScoutingReports.map(t => t.endgame).byCount();
+
+				teamData.frequencyOfRobotDeath = teamMatchScoutingReports.map(t => t.didRobotDie).average();
+
+				teamData.teleopComments = teamMatchScoutingReports.map(t => t.teleopComments).listOnLines();
+
+
+				matchScoutingData.push(teamData);
+			}
+
+			res.render("webDataConsolidated", {
+				showPitScouting: false,
+				showMatchScouting: true,
+				pitScoutingReports: pitScoutingReports,
+				matchScoutingData: matchScoutingData,
+				teams: config.teams
+			})
+		})
+	})
+}
+
 module.exports.messages = (req, res) => {
 	// User list
 	const requestOptions = {

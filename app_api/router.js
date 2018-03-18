@@ -33,4 +33,5 @@ router.post("/api/match-scouting-report", reportController.addMatchScoutingRepor
 router.delete("/api/match-scouting-report", reportController.deleteMatchScoutingReport);
 router.get("/api/match-scouting-reports", reportController.findAllMatchScoutingReports);
 
+
 module.exports = router;

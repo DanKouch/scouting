@@ -82,6 +82,7 @@ router.delete('/match-scouting-report', ensureAdministrator, controller.deleteMa
 
 // Webdata
 router.get("/"+config.secret.webDataPath, controller.getWebData)
+router.get("/"+config.secret.webDataPath+"/consolidated", controller.getWebDataConsolidated)
 
 
 
