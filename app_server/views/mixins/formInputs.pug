@@ -4,7 +4,10 @@ mixin simpleInput(prettyName, codeName, errorMessages, settings)
 		div(class=(settings && settings.postfix ? "input-group" : ""))
 			block inputArea
 				input.form-control(id=(codeName + "Input"), minlength=((settings && settings.minLength) ? settings.minLength : 0), maxLength=((settings && settings.maxLength) ? settings.maxLength : 500), required=(settings && settings.required), name=(codeName), type=((settings && settings.type) ? settings.type : "text"), placeholder=("Enter " + prettyName), readonly=(settings && settings.readonly), disabled=(settings && settings.disabled), value=((settings&&settings.value) ? settings.value : ""), pattern=((settings && settings.type == "number") ? "[0-9]*" : ""))
-			if settings && settings.postfix && true
+			if settings && settings.postfix && settings.type == "number"
+				span.plusminusbutton.input-group-addon(onclick="$('#"+(codeName + "Input")+"').val((i, old) => ++old)") +
+				span.plusminusbutton.input-group-addon(onclick="$('#"+(codeName + "Input")+"').val((i, old) => --old)") −
+			if settings && settings.postfix
 				span.input-group-addon= settings.postfix
 		div.help-block= errorMessages && errorMessages[codeName] ? errorMessages[codeName] : ""
 
