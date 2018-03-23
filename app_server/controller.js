@@ -31,7 +31,7 @@ module.exports.postRegister = (req, res) => {
 module.exports.postPitScoutingReport = (req, res) => {
 	// Remove unknown and blanks
 	var query = {};
-	query.submittedBy = req.user.username;
+	query.submittedBy = req.user.username || "Anonymous";
 	for(var property in req.body){
 		if(req.body[property].trim() == "" || req.body[property].toUpperCase() == "UNKNOWN" || req.body[property] == -1){
 			//winston.info("skipped " + property);
