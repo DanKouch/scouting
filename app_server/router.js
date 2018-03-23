@@ -26,7 +26,9 @@ router.get("/login", (req, res) => {
 			teamName: config.teamName,
 			errorMessages: {
 				login: req.flash('error')
-			}
+				
+			},
+			message: req.query.message
 		});
 	}
 });

@@ -46,3 +46,7 @@ mixin navbar(user, teamName)
 			.alert.alert-warning
 				strong You have unread messages.
 				span  Click on "Messages" in the navbar to see whats new.
+	if message
+		.container
+			.alert.alert-warning
+				span= message

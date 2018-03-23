@@ -23,7 +23,8 @@ module.exports.postRegister = (req, res) => {
 		}
 		module.exports.renderPage(req, res, "register", {
 			success: body.success,
-			errorMessages: body.err
+			errorMessages: body.err,
+			message: req.query.message
 		})
 	})
 }
@@ -31,7 +32,7 @@ module.exports.postRegister = (req, res) => {
 module.exports.postPitScoutingReport = (req, res) => {
 	// Remove unknown and blanks
 	var query = {};
-	query.submittedBy = req.user.username || "Anonymous";
+	query.submittedBy = (req.user && req.user.username) ? req.user.username : "Anonymous";
 	for(var property in req.body){
 		if(req.body[property].trim() == "" || req.body[property].toUpperCase() == "UNKNOWN" || req.body[property] == -1){
 			//winston.info("skipped " + property);
@@ -55,7 +56,7 @@ module.exports.postPitScoutingReport = (req, res) => {
 		}
 		module.exports.renderPage(req, res, "pitScoutingReport", {
 			success: body.success,
-			errorMessages: body.err
+			errorMessages: body.err,
 		})
 	})
 }
@@ -63,7 +64,7 @@ module.exports.postPitScoutingReport = (req, res) => {
 module.exports.postMatchScoutingReport = (req, res) => {
 	// Remove unknown and blanks
 	var query = {};
-	query.submittedBy = req.user.username;
+	query.submittedBy = (req.user && req.user.username) ? req.user.username : "Anonymous";
 	for(var property in req.body){
 		if(req.body[property].trim() == "" || req.body[property].toUpperCase() == "UNKNOWN" || req.body[property] == -1){
 			continue;
@@ -297,7 +298,7 @@ module.exports.getWebDataConsolidated = (req, res) => {
 				teamData.averageSwitchReliabilityInTeleop = teamMatchScoutingReports.map(t => t.switchReliabilityInTeleop).average();
 				teamData.averageScaleReliabilityInTeleop = teamMatchScoutingReports.map(t => t.scaleReliabilityInTeleop).average();
 				teamData.averageExchangeReliabilityInTeleop = teamMatchScoutingReports.map(t => t.exchangeReliabilityInTeleop).average();
-				teamData.averageIntakeReliabilityInTeleop = teamMatchScoutingReports.map(t => t.intakeReliabilityInTeleop);
+				teamData.averageIntakeReliabilityInTeleop = teamMatchScoutingReports.map(t => t.intakeReliabilityInTeleop).average();
 
 				teamData.averageClimbTimeInTeleop = teamMatchScoutingReports.map(t => t.climbTimeInTeleop).average();
 				teamData.zeroedAverageClimbTimeInTeleop = teamMatchScoutingReports.map(t => t.climbTimeInTeleop).filter((a) => a != 0).average();
@@ -459,21 +460,26 @@ module.exports.changeUserPassword = (req, res) => {
 }
 
 module.exports.renderPage = (req, res, page, vars) => {
-	const requestOptions = {
-		url: config.apiURL + "/api/message/user/status",
-		method: "GET",
-		json: {},
-		qs: {username: req.user.username}
-	}
-	request(requestOptions, (err, response, messageStatus) => {
-		if(err){
-			winston.error("API Request Error (message status - get): " + err);
+	if(req.user){
+		const requestOptions = {
+			url: config.apiURL + "/api/message/user/status",
+			method: "GET",
+			json: {},
+			qs: {username: req.user.username}
 		}
-		vars.user = req.user;
-		vars.user.hasNewMessages = messageStatus;
-		vars.teamName = config.teamName;
-		vars.teams = config.teams;
-		vars.tournament = config.tournament;
-		res.render(page, vars)
-	})
+		request(requestOptions, (err, response, messageStatus) => {
+			if(err){
+				winston.error("API Request Error (message status - get): " + err);
+			}
+			vars.user = req.user;
+			vars.user.hasNewMessages = messageStatus;
+			vars.teamName = config.teamName;
+			vars.teams = config.teams;
+			vars.tournament = config.tournament;
+			vars.message = req.query.message;
+			res.render(page, vars)
+		})
+	}else{
+		res.redirect("/login?message=Your session has expired and you have been logged out. If you were just submitting a report, it has been saved.");
+	}
 }
