@@ -297,6 +297,7 @@ module.exports.getWebDataConsolidated = (req, res) => {
 				teamData.averageSwitchReliabilityInTeleop = teamMatchScoutingReports.map(t => t.switchReliabilityInTeleop).average();
 				teamData.averageScaleReliabilityInTeleop = teamMatchScoutingReports.map(t => t.scaleReliabilityInTeleop).average();
 				teamData.averageExchangeReliabilityInTeleop = teamMatchScoutingReports.map(t => t.exchangeReliabilityInTeleop).average();
+				teamData.averageIntakeReliabilityInTeleop = teamMatchScoutingReports.map(t => t.intakeReliabilityInTeleop);
 
 				teamData.averageClimbTimeInTeleop = teamMatchScoutingReports.map(t => t.climbTimeInTeleop).average();
 				teamData.zeroedAverageClimbTimeInTeleop = teamMatchScoutingReports.map(t => t.climbTimeInTeleop).filter((a) => a != 0).average();

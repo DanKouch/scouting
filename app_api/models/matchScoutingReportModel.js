@@ -35,6 +35,7 @@ let matchScoutingReportSchema = new Schema({
 	switchReliabilityInTeleop:				{type: Number},
 	scaleReliabilityInTeleop:				{type: Number},
 	exchangeReliabilityInTeleop:			{type: Number},
+	intakeReliabilityInTeleop:				{type: Number},
 	
 	climbTimeInTeleop:						{type: String},
 
