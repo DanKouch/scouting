@@ -1,0 +1,57 @@
+mixin simpleInput(prettyName, codeName, errorMessages, settings)
+	div.form-group(class=(errorMessages && errorMessages[codeName]) ? "has-error" : "")
+		label(for=(codeName + "Input"))= (prettyName+ ((settings && settings.note) ? (" ("+settings.note+")") : ""))
+		div.input-group
+			block inputArea
+				input.form-control(id=(codeName + "Input"), minlength=((settings && settings.minLength) ? settings.minLength : 0), maxLength=((settings && settings.maxLength) ? settings.maxLength : 500), required=(settings && settings.required), name=(codeName), type=((settings && settings.type) ? settings.type : "text"), placeholder=(settings && settings.placeholder) ? settings.placeholder : "", readonly=(settings && settings.readonly), disabled=(settings && settings.disabled), value=((settings&&settings.value) ? settings.value : ""), pattern=((settings && settings.type == "number") ? "[0-9]*" : ""))
+			if settings && settings.postfix
+				div.input-group-append
+					span.input-group-text= settings.postfix
+			if settings && settings.type == "number"
+				div.input-group-append
+					button.btn.input-group-text(type="button", onclick="$('#"+(codeName + "Input")+"').val((i, old) => ++old)") +
+					button.btn.input-group-text(onclick="$('#"+(codeName + "Input")+"').val((i, old) => --old)") −
+		div.help-block= errorMessages && errorMessages[codeName] ? errorMessages[codeName] : ""
+
+
+mixin dropDownInput(prettyName, codeName, errorMessages, options, settings)
+	div.form-group(class=(errorMessages && errorMessages[codeName]) ? "has-error" : "")
+		label(for=(codeName + "Input"))= (prettyName+ ((settings && settings.note) ? (" ("+settings.note+")") : ""))
+		select.form-control(id=(codeName + "Input"), name=(codeName), readonly=(settings && settings.readonly), value=((settings&&settings.value) ? settings.value : ""))
+			each option in options
+				option= option
+		div.help-block= errorMessages && errorMessages[codeName] ? errorMessages[codeName] : ""
+
+mixin textAreaInput(prettyName, codeName, errorMessages, options, settings)
+	div.form-group(class=(errorMessages && errorMessages[codeName]) ? "has-error" : "")
+		label(for=(codeName + "Input"))= (prettyName+ ((settings && settings.note) ? (" ("+settings.note+")") : ""))
+		textarea.form-control(id=(codeName + "Input"), name=(codeName), required=(settings && settings.required), readonly=(settings && settings.readonly), value=((settings&&settings.value) ? settings.value : ""))
+		div.help-block= errorMessages && errorMessages[codeName] ? errorMessages[codeName] : ""
+
+mixin datalistInput(prettyName, codeName, errorMessages, options, settings)
+	div.form-group(class=(errorMessages && errorMessages[codeName]) ? "has-error" : "")
+		label(for=(codeName + "Input"))= (prettyName+ ((settings && settings.note) ? (" ("+settings.note+")") : ""))
+		div(class=(settings && settings.postfix ? "input-group" : ""))
+			block inputArea
+				input.form-control(id=(codeName + "Input"), list=(codeName+"s"), minlength=((settings && settings.minLength) ? settings.minLength : 0), maxLength=((settings && settings.maxLength) ? settings.maxLength : 500), required=(settings && settings.required), name=(codeName), placeholder=(settings && settings.placeholder) ? settings.placeholder : "", readonly=(settings && settings.readonly), value=((settings && settings.value) ? settings.value : ""))
+				datalist(id=(codeName+"s"))
+					each o in options
+						option(value=o)
+			if settings && settings.postfix && true
+				span.input-group-addon= settings.postfix
+		div.help-block= errorMessages && errorMessages[codeName] ? errorMessages[codeName] : ""
+
+mixin yesNoInput(prettyName, codeName, errorMessages, settings)
+	+dropDownInput(prettyName, codeName, errorMessages, ["Unknown", "Yes", "No"], settings)
+
+mixin starInput(prettyName, codeName, errorMessages, settings)
+	div.form-group(class=(errorMessages && errorMessages[codeName]) ? "has-error" : "")
+		label(for=(codeName + "Input"))= (prettyName+ ((settings && settings.note) ? (" ("+settings.note+")") : ""))
+		select.form-control(id=(codeName + "Input"), name=(codeName), readonly=(settings && settings.readonly), value=((settings&&settings.value) ? settings.value : ""))
+			option(value=-1)="Unknown"
+			option(value=1)="★"
+			option(value=2)="★★"
+			option(value=3)="★★★"
+			option(value=4)="★★★★"
+			option(value=5)="★★★★★"
+		div.help-block= errorMessages && errorMessages[codeName] ? errorMessages[codeName] : ""

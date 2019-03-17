@@ -1,4 +1,5 @@
 module.exports = {
+    name: "2019MatchReport",
     title: "2019 Match Scouting Report",
     matchBased: true,
 
@@ -17,6 +18,12 @@ module.exports = {
             placeholder: "Ex. Red Ties",
             type: "dropdown",
             smartTeamSocket: true
+        },
+        {
+            name: "tournament",
+            description: "What tournament is this report for?",
+            type: "text",
+            tournamentAutoFill: true
         },
         {
             sectionTitle: "Sandstorm"
@@ -90,9 +97,17 @@ module.exports = {
             ]
         },
         {
+            sectionTitle: "Defence"
+        },
+        {
             name: "defence",
             description: "Defence",
             type: "stars"
+        },
+        {
+            name: "defenceComments",
+            description: "Additional comments on defence (If Applicable)",
+            type: "textarea"
         },
         {
             sectionTitle: "Climbing"

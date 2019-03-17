@@ -1,0 +1,28 @@
+extends boilerplate.pug
+
+block content
+	.container-fluid.fixed-top.py-3#navbar
+		.row
+			.col-sm-3.col-0.collapse.show.sidebar#spacer
+			.col.px-3#navbar
+				a(data-toggle="collapse", href="#", data-target=".collapse", role="button")
+					i.oi.oi-menu
+				.navbar-brand(href="#")
+					img(src="/teamlogo.png").brand-img
+					span #{tba.team.nickname} Scouting
+					small.text-muted #{tba.event.name} #{tba.event.year}
+			
+	.container-fluid
+		.row.vh-100
+			.col-3.collapse.show.sidebar.px-0.bg-dark
+				ul.nav.flex-column.flex-nowrap.text-truncate.position-fixed.pt-2.vh-100.navbar-dark.bg-dark#sidebar
+					each schema in reportSchemas
+						li.nav-item
+							a(href="/scout/" + schema.name).nav-link= schema.title
+			.col.py-3
+				br
+				br
+				br
+				div.ml-3
+					block main
+				

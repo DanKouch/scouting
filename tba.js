@@ -27,6 +27,7 @@ module.retreiveTBAData = (url) => {
             // Information on all teams at competition
             promises.push(module.sendTBARequest("/event/" + config.get("TBA.event_key") + "/teams/simple").then((data) => {
                 module.TBAdata.teams = data
+                module.TBAdata.team = data.filter(a => a.key == config.get("TBA.team_key"))[0]
             }));
 
             // Information about the specific event entered

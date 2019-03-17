@@ -1,0 +1,14 @@
+extends boilerplate.pug
+
+block head
+    title Login
+
+block content
+    div.container
+		div.page-header
+			h1 Log in to your account
+		div.col-md-offset-5.col-md-3.login-form
+            form(method="post")
+                .form-group
+                    label(for="email")
+                    input.form-control

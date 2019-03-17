@@ -2,7 +2,12 @@ const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 const express = require("express")
 const mongoose = require('mongoose');
+const winston = require('winston');
 const session = require('express-session');
+const flash = require('connect-flash');
+const MongoStore = require('connect-mongo')(session);
+
+const tba = require("../tba.js");
 
 
 module.exports = (app) => {
@@ -30,9 +35,21 @@ module.exports = (app) => {
         })
     }));
 
-    // Login Redirection (as Middlewear)
+    // Set up flash alerts
+    app.use(flash())
 
     // Configure Passport
 
+
+    // Login Redirection (as Middlewear)
+    app.use((req, res, next) => {
+        // Inject TBA data into the request
+        tba.getData((data) => {
+            req.tba = data;
+            next()
+        })
+    })
+
     // Base Routing
+    app.use("/", require("./router.js"));
 }
