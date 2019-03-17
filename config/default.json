@@ -4,5 +4,13 @@
     },
     "Api": {
         "port": 3008    
+    },
+    "Database": {
+        "URI": "mongodb://localhost/scouting"
+    },
+    "TBA" : {
+        "team_key": "frc1458",
+        "event_key": "2019cada",
+        "frequency": 10000
     }
   }

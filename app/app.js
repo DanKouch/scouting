@@ -20,5 +20,9 @@ module.exports = (app) => {
 
     // Configure Sessions
 
+    // Login Redirection (as Middlewear)
+
     // Configure Passport
+
+    // Base Routing
 }

@@ -19,8 +19,10 @@ winston.add(winston.transports.Console, {'timestamp': true, 'colorize': true, 'l
 winston.add(winston.transports.File, { filename: './logs/main.log' });
 
 // Setup Database Connection
+require("./database.js")();
 
 // Setup TBA Connection
+const tba = require("./tba.js");
 
 // Load Scouting Schema Data
 
