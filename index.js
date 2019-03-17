@@ -3,8 +3,6 @@ const express = require("express")
 const winston = require("winston")
 const config = require("config")
 
-
-
 // Create Express Server Instances
 const app = express()
 const api = express()
@@ -25,6 +23,7 @@ require("./database.js")();
 const tba = require("./tba.js");
 
 // Load Scouting Schema Data
+const reportSchemas = require("./reportSchemas")
 
 // Run Setup Scripts
 require("./app/app.js")(app);
