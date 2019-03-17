@@ -58,7 +58,7 @@ module.sendTBARequest = (url) => {
             method: 'GET',
             url: 'http://www.thebluealliance.com/api/v3' + url,
             headers: {
-                'X-TBA-Auth-Key': process.env.TBAKey,
+                'X-TBA-Auth-Key': process.env.TBA_KEY,
                 'Content-Type': 'application/json'
             },
             json: true
