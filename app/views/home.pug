@@ -4,4 +4,43 @@ block head
 	title Home
 
 block main
-	p Hi
+	h1.font-weight-light The tournament hasn't started yet.
+	p Information about how #{tba.team.nickname} is doing will appear here once the tournament begins.
+	br
+	hr
+
+	h2.font-weight-light Report Leaderboard
+		span.text-muted.font-weight-light(style="font-size: 0.6em")  (Top 10 Reporters)
+	br
+	table.homeTable
+		tr.homeTableRow
+			td <b>Place</b>
+			td <b>Name</b>
+			td <b># of Reports</b>
+		for leader, index in leaderboard
+			if(index < 10)
+				tr.homeTableRow
+					td= index + 1
+					td= leader.name
+					td= leader.reports
+	hr
+
+	h2.font-weight-light Report History
+		span.text-muted.font-weight-light(style="font-size: 0.6em")  (Last 20 Reports)
+	br
+	table.homeTable
+		tr.homeTableRow
+			td <b>Name</b>
+			td <b>Report</b>
+			td <b>Team</b>
+			td <b>Time</b>
+		for report, index in reports
+			if(index < 20)
+				tr.homeTableRow
+					td= report.submittedBy
+					td= reportSchemas.filter((a) => a.name == report.schemaName)[0].title
+					td= report.team
+					td= moment(report.submittedAt).fromNow()
+					
+
+	//p #{reports}

@@ -3,6 +3,7 @@ const winston = require('winston');
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const passport = require('passport')
+const moment = require('moment')
 
 module.exports.render = (req, res, page, variables) => {
     if(!variables)
@@ -15,7 +16,27 @@ module.exports.render = (req, res, page, variables) => {
         warnings: req.flash("warning"),
         info: req.flash("info") 
     }
+    if(variables.reports){
+        // Get Leaderboard
+        variables.leaderboard = []
+        variables.reports.map(a => a.submittedBy)
+        variables.reports.map(a => a.submittedBy).forEach(reporter => {
+            let found = false;
+            variables.leaderboard.forEach((leader) => {
+                if(leader.name == reporter){
+                    leader.reports ++;
+                    found = true;
+                }
+            })
+            if(!found)
+                variables.leaderboard.push({name: reporter, reports: 1})
+        })
+        variables.leaderboard = variables.leaderboard.sort((a, b) => a.reports < b.reports)
+        
+    }
+    
     variables.user = req.user
+    variables.moment = moment;
     req.session.flash = [];
     res.render(page, variables)
 }
@@ -132,4 +153,13 @@ module.exports.postLogin = (req, res) => {
 module.exports.getLogout = (req, res) => {
     req.logout();
     res.redirect('/login');
+}
+
+module.exports.ensureAdministrator = (req, res, next) => {
+    if (req.isAuthenticated() && (req.user.role == "administrator"))
+        next()
+    else{
+        req.flash("warn", "You do not have permission to access that page.")
+        res.redirect("/");
+    }
 }

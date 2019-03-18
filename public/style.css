@@ -114,3 +114,24 @@ div.login-form {
 .alert {
     margin-top: 1em;
 }
+
+table.homeTable {
+    width: 100%
+}
+
+tr.homeTableRow {
+    height: 3em;
+    padding-left: 1em;
+}
+
+tr.homeTableRow > td {
+    padding-left: 1em;
+}
+
+tr.homeTableRow:nth-child(2n-1){
+    background-color: #ddd;
+}
+
+table {
+    border-collapse: collapse;
+}

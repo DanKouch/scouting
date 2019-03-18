@@ -18,15 +18,18 @@ block content
 			.col-3.collapse.show.sidebar.px-0.bg-dark
 				ul.nav.flex-column.flex-nowrap.text-truncate.position-fixed.pt-2.vh-100.navbar-dark.bg-dark#sidebar
 					li.nav-item
-						a(href="/profile").nav-link Profile
+						a(href="/").nav-link Home
 						
 					each schema in reportSchemas
 						li.nav-item.red
 							a(href="/scout/" + schema.name).nav-link= schema.title
 					li.nav-item
-						a(href="/data").nav-link View Raw Data
+						a(href="#").nav-link View Data (Under Construction)
 					li.nav-item
 						a(href="#").nav-link Statistics (Under Construction)
+					if(user.role == "administrator")
+						li.nav-item
+							a(href="/register").nav-link Register New Users
 					li.nav-item
 						a(href="/logout").nav-link Logout - #{user.name}
 			.col.py-3
