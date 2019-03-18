@@ -3,7 +3,7 @@ mixin simpleInput(prettyName, codeName, errorMessages, settings)
 		label(for=(codeName + "Input"))= (prettyName+ ((settings && settings.note) ? (" ("+settings.note+")") : ""))
 		div.input-group
 			block inputArea
-				input.form-control(id=(codeName + "Input"), minlength=((settings && settings.minLength) ? settings.minLength : 0), maxLength=((settings && settings.maxLength) ? settings.maxLength : 500), required=(settings && settings.required), name=(codeName), type=((settings && settings.type) ? settings.type : "text"), placeholder=(settings && settings.placeholder) ? settings.placeholder : "", readonly=(settings && settings.readonly), disabled=(settings && settings.disabled), value=((settings&&settings.value) ? settings.value : ""), pattern=((settings && settings.type == "number") ? "[0-9]*" : ""))
+				input.form-control(id=(codeName + "Input"), minlength=((settings && settings.minLength) ? settings.minLength : 0), maxLength=((settings && settings.maxLength) ? settings.maxLength : 500), required=(settings && settings.required), name=(codeName), type=((settings && settings.type) ? settings.type : "text"), placeholder=(settings && settings.placeholder) ? settings.placeholder : "", readonly=(settings && settings.readonly), disabled=(settings && settings.disabled), value=((settings&&settings.value) ? settings.value : ""), pattern=((settings && settings.type == "number") ? "[0-9]*" : "*"))
 			if settings && settings.postfix
 				div.input-group-append
 					span.input-group-text= settings.postfix

@@ -18,8 +18,29 @@
     width: 100%;
 }
 
+.nav-link > span.oi {
+    color: white;
+    margin-left: 1em;
+}
+
 a.nav-link {
     color: white !important;
+}
+
+ul.nav.flex-column {
+    width: 25%;
+}
+
+.nav-item:hover {
+    background-color: #272727
+}
+
+.nav-item.red {
+    background-color: #5a0f0f;
+}
+
+.nav-item.red:hover {
+    background-color: #3b0909;
 }
 
 .vh-100 {
@@ -32,9 +53,7 @@ a.nav-link {
     left: 0;
 }
 
-.sidebar {
-    width: 10em !important;
-}
+
 
 .sidebar.collapse ,
 .sidebar.collapsing,
@@ -83,4 +102,15 @@ textarea:focus, select, input[type="text"]:focus, input[type="password"]:focus, 
     box-shadow: none !important;
     -webkit-box-shadow: none !important;
     outline: none !important;
+}
+
+div.login-form {
+    float: none;
+    margin: 0 auto;
+    width: 50%;
+    margin-top: 25vh
+}
+
+.alert {
+    margin-top: 1em;
 }

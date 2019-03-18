@@ -1,14 +1,23 @@
 extends boilerplate.pug
+include mixins/alerts.pug
 
 block head
-    title Login
+	title Login
 
 block content
-    div.container
-		div.page-header
-			h1 Log in to your account
-		div.col-md-offset-5.col-md-3.login-form
-            form(method="post")
-                .form-group
-                    label(for="email")
-                    input.form-control
+	.container
+		.login-form(style="text-align: center")
+			img(src="/teamlogo.png", style="height: 8em").brand-img
+			h6.centered #{tba.team.nickname} Scouting
+			small.text-muted #{tba.event.name} #{tba.event.year}
+			br
+			br
+			+showAlerts(flashMessages)
+			form(method="post")
+				.form-group
+					input.form-control#emailInput(name="email", type="email", placeholder="Email")
+				.form-group
+					input.form-control#passwordInput(name="password", type="password", placeholder="Password")
+				button.btn.btn-danger.submit(type="submit", style="width:100%") Login
+				br
+				br

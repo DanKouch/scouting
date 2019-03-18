@@ -1,8 +1,9 @@
 extends boilerplate.pug
+include mixins/alerts.pug
 
 block content
 	.container-fluid.fixed-top.py-3#navbar
-		.row
+		.row(style="height: 3em")
 			.col-sm-3.col-0.collapse.show.sidebar#spacer
 			.col.px-3#navbar
 				a(data-toggle="collapse", href="#", data-target=".collapse", role="button")
@@ -16,13 +17,23 @@ block content
 		.row.vh-100
 			.col-3.collapse.show.sidebar.px-0.bg-dark
 				ul.nav.flex-column.flex-nowrap.text-truncate.position-fixed.pt-2.vh-100.navbar-dark.bg-dark#sidebar
+					li.nav-item
+						a(href="/profile").nav-link Profile
+						
 					each schema in reportSchemas
-						li.nav-item
+						li.nav-item.red
 							a(href="/scout/" + schema.name).nav-link= schema.title
+					li.nav-item
+						a(href="/data").nav-link View Raw Data
+					li.nav-item
+						a(href="#").nav-link Statistics (Under Construction)
+					li.nav-item
+						a(href="/logout").nav-link Logout - #{user.name}
 			.col.py-3
 				br
 				br
 				br
 				div.ml-3
+					+showAlerts(flashMessages)
 					block main
 				

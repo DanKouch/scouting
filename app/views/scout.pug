@@ -5,36 +5,38 @@ block head
 	title #{schema.title}
 
 block main
-	h1.display-4 #{schema.title}
+	h1.font-weight-light #{schema.title}
 	hr
 	p Please fill out the following information to the best of your ability. If you are unsure about something, please enter Unknown or -1 (if it is a number field).
-
-	for field in schema.fields
-		if field.sectionTitle
-			h4.mt-5 #{field.sectionTitle}
-		else
-			if field.type == "number"
-				+simpleInput(field.description, field.name, [], {
-					type: "number",
-					postfix: field.postfix,
-					placeholder: field.placeholder
-				})
-			else if field.type == "dropdown"
-				+dropDownInput(field.description, field.name, [], field.options || [])
-			else if field.type == "stars"
-				+starInput(field.description, field.name, [])
-			else if field.type == "yes/no"
-				+yesNoInput(field.description, field.name)
-			else if field.type == "textarea"
-				+textAreaInput(field.description, field.name)
-			else if field.type == "text"
-				if field.tournamentAutoFill
-					+simpleInput(field.description, field.name, [], {
-						type: "text",
-						readonly: true,
-						value: tba.event.name
-					})
-				else
-					+simpleInput(field.description, field.name, [])
+	
+	form(method="post")
+		for field in schema.fields
+			if field.sectionTitle
+				h4.mt-5 #{field.sectionTitle}
 			else
-				p #{field.description}
+				if field.type == "number"
+					+simpleInput(field.description, field.name, [], {
+						type: "number",
+						postfix: field.postfix,
+						placeholder: field.placeholder
+					})
+				else if field.type == "dropdown"
+					+dropDownInput(field.description, field.name, [], field.options || [])
+				else if field.type == "stars"
+					+starInput(field.description, field.name, [])
+				else if field.type == "yes/no"
+					+yesNoInput(field.description, field.name)
+				else if field.type == "textarea"
+					+textAreaInput(field.description, field.name)
+				else if field.type == "text"
+					if field.tournamentAutoFill
+						+simpleInput(field.description, field.name, [], {
+							type: "text",
+							readonly: true,
+							value: tba.event.name + " " + tba.event.year
+						})
+					else
+						+simpleInput(field.description, field.name, [])
+				else
+					p #{field.description}
+		button.btn.btn-danger.submit(type="submit") Submit Report

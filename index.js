@@ -17,7 +17,7 @@ winston.add(winston.transports.Console, {'timestamp': true, 'colorize': true, 'l
 winston.add(winston.transports.File, { filename: './logs/main.log' });
 
 // Setup Database Connection
-require("./database.js")();
+require("./database/database.js")();
 
 // Setup TBA Connection
 const tba = require("./tba.js");
@@ -25,9 +25,8 @@ const tba = require("./tba.js");
 // Load Scouting Schema Data
 const reportSchemas = require("./reportSchemas")
 
-// Run Setup Scripts
+// Run Setup Script
 require("./app/app.js")(app);
-require("./api/api.js")(api);
 
 // Start App Server
 if(production){
@@ -43,9 +42,4 @@ if(production){
   
 app.listen(config.get("App.port"), () => {
     winston.info("App HTTP server started on port " + config.get("App.port"));
-});
-
-// Start API HTTP server
-app.listen(config.get("Api.port"), () => {
-    winston.info("Api HTTP server started on port " + config.get("Api.port"));
 });
