@@ -9,7 +9,8 @@ module.exports = {
             name: "team",
             description: "Team",
             placeholder: "Ex. Red Ties",
-            type: "dropdown"
+            type: "dropdown",
+            hideScoutedTeams: true
         },
         {
             name: "tournament",
