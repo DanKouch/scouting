@@ -123,7 +123,7 @@ module.exports = {
         },
         {
             name: "robotPicture",
-            description: "Did you take a picture of the team's robot?",
+            description: "Please take a picture of the team's robot immediately after submitting this report",
             type: "yes/no"
         }
     ]
