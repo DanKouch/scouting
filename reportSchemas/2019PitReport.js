@@ -52,18 +52,23 @@ module.exports = {
             type: "textarea"
         },
         {
+            name: "canPickUpBalls",
+            description: "Can Pick Up Cargo Balls From Ground",
+            type: "yes/no"
+        },
+        {
             name: "canPickUpHatches",
-            description: "Can Pick Up Hatches From Ground",
+            description: "Can Pick Up Hatch Panels From Ground",
             type: "yes/no"
         },
         {
             name: "canPlaceHatchesOnRocket",
-            description: "Can Place Hatches on Rocket",
+            description: "Can Place Hatch Panels on Rocket",
             type: "yes/no"
         },
         {
             name: "canPlaceBallsInRocket",
-            description: "Can Place Balls in Rocket",
+            description: "Can Place Cargo Balls in Rocket",
             type: "yes/no"
         },
         {
@@ -71,14 +76,20 @@ module.exports = {
             description: "Highest Rocket Level Reachable",
             type: "dropdown",
             options: [
+                "None",
                 "Level 1",
                 "Level 2",
                 "Level 3"
             ]
         },
         {
+            name: "canPlaceHatchesInCargoShip",
+            description: "Can Place Hatch Panels in Cargo Ship",
+            type: "yes/no"
+        },
+        {
             name: "canPlaceBallsInCargoShip",
-            description: "Can Place Balls in Cargo Ship",
+            description: "Can Place Cargo Balls in Cargo Ship",
             type: "yes/no"
         },
         {
@@ -107,8 +118,13 @@ module.exports = {
         },
         {
             name: "additionalComments",
-            description: "Do you have any additional comments?",
+            description: "Additional comments about their robot, team, capabilities, attributes, etc.",
             type: "textarea"
+        },
+        {
+            name: "robotPicture",
+            description: "Please take a picture of the team's robot immediately after submitting this report",
+            type: "yes/no"
         }
     ]
 }
