@@ -46,7 +46,6 @@ module.retreiveTBAData = (url) => {
         // Information on matches
         promises.push(module.sendTBARequest("/event/" + config.get("TBA.event_key") + "/matches/simple").then((data) => {
             module.TBAdata.matches = data
-            winston.warn(JSON.stringify(module.TBAdata.matches))
         }));
 
         

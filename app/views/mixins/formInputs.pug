@@ -10,7 +10,7 @@ mixin simpleInput(prettyName, codeName, errorMessages, settings)
 			if settings && settings.type == "number"
 				div.input-group-append
 					button.btn.input-group-text(type="button", onclick="$('#"+(codeName + "Input")+"').val((i, old) => ++old)") +
-					button.btn.input-group-text(onclick="$('#"+(codeName + "Input")+"').val((i, old) => --old)") −
+					button.btn.input-group-text(type="button", onclick="$('#"+(codeName + "Input")+"').val((i, old) => --old)") −
 		div.help-block= errorMessages && errorMessages[codeName] ? errorMessages[codeName] : ""
 
 
