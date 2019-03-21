@@ -37,8 +37,8 @@ if(production){
             key: fs.readFileSync("./ssl/private_key.key"),
             ca: fs.readFileSync("./ssl/ca.ca-bundle"),
             cert: fs.readFileSync("./ssl/certificate.crt")
-        }, app).listen(config.get("App.secure_port") || 443 , () => {
-            winston.info("App HTTPS server started on port " + config.get("App.secure_port") || 443);
+        }, app).listen(config.has('App.secure_port') ? config.get("App.secure_port") : 443, () => {
+            winston.info("App HTTPS server started on port " + config.has('App.secure_port') ? config.get("App.secure_port") : 443);
         });
 }
   
