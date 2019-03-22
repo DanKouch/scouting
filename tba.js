@@ -75,3 +75,5 @@ module.sendTBARequest = (url) => {
     })
 }
 
+// Initial request to have first-time data loaded
+module.retreiveTBAData()
