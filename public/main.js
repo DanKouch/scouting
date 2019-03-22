@@ -6,3 +6,5 @@ setTimeout(() => {
     });
 }, 5000)
 
+// For some reason gets dropdowns working in mobile
+$('.dropdown').click(() => {});
