@@ -31,7 +31,7 @@ module.exports.render = (req, res, page, variables) => {
             if(!found)
                 variables.leaderboard.push({name: reporter, reports: 1})
         })
-        variables.leaderboard = variables.leaderboard.sort((a, b) => a.reports.length < b.reports.length)
+        variables.leaderboard = variables.leaderboard.sort((a, b) => b.reports - a.reports)
         
     }
     
@@ -59,11 +59,11 @@ module.exports.getScout = (req, res, next) => {
                         return;
                     }
                     let teamsScouted = reports.map(a => a.team)
-                    a.options = req.tba.teams.map(b => (b.team_number + " - " + b.nickname)).filter(g => !teamsScouted.includes(g))
+                    a.options = req.tba.teams.sort((a, b) => parseInt(a.team_number) - parseInt(b.team_number)).map(b => (b.team_number + " - " + b.nickname)).filter(g => !teamsScouted.includes(g))
                     module.exports.render(req, res, "scout", {schema: schema})
                 })
             }else{
-                a.options = req.tba.teams.map(b => (b.team_number + " - " + b.nickname))
+                a.options = req.tba.teams.sort((a, b) => parseInt(a.team_number) - parseInt(b.team_number)).map(b => (b.team_number + " - " + b.nickname))
                 module.exports.render(req, res, "scout", {schema: schema})
             }
         });
