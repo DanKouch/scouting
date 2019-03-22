@@ -20,7 +20,7 @@ block content
 							a.dropdown-item(href="/scout/" + schema.name)= schema.title
 				li.nav-item
 					a.nav-link(href="/data") View Data
-				if user.role != "administrator"
+				if user.role == "administrator"
 					li.nav-item.dropdown
 						a.nav-link.dropdown-toggle.admin#navbarAdminDropdown(role="button", data-toggle="dropdown", aria-expanded="false") Administrate
 						.dropdown-menu(aria-labelledby="navbarAdminDropdown")
