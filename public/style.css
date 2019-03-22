@@ -1,6 +1,3 @@
-.navbar {
-    height: 4em;
-}
 
 .navbar-brand > img {
     margin-left: 1em;
@@ -13,65 +10,11 @@
     margin-left: 1em;
 }
 
-.wrapper {
-    display: flex;
-    width: 100%;
+nav.navbar {
+    margin: 0;
+    background-color: whitesmoke !important;
 }
 
-.nav-link > span.oi {
-    color: white;
-    margin-left: 1em;
-}
-
-a.nav-link {
-    color: white !important;
-}
-
-ul.nav.flex-column {
-    width: 25%;
-}
-
-.nav-item:hover {
-    background-color: #272727
-}
-
-.nav-item.red {
-    background-color: #5a0f0f;
-}
-
-.nav-item.red:hover {
-    background-color: #3b0909;
-}
-
-.vh-100 {
-    height: 100vh;
-}
-
-.sidebar.collapse.show,
-.sidebar.collapse.show + .col {
-    transition: .18s linear;
-    left: 0;
-}
-
-
-
-.sidebar.collapse ,
-.sidebar.collapsing,
-.sidebar.collapsing + .col {
-    transition: .18s linear;
-    z-index: 1050;
-    left: -25%;
-    height: auto !important;
-}
-
-#navbar {
-    background-color: whitesmoke;
-    
-}
-
-a > .oi {
-    color: darkslategray; 
-}
 
 @media all and (max-width: 768px) {
     .navbar-brand > small {
@@ -116,7 +59,8 @@ div.login-form {
 }
 
 table.homeTable {
-    width: 100%
+    width: 100%;
+    border-collapse: collapse;
 }
 
 tr.homeTableRow {
@@ -132,6 +76,16 @@ tr.homeTableRow:nth-child(2n-1){
     background-color: #ddd;
 }
 
-table {
-    border-collapse: collapse;
+.admin {
+    color: rgb(148, 34, 34) !important;
+}
+
+/*Override some DataTables default styling*/
+.report-table {
+    width: 100% !important;
+}
+
+table.report-table > tbody > tr:nth-child(2n + 0){
+    background-color: rgb(235, 235, 235);
+    
 }

@@ -2,41 +2,35 @@ extends boilerplate.pug
 include mixins/alerts.pug
 
 block content
-	.container-fluid.fixed-top.py-3#navbar
-		.row(style="height: 3em")
-			.col-sm-3.col-0.collapse.show.sidebar#spacer
-			.col.px-3#navbar
-				a(data-toggle="collapse", href="#", data-target=".collapse", role="button")
-					i.oi.oi-menu
-				.navbar-brand(href="#")
-					img(src="/teamlogo.png").brand-img
-					span #{tba.team.nickname} Scouting
-					small.text-muted #{tba.event.name} #{tba.event.year}
-			
-	.container-fluid
-		.row.vh-100
-			.col-3.collapse.show.sidebar.px-0.bg-dark
-				ul.nav.flex-column.flex-nowrap.text-truncate.position-fixed.pt-2.vh-100.navbar-dark.bg-dark#sidebar
-					li.nav-item
-						a(href="/").nav-link Home
-						
-					each schema in reportSchemas
-						li.nav-item.red
-							a(href="/scout/" + schema.name).nav-link= schema.title
-					li.nav-item
-						a(href="#").nav-link View Data (Under Construction)
-					li.nav-item
-						a(href="#").nav-link Statistics (Under Construction)
-					if(user.role == "administrator")
-						li.nav-item
-							a(href="/register").nav-link Register New Users
-					li.nav-item
-						a(href="/logout").nav-link Logout - #{user.name}
-			.col.py-3
-				br
-				br
-				br
-				div.ml-3
-					+showAlerts(flashMessages)
-					block main
-				
+	nav.navbar.navbar-expand-lg.navbar-light.bg-light
+		//.w-100.d-flex
+		a.navbar-brand(href="/")
+			img(src="/teamlogo.png").brand-img
+			span #{tba.team.nickname} Scouting
+			//small.text-muted #{tba.event.name} #{tba.event.year}
+		button.navbar-toggler(type="button", data-toggle="collapse", data-target="#navbarSupportedContent", aria-controls="navbarSupportedContent", aria-expanded="false", aria-label="Toggle navigation")
+			span.navbar-toggler-icon
+		
+		.collapse.navbar-collapse#navbarSupportedContent
+			ul.navbar-nav.mr-auto
+				li.nav-item.dropdown
+					a.nav-link.dropdown-toggle#navbarDropdown(role="button", data-toggle="dropdown", aria-expanded="false") Scout
+					.dropdown-menu(aria-labelledby="navbarDropdown")
+						each schema in reportSchemas
+							a.dropdown-item(href="/scout/" + schema.name)= schema.title
+				li.nav-item
+					a.nav-link(href="/data") View Data
+				if user.role != "administrator"
+					li.nav-item.dropdown
+						a.nav-link.dropdown-toggle.admin#navbarAdminDropdown(role="button", data-toggle="dropdown", aria-expanded="false") Administrate
+						.dropdown-menu(aria-labelledby="navbarAdminDropdown")
+							a.dropdown-item(href="/register") Register New Users
+			ul.navbar-nav.ml-auto
+				li.nav-item.dropdown
+					a.nav-link.dropdown-toggle#navbarUserDropdown(role="button", data-toggle="dropdown", aria-expanded="false")= user.name
+					.dropdown-menu(aria-labelledby="navbarUserDropdown")
+						a.dropdown-item(href="/logout") Logout
+	.container
+		br
+		+showAlerts(flashMessages)
+		block main

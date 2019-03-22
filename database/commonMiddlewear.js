@@ -9,7 +9,7 @@ module.exports.injectAllReports = (req, res, next) => {
             req.flash("error", "Error getting reports.")
             next();
         }else{
-            req.reports = reports
+            req.reports = JSON.parse(JSON.stringify(reports))
             next();
         }
     })

@@ -1,9 +1,41 @@
 extends base.pug
+include mixins/formInputs.pug
 
 block head
-	title Register
+	title Data
+	
+
+block scripts
+	script(src="/scripts/data.js")
 
 block main
-	h1.font-weight-light Register New Account
+	h1.font-weight-light View Data
 	hr
-	p All accounts are created as standard users by default. Upgrading accounts must be done manually through the database.
+	
+	for schema in reportSchemas
+		h3.font-weight-light=schema.title
+			a.float-right.btn.btn-outline-secondary(href="/data/" + schema.name + ".csv") Download CSV
+		hr
+		br
+		table.report-table.display
+			thead
+				th(scope="col") Submitted By
+				th(scope="col") Submitted At
+				for field in schema.fields
+					if !field.sectionTitle
+						th(scope="col")= field.description
+			tbody
+				for report in reports
+					if report.schemaName == schema.name
+						tr
+							td= report.submittedBy
+							td(data-sort=(new Date(report.submittedAt).getTime()))= moment(report.submittedAt).format("MMMM Do YYYY, h:mm:ss A")
+							for field in schema.fields
+								if !field.sectionTitle
+									td= report[field.name]
+		br
+		br
+		br
+
+
+

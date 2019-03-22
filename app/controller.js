@@ -163,3 +163,28 @@ module.exports.ensureAdministrator = (req, res, next) => {
         res.redirect("/");
     }
 }
+
+
+module.exports.getDataCSV = (req, res, next) => {
+    let schemaMatches = reportSchemas.filter(a => a.name == req.params.reportName);
+    if(schemaMatches.length < 1){
+        next()
+        return;
+    }
+    let schema = schemaMatches[0];
+    let rawReports = req.reports.filter(a => a.schemaName == schema.name);
+    res.set("Content-Type", "text/csv")
+    res.set("Conent-Disposition", "attachment;filename=" + schema.name + ".csv")
+    schema.fields.filter(a => a.name).forEach(field => {
+        res.write(field.description + ",")
+    })
+    res.write("Submitted By,Submitted At")
+    rawReports.forEach(report => {
+        res.write("\n")
+        schema.fields.filter(a => a.name).forEach(field => {
+            res.write(report[field.name] + ",")
+        })
+        res.write(report.submittedBy + "," + report.submittedAt)
+    })
+    res.end()
+}
