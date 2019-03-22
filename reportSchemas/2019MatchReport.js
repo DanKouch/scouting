@@ -65,6 +65,17 @@ module.exports = {
             type: "number"
         },
         {
+            name: "rocketBalls",
+            description: "# of Balls in Rocket Ship",
+            type: "number"
+        },
+        {
+            name: "rocketBallFails",
+            description: "# of Failed Rocket Ship Ball Attempts",
+            subdescription: "(i.e. Dropped ball on ground or backed up A SIGNIFICANT AMOUNT)",
+            type: "number"
+        },
+        {
             name: "rocketHatches",
             description: "# of Hatches in Rocket Ship",
             type: "number"
@@ -76,14 +87,14 @@ module.exports = {
             type: "number"
         },
         {
-            name: "rocketBalls",
-            description: "# of Balls in Rocket Ship",
+            name: "cargoShipHatches",
+            description: "# of Hatches in Cargo Ship",
             type: "number"
         },
         {
-            name: "rocketBallFails",
-            description: "# of Failed Rocket Ship Ball Attempts",
-            subdescription: "(i.e. Dropped ball on ground or backed up A SIGNIFICANT AMOUNT)",
+            name: "cargoShipHatchFails",
+            description: "# of Failed Cargo Ship Hatch Attempts",
+            subdescription: "(i.e. Dropped hatch on ground or backed up A SIGNIFICANT AMOUNT)",
             type: "number"
         },
         {
