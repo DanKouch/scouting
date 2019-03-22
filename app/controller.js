@@ -31,7 +31,7 @@ module.exports.render = (req, res, page, variables) => {
             if(!found)
                 variables.leaderboard.push({name: reporter, reports: 1})
         })
-        variables.leaderboard = variables.leaderboard.sort((a, b) => a.reports < b.reports)
+        variables.leaderboard = variables.leaderboard.sort((a, b) => a.reports.length < b.reports.length)
         
     }
     
