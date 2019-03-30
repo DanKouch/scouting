@@ -53,19 +53,12 @@ module.exports.getScout = (req, res, next) => {
         // Get Teams
         schema.fields.filter(a => a.name == "team").forEach(a => {
             if(a.hideScoutedTeams){
-                reportModel.find({schemaName: schema.name}, (err, reports) => {
-                    if(err){
-                        req.flash("error", "Error removing teams already scouted.")
-                        return;
-                    }
-                    let teamsScouted = reports.map(a => a.team)
-                    a.options = req.tba.teams.sort((a, b) => parseInt(a.team_number) - parseInt(b.team_number)).map(b => (b.team_number + " - " + b.nickname)).filter(g => !teamsScouted.includes(g))
-                    module.exports.render(req, res, "scout", {schema: schema})
-                })
+                let teamsScouted = req.reports.map(a => a.team)
+                a.options = req.tba.teams.sort((a, b) => parseInt(a.team_number) - parseInt(b.team_number)).map(b => (b.team_number + " - " + b.nickname)).filter(g => !teamsScouted.includes(g))
             }else{
                 a.options = req.tba.teams.sort((a, b) => parseInt(a.team_number) - parseInt(b.team_number)).map(b => (b.team_number + " - " + b.nickname))
-                module.exports.render(req, res, "scout", {schema: schema})
             }
+            module.exports.render(req, res, "scout", {schema: schema})
         });
 
         

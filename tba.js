@@ -27,13 +27,15 @@ module.retreiveTBAData = (url) => {
             // Information on all teams at competition
             promises.push(module.sendTBARequest("/event/" + config.get("TBA.event_key") + "/teams/simple").then((data) => {
                 module.TBAdata.teams = data
+                module.exports.teams = module.TBAdata.teams
                 module.TBAdata.team = data.filter(a => a.key == config.get("TBA.team_key"))[0]
+                module.exports.team = module.TBAdata.team
             }));
 
             // Information about the specific event entered
             promises.push(module.sendTBARequest("/event/" + config.get("TBA.event_key") + "/simple").then((data) => {
                 module.TBAdata.event = data
-                module.exports.event = data
+                module.exports.event = module.TBAdata.event
             }));
         }
 

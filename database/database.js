@@ -6,6 +6,8 @@ module.exports = () => {
     mongoose.connect(config.get("Database.URI"), {useNewUrlParser: true}).then(
         () => {
             winston.info("Connected to MongoDB server at '" + config.get("Database.URI") + "'");
+            // Run Statistics
+            //require("../statistics.js")
         },
         err => {
             winston.error("Mongoose Connection Error: " + err)
