@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 const moment = require('moment')
+const tba = require('../tba.js')
 
 module.exports.render = (req, res, page, variables) => {
     if(!variables)
@@ -53,7 +54,8 @@ module.exports.getScout = (req, res, next) => {
         // Get Teams
         schema.fields.filter(a => a.name == "team").forEach(a => {
             if(a.hideScoutedTeams){
-                let teamsScouted = req.reports.map(a => a.team)
+                let teamsScouted = req.reports.filter(a => a.schemaName == schema.name).map(a => a.team)
+                //winston.info(JSON.stringify(teamsScouted))
                 a.options = req.tba.teams.sort((a, b) => parseInt(a.team_number) - parseInt(b.team_number)).map(b => (b.team_number + " - " + b.nickname)).filter(g => !teamsScouted.includes(g))
             }else{
                 a.options = req.tba.teams.sort((a, b) => parseInt(a.team_number) - parseInt(b.team_number)).map(b => (b.team_number + " - " + b.nickname))
