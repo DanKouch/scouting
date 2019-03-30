@@ -166,6 +166,10 @@ module.exports.ensureAdministrator = (req, res, next) => {
     }
 }
 
+//https://stackoverflow.com/a/44391621/3746623
+String.prototype.replaceAll = String.prototype.replaceAll || function(string, replaced) {
+    return this.replace(new RegExp(string, 'g'), replaced);
+};
 
 module.exports.getDataCSV = (req, res, next) => {
     let schemaMatches = reportSchemas.filter(a => a.name == req.params.reportName);
@@ -184,7 +188,7 @@ module.exports.getDataCSV = (req, res, next) => {
     rawReports.forEach(report => {
         res.write("\n")
         schema.fields.filter(a => a.name).forEach(field => {
-            res.write(report[field.name] + ",")
+            res.write(report[field.name].replaceAll(",", ";") + ",")
         })
         res.write(report.submittedBy + "," + report.submittedAt)
     })
