@@ -1,9 +1,10 @@
 mixin showAlerts(alerts)
-    for error in alerts.errors
-        div.alert.alert-danger= error
-    for warning in alerts.warnings
-        div.alert.alert-danger= warning
-    for success in alerts.successes
-        div.alert.alert-success= success
-    for info in alerts.info
-        div.alert.alert-info= info
+    #alerts
+        for error in alerts.errors
+            div.alert.alert-danger= error
+        for warning in alerts.warnings
+            div.alert.alert-danger= warning
+        for success in alerts.successes
+            div.alert.alert-success= success
+        for info in alerts.info
+            div.alert.alert-info= info

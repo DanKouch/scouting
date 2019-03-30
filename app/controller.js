@@ -6,6 +6,7 @@ const passport = require('passport')
 const moment = require('moment')
 
 module.exports.render = (req, res, page, variables) => {
+    
     if(!variables)
         variables = {}
     variables.tba = req.tba
@@ -37,7 +38,7 @@ module.exports.render = (req, res, page, variables) => {
     
     variables.user = req.user
     variables.moment = moment;
-    req.session.flash = [];
+    //req.session.flash = [];
     res.render(page, variables)
 }
 
@@ -205,8 +206,10 @@ module.exports.changeUserPassword = (req, res) => {
             }, (err) => {
                 if(err){
                     req.flash("error", "Error updating password.")
+                    res.redirect("/users")
                     return;
                 }
+                req.flash("success", "Successfully updated " + req.body.name + "'s password.")
                 res.redirect("/users")
             })
         })
@@ -217,16 +220,19 @@ module.exports.changeUserPassword = (req, res) => {
 }
 
 module.exports.deleteUser = (req, res) => {
+    req.flash("error", "test error")
     if(req.body && req.body.name){
         userModel.deleteOne({name: req.body.name}, (err) => {
             if(err){
                 req.flash("error", "Error removing user from database.")
+                module.exports.render(req, res, "users", {users: req.users})
                 return;
             }
-            res.redirect("/users")
+            req.flash("success", "Successfully terminated " + req.body.name + ".")
+            module.exports.render(req, res, "users", {users: req.users})
         })
     }else{
         req.flash("error", "Invalid request parameters")
-        res.redirect("/users")
+        module.exports.render(req, res, "users", {users: req.users})
     }
 }
