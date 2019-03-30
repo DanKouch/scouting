@@ -20,8 +20,9 @@ module.exports = () => {
         winston.warn("Disconnected from mongoose database.");	
     });
 
-    // Fix deprecation warning
+    // Fix deprecation warnings
     mongoose.set('useCreateIndex', true);
+    mongoose.set('useFindAndModify', false)
 
     require("./models/userModel.js");
     require("./models/reportModel.js");

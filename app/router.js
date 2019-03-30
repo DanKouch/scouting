@@ -18,4 +18,8 @@ router.get('/logout', controller.getLogout)
 router.get('/scout/:reportName', controller.getScout)
 router.post('/scout/:reportName', controller.postScout)
 
+router.get('/users', controller.ensureAdministrator, commonMiddlewear.injectAllUsers, (req, res) => controller.render(req, res, 'users', {users:req.users}))
+router.post('/users/changePassword', controller.ensureAdministrator, controller.changeUserPassword)
+router.post('/users/delete', controller.ensureAdministrator, controller.deleteUser)
+
 module.exports = router

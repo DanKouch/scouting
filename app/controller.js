@@ -190,3 +190,43 @@ module.exports.getDataCSV = (req, res, next) => {
     })
     res.end()
 }
+
+module.exports.changeUserPassword = (req, res) => {
+    if(req.body && req.body.name && req.body.password){
+        bcrypt.hash(req.body.password, 512, (bcryptError, hashedPassword) => {
+            if(bcryptError){
+                req.flash("error", "BCrypt error creating user.")
+                winston.error("Bcrypt Error: " + bcryptError);
+                if(!res.headerSent)
+                    module.exports.render(req, res, "register")
+            }
+            userModel.findOneAndUpdate({name: req.body.name}, {
+                password: hashedPassword
+            }, (err) => {
+                if(err){
+                    req.flash("error", "Error updating password.")
+                    return;
+                }
+                res.redirect("/users")
+            })
+        })
+    }else{
+        req.flash("error", "Invalid request parameters")
+        res.redirect("/users")
+    }
+}
+
+module.exports.deleteUser = (req, res) => {
+    if(req.body && req.body.name){
+        userModel.deleteOne({name: req.body.name}, (err) => {
+            if(err){
+                req.flash("error", "Error removing user from database.")
+                return;
+            }
+            res.redirect("/users")
+        })
+    }else{
+        req.flash("error", "Invalid request parameters")
+        res.redirect("/users")
+    }
+}

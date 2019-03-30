@@ -1,0 +1,39 @@
+extends base.pug
+include mixins/formInputs.pug
+
+block head
+	title Users
+	
+block scripts
+	script(src="/scripts/users.js")
+
+block main
+	h1.font-weight-light View Users
+	hr
+	
+	table.report-table.display.show-all.users-buttons
+		thead
+			tr
+				th(scope="col") Name
+				th(scope="col") Role
+				th(scope="col") Email
+				td(scope="col")
+				td(scope="col")
+		tbody
+			for user in users
+				tr
+					td= user.name
+					td= user.role
+					td= user.email
+					td
+						form(method="post", action="/users/changePassword", style= "margin: 0.2em", onsubmit="return confirm('Are you sure you would like to change the password of " + user.name + "?')")
+							input(name="name", value=user.name, style="display: none")
+							div.input-group
+									input.form-control(name="password", type="password", for=user.name, autocomplete="new-password", minlength=4, required)
+									span.input-group-btn
+										input.btn.btn-outline-dark(type="submit", value="Change Password", style="margin-left: 0.5em; margin-right: 1em")
+					td
+						form(method="post", action="/users/delete", style= "margin: 0.2em", onsubmit="return confirm('Are you sure you would like to terminate " + user.name + "?')")
+							input(name="name", value=user.name, style="display: none")
+							input.btn.btn-outline-danger(type="submit", value="Terminate")
+
