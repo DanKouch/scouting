@@ -2,9 +2,6 @@
     "App": {
         "port": 3001
     },
-    "Api": {
-        "port": 3008    
-    },
     "Database": {
         "URI": "mongodb://localhost/scouting"
     },

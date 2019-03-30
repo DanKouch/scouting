@@ -60,11 +60,6 @@ module.exports = (app) => {
         usernameField: "email"
     }, require("./../authentication.js")));
 
-    // Force HTTPS
-    if(process.env.NODE_ENV == "production"){
-        app.use(require('force-https'))
-    }
-
     // Login Redirection (as Middlewear)
     app.use((req, res, next) => {
         if(!req.isAuthenticated() && req.url != "/login")

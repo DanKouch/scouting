@@ -87,10 +87,11 @@ module.exports.postScout = (req, res, next) => {
                 data[key] = req.body[key]
             }
         })
-            
+        winston.warn(data)
         reportModel.create(data, (err, report) => {
 			module.exports.mongooseHandler(req, res, err, report, (report, successful) => {
                 if(successful){
+                    winston.warn("Scccess")
                     req.flash("success", "Successfully submitted report.")
                 }
                 res.redirect(req.url)
@@ -130,6 +131,7 @@ module.exports.postUser = (req, res) => {
 
 module.exports.mongooseHandler = (req, res, err, data, callback) => {
     if(err || !data){
+        winston.warn(err)
         for(var key in err.errors){
             if(err.errors.hasOwnProperty(key)){
                 if(err.errors[key].name != "ValidatorError"){

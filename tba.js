@@ -33,6 +33,7 @@ module.retreiveTBAData = (url) => {
             // Information about the specific event entered
             promises.push(module.sendTBARequest("/event/" + config.get("TBA.event_key") + "/simple").then((data) => {
                 module.TBAdata.event = data
+                module.exports.event = data
             }));
         }
 
