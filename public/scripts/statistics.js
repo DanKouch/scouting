@@ -55,7 +55,7 @@ $(document).ready(function() {
             "orderable":      false,
             "data":           null,
             "defaultContent": ""
-        }, {}, {}, {}, {}, {visible: true}]
+        }, {}, {}, {}, {}, {visible: false}]
     }
 
     for(i = 0; i < parseInt($("#numOfMatchDataAverages").text()); i++){
