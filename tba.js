@@ -50,7 +50,7 @@ module.retreiveTBAData = (url) => {
         // Information on matches
         promises.push(module.sendTBARequest("/event/" + config.get("TBA.event_key") + "/matches").then((data) => {
             module.TBAdata.matches = data
-            module.TBAdata.nextTeamMatch = (data.filter(a => a.alliances.red.team_keys.includes(config.get("TBA.team_key")) && !a.score_breakdown)).concat((data.filter(a => a.alliances.blue.team_keys.includes(config.get("TBA.team_key")) && !a.score_breakdown)).sort((a, b) => a.match_number < b.match_number).filter(a.time != null && a.time != -1))[0];
+            module.TBAdata.nextTeamMatch = (data.filter(a => a.alliances.red.team_keys.includes(config.get("TBA.team_key")) && !a.score_breakdown)).concat((data.filter(a => a.alliances.blue.team_keys.includes(config.get("TBA.team_key")) && !a.score_breakdown)).sort((a, b) => a.match_number < b.match_number).filter(a => (a.time != null && a.time != -1)))[0];
         }));
 
         module.firstTime = false;
