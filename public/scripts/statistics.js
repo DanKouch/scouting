@@ -7,22 +7,39 @@ function format (d) {
     +   "<div style='flex: 0 0 50%'>"
     + "<table><tbody>"  
 
-    let end = ""
+    let middleTwo = ""
     + "</tbody></table></div>"
     +   "<div style='flex: 1'>"
+    +   "<table><tbody>"
+
+    let end = ""
+    +   "</table></tbody>"
     +   "</div>"
     + "</div>";
 
-    let middle = "";
+    let middleOne = "";
+    let middleThree = ""
 
     let names = $("#MatchDataAverageNames").text().split(",")
     Object.keys(d).forEach((key) => {
         let index = parseInt(key)
-        if(index > 4)
-            middle += ("<tr><td>Avg " + names[index-5] + "</td><td style='padding-left: 2em'>" + Math.round(average(d[key].split(",").map(a => parseInt(a)))*100)/100 + "</td><td style='padding-left: 2em; color: grey'> σ = " + Math.round(stdev(d[key].split(",").map(a => parseInt(a)))*100)/100 + "</td></tr>")
+        if(index > 4 && index < 16)
+            middleOne += ("<tr><td><b>Avg " + names[index-5] + "</b></td><td style='padding-left: 2em'>" + Math.round(average(d[key].split(",").map(a => parseInt(a)))*100)/100 + "</td><td style='padding-left: 2em; color: grey'> σ = " + Math.round(stdev(d[key].split(",").map(a => parseInt(a)))*100)/100 + "</td></tr>")
     })
 
-    return beginning + middle + end;
+    middleThree += ("<tr><td><b>" + "Robot Speed (m/s)" + "</b></td><td style='padding-left: 2em'>" + (d["16"] == "0" || d["16"] == "-1" ? "" : d["16"]) + "</td></tr>")
+    middleThree += ("<tr><td><b>" + "Drive Train" + "</b></td><td style='padding-left: 2em'>" + d["17"] + "</td></tr>")
+    middleThree += ("<tr><td><b>" + "Sturdiness" + "</b></td><td style='padding-left: 2em'>" + d["18"] + "</td></tr>")
+    middleThree += ("<tr><td><b>" + "Aesthetics" + "</b></td><td style='padding-left: 2em'>" + d["19"] + "</td></tr>")
+    middleThree += ("<tr><td><b>" + "Sandstorm Ability" + "</b></td><td style='padding-left: 2em'>" + d["20"] + "</td></tr>")
+    middleThree += ("<tr><td><b>" + "Can Pick Up Balls From Ground" + "</b></td><td style='padding-left: 2em'>" + d["21"] + "</td></tr>")
+    middleThree += ("<tr><td><b>" + "Can Pick Up Hatches From Ground" + "</b></td><td style='padding-left: 2em'>" + d["22"] + "</td></tr>")
+    middleThree += ("<tr><td><b>" + "Highest Rocket Level Reachable" + "</b></td><td style='padding-left: 2em'>" + d["23"] + "</td></tr>")
+    middleThree += ("<tr><td><b>" + "Climb Level" + "</b></td><td style='padding-left: 2em'>" + d["24"] + "</td></tr>")
+    middleThree += ("<tr><td><b>" + "Can Carry Other Robots" + "</b></td><td style='padding-left: 2em'>" + d["25"] + "</td></tr>")
+    middleThree += ("<tr><td><b>" + "Additional Comments" + "</b></td><td style='padding-left: 2em'>" + d["26"] + "</td></tr>")
+
+    return beginning + middleOne + middleTwo + middleThree + end;
 }
 
 $(document).ready(function() {
@@ -40,6 +57,11 @@ $(document).ready(function() {
     }
 
     for(i = 0; i < parseInt($("#numOfMatchDataAverages").text()); i++){
+        dtOptions.columns.push({visible: false})
+    }
+
+    // Manual fix
+    for(i = 0; i < 11; i++){
         dtOptions.columns.push({visible: false})
     }
 

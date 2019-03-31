@@ -90,7 +90,7 @@ table.report-table > tbody > tr.even{
 }
 
 table.report-table > tbody > tr:not([role="row"]){
-    background-color: rgb(235, 235, 235);
+    background-color: rgb(209, 209, 209);
 }
 
 td.details-control {

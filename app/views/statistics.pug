@@ -22,6 +22,19 @@ block main
 				th(scope="col") Average Ranking Points
 				for avg in statistics.teams[0].matchData
 					th(scope="col") Avg #{avg.name}
+				// Manual Ugly Fix
+				th(scope="col") Robot Speed (m/s)
+				th(scope="col") Drive Train
+				th(scope="col") Sturdiness
+				th(scope="col") Aesthetics
+				th(scope="col") Sandstorm Ability
+				th(scope="col") Can Pick Up Balls From Ground
+				th(scope="col") Can Pick Up Hatches From Ground
+				th(scope="col") Highest Rocket Level Reachable
+				th(scope="col") Climb Level
+				th(scope="col") Can Carry Other Robots
+				th(scope="col") Additional Comments
+
 		tbody
 			for team in statistics.teams
 				tr(style=(team.ranking.dq != 0 ? "color: red; text-decoration: line-through;" : ""))
@@ -33,4 +46,18 @@ block main
 						span(style="margin-left: 0.5em; color:grey") (σ = #{(Math.round(stdev(team.RP)*100)/100).toFixed(2)})
 					for avg in team.matchData
 						td= avg.values
+					// Manual Ugly Fix
+					td= team.pitData ? team.pitData.robotSpeed : ""
+					td= team.pitData ? team.pitData.driveTrain : ""
+					td= team.pitData ? team.pitData.sturdiness : ""
+					td= team.pitData ? team.pitData.aesthetics : ""
+					td= team.pitData ? team.pitData.sandstormAbility : ""
+					td= team.pitData ? team.pitData.canPickUpBalls : ""
+					td= team.pitData ? team.pitData.canPickUpHatches : ""
+					td= team.pitData ? team.pitData.rocketLevelReachable : ""
+					td= team.pitData ? team.pitData.climbLevel : ""
+					td= team.pitData ? team.pitData.canLiftOtherRobots : ""
+					td= team.pitData ? team.pitData.additionalComments : ""
+
+
 	//textarea(placeholder=JSON.stringify(statistics, null, 4), cols="70")
