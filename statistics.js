@@ -36,6 +36,10 @@ module.exports.updateStatisticsData = (callback) => {
                     teamStats.pitData = reports.filter(a => JSON.parse(JSON.stringify(a)).schemaName.toLowerCase().includes("pit") && a.team == team.team_number + " - " + team.nickname)[0]
                     if(teamStats.pitData){
                         teamStats.pitData = JSON.parse(JSON.stringify(teamStats.pitData))
+                        Object.keys(teamStats.pitData).forEach(key => {
+                            if(teamStats.pitData[key] == "-1" || teamStats.pitData[key] == -1)
+                                teamStats.pitData[key] = ""
+                        })
                     }
                     teamStats.additionalMatchComments = (reports.filter(a => a.schemaName.toLowerCase().includes("match") && a.team == team.team_number + " - " + team.nickname).map(a => JSON.parse(JSON.stringify(a))["additionalComments"]).filter(a => a !== ""))
                     teamStats.matchData = matchSchema.fields.filter(a => a.type == "number" || a.type == "stars").map(a => a.name).filter(a => a != "matchNumber").map(fieldName => { return { name: matchSchema.fields.filter(a => a.name == fieldName)[0].description, values: (reports.filter(a => a.schemaName.toLowerCase().includes("match") && a.team == team.team_number + " - " + team.nickname).map(a => JSON.parse(JSON.stringify(a))[fieldName]).filter(a => a !== "").map(a => parseInt(a)).filter(a => a >= 0))}})
