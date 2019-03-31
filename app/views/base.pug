@@ -20,13 +20,14 @@ block content
 							a.dropdown-item(href="/scout/" + schema.name)= schema.title
 				li.nav-item
 					a.nav-link(href="/data") View Data
+				li.nav-item
+					a.nav-link(href="/statistics") Statistics
 				if user.role && user.role == "administrator"
 					li.nav-item.dropdown
 						a.nav-link.dropdown-toggle.admin#navbarAdminDropdown(role="button", data-toggle="dropdown", aria-expanded="false") Administrate
 						.dropdown-menu(aria-labelledby="navbarAdminDropdown")
 							a.dropdown-item(href="/register") Register New Users
 							a.dropdown-item(href="/users") User Administration Panel
-							a.dropdown-item(href="/statistics") Statistics
 			ul.navbar-nav.ml-auto
 				li.nav-item.dropdown
 					a.nav-link.dropdown-toggle#navbarUserDropdown(role="button", data-toggle="dropdown", aria-expanded="false")= user.name
