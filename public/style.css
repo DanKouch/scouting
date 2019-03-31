@@ -85,7 +85,19 @@ tr.homeTableRow:nth-child(2n-1){
     width: 100% !important;
 }
 
-table.report-table > tbody > tr:nth-child(2n + 0){
+table.report-table > tbody > tr.even{
     background-color: rgb(235, 235, 235);
-    
+}
+
+table.report-table > tbody > tr:not([role="row"]){
+    background-color: rgb(235, 235, 235);
+}
+
+td.details-control {
+    width:3em;
+    background: url('https://datatables.net/examples/resources/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.details td.details-control {
+    background: url('https://datatables.net/examples/resources/details_close.png') no-repeat center center;
 }

@@ -7,7 +7,7 @@ module.exports = () => {
         () => {
             winston.info("Connected to MongoDB server at '" + config.get("Database.URI") + "'");
             // Run Statistics
-            //require("../statistics.js")
+            require("../statistics.js").updateStatisticsData(() => {})
         },
         err => {
             winston.error("Mongoose Connection Error: " + err)

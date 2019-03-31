@@ -35,6 +35,19 @@ module.exports.render = (req, res, page, variables) => {
         variables.leaderboard = variables.leaderboard.sort((a, b) => b.reports - a.reports)
         
     }
+
+    variables.average = (array) => {
+        if(array.length == 0)
+            return "Unknown"
+        return (array.reduce((sum, val) => sum + parseInt(val)) / array.length)
+    };
+
+    variables.stdev = (array) => {
+        let avg = variables.average(array)
+        let sqDiffs = array.map((a) => Math.pow(a - avg, 2))
+        let avgDiff = variables.average(sqDiffs)
+        return Math.sqrt(avgDiff)
+    }
     
     variables.user = req.user
     variables.moment = moment;
@@ -55,7 +68,6 @@ module.exports.getScout = (req, res, next) => {
         schema.fields.filter(a => a.name == "team").forEach(a => {
             if(a.hideScoutedTeams){
                 let teamsScouted = req.reports.filter(a => a.schemaName == schema.name).map(a => a.team)
-                //winston.info(JSON.stringify(teamsScouted))
                 a.options = req.tba.teams.sort((a, b) => parseInt(a.team_number) - parseInt(b.team_number)).map(b => (b.team_number + " - " + b.nickname)).filter(g => !teamsScouted.includes(g))
             }else{
                 a.options = req.tba.teams.sort((a, b) => parseInt(a.team_number) - parseInt(b.team_number)).map(b => (b.team_number + " - " + b.nickname))

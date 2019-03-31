@@ -2,11 +2,35 @@ extends base.pug
 include mixins/formInputs.pug
 
 block head
-	title Users
+	title Statistics
 	
 block scripts
 	script(src="/scripts/statistics.js")
 
 block main
+	a(style="display:none")#numOfMatchDataAverages= statistics.teams[0].matchData.length
+	a(style="display:none")#MatchDataAverageNames= (statistics.teams[0].matchData.map(a => a.name).reduce((acc, n) => acc + "," + n))
 	h1.font-weight-light Statistics
 	hr
+	table.report-table.display
+		thead
+			tr
+				<th></th>
+				th(scope="col") Team
+				th(scope="col") Rank
+				th(scope="col") Record
+				th(scope="col") Average Ranking Points
+				for avg in statistics.teams[0].matchData
+					th(scope="col") Avg #{avg.name}
+		tbody
+			for team in statistics.teams
+				tr(style=(team.ranking.dq != 0 ? "color: red; text-decoration: line-through;" : ""))
+					td
+					td= team.name
+					td= team.ranking.rank
+					td(data-sort=(team.ranking.record.wins/team.ranking.record.losses)) #{team.ranking.record.wins}-#{team.ranking.record.losses}-#{team.ranking.record.ties} 
+					td #{(Math.round(average(team.RP)*100)/100).toFixed(2)}
+						span(style="margin-left: 0.5em; color:grey") (σ = #{(Math.round(stdev(team.RP)*100)/100).toFixed(2)})
+					for avg in team.matchData
+						td= avg.values
+	//textarea(placeholder=JSON.stringify(statistics, null, 4), cols="70")

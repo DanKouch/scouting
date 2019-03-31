@@ -3,6 +3,7 @@ const winston = require("winston");
 const controller = require("./controller.js");
 const passport = require("passport")
 const commonMiddlewear = require("../database/commonMiddlewear.js")
+const statistics = require("../statistics.js")
 
 
 let router = express.Router();
@@ -17,6 +18,7 @@ router.get('/data/:reportName.csv', commonMiddlewear.injectAllReports, controlle
 router.get('/logout', controller.getLogout)
 router.get('/scout/:reportName', commonMiddlewear.injectAllReports, controller.getScout)
 router.post('/scout/:reportName', controller.postScout)
+router.get('/statistics', statistics.injectStatisticsData, (req, res) => controller.render(req, res, 'statistics', {statistics:req.statistics}))
 
 router.get('/users', controller.ensureAdministrator, commonMiddlewear.injectAllUsers, (req, res) => controller.render(req, res, 'users', {users:req.users}))
 router.post('/users/changePassword', controller.ensureAdministrator, controller.changeUserPassword)
