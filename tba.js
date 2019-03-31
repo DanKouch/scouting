@@ -44,11 +44,13 @@ module.retreiveTBAData = (url) => {
         // Information on rankings
         promises.push(module.sendTBARequest("/event/" + config.get("TBA.event_key") + "/rankings").then((data) => {
             module.TBAdata.rankings = data
+            module.TBAdata.ranking = data.rankings.filter(a => a.team_key == config.get("TBA.team_key"))[0]
         }));
 
         // Information on matches
         promises.push(module.sendTBARequest("/event/" + config.get("TBA.event_key") + "/matches").then((data) => {
             module.TBAdata.matches = data
+            //module.TBAdata.nextTeamMatch = (data.matches.filter(a => a.alliances.red.team_keys.includes(team.key) && !a.score_breakdown)).concat((data.matches.filter(a => a.alliances.blue.team_keys.includes(team.key) && !a.score_breakdown)).sort((a, b) => a.match_number < b.match_number))[0];
         }));
 
         module.firstTime = false;
