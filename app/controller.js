@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 const moment = require('moment')
+const ordinal = require('ordinal')
 const tba = require('../tba.js')
 
 module.exports.render = (req, res, page, variables) => {
@@ -51,6 +52,7 @@ module.exports.render = (req, res, page, variables) => {
     
     variables.user = req.user
     variables.moment = moment;
+    variables.ordinal = ordinal;
     //req.session.flash = [];
     res.render(page, variables)
 }

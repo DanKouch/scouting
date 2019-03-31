@@ -4,20 +4,25 @@ block head
 	title Home
 
 block main
-	//- h1.font-weight-light=tba.event.name + " " + tba.event.year
-	//- //- h3.font-weight-light(style="color: green") #{tba.ranking.record.wins} Wins
-	//- //- 	span(style="color: black")  - 
-	//- //- 	span(style="color: red") #{tba.ranking.record.losses} Losses
-	//- //- 	span(style="color: black")  - 
-	//- //- 	span(style="color: Orange") #{tba.ranking.record.ties} Ties 
-	//- //- h3.font-weight-light
-	//- //- 	i= tba.nextTeamMatch
-	//- //- br
-	//- //- hr
+	h2.font-weight-light Team Status
+		span.text-muted.font-weight-light(style="font-size: 0.6em")  (#{tba.event.name} #{tba.event.year})
+	br
+	h5.font-weight-light(style="color: green") #{tba.ranking.record.wins} Wins
+		span(style="color: black")  - 
+		span(style="color: red") #{tba.ranking.record.losses} Losses
+		span(style="color: black")  - 
+		span(style="color: Orange") #{tba.ranking.record.ties} Ties 
+	h5.font-weight-light We are currently in <i>#{ordinal(tba.ranking.rank)}</i> place.
+	if(tba.nextTeamMatch)
+		h5.font-weight-light 
+			i Our next match is match #{tba.nextTeamMatch.match_number}, which is (approximately) #{moment(new Date(tba.nextTeamMatch.predicted_time*1000)).fromNow()}
+
+	br
+	hr
 
 	h2.font-weight-light Report Leaderboard
 		if (user.role != "administrator")
-			span.text-muted.font-weight-light(style="font-size: 0.6em") (Top 10 Reporters)
+			span.text-muted.font-weight-light(style="font-size: 0.6em")  (Top 10 Reporters)
 	br
 	table.homeTable
 		tr.homeTableRow
