@@ -195,7 +195,7 @@ module.exports.getDataCSV = (req, res, next) => {
     rawReports.forEach(report => {
         res.write("\n")
         schema.fields.filter(a => a.name).forEach(field => {
-            res.write(report[field.name].replaceAll(",", ";") + ",")
+            res.write(report[field.name].replaceAll(",", ";").replaceAll("\n", ";").replaceAll("\r", "") + ",")
         })
         res.write(report.submittedBy + "," + report.submittedAt)
     })
