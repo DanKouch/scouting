@@ -34,6 +34,7 @@ block main
 				th(scope="col") Climb Level
 				th(scope="col") Can Carry Other Robots
 				th(scope="col") Additional Comments
+				th(scope="col") Additional Match Comments
 
 		tbody
 			for team in statistics.teams
@@ -58,6 +59,7 @@ block main
 					td= team.pitData ? team.pitData.climbLevel : ""
 					td= team.pitData ? team.pitData.canLiftOtherRobots : ""
 					td= team.pitData ? team.pitData.additionalComments : ""
+					td= team.additionalMatchComments ? team.additionalMatchComments : ""
 
 
 	//textarea(placeholder=JSON.stringify(statistics, null, 4), cols="70")

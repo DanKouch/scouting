@@ -7,18 +7,20 @@ function format (d) {
     +   "<div style='flex: 0 0 50%'>"
     + "<table><tbody>"  
 
+    let middleOne = "" // Match Averages
+
     let middleTwo = ""
     + "</tbody></table></div>"
     +   "<div style='flex: 1'>"
     +   "<table><tbody>"
 
-    let end = ""
-    +   "</table></tbody>"
-    +   "</div>"
-    + "</div>";
+    let middleThree = "" // Pit Information
 
-    let middleOne = "";
-    let middleThree = ""
+    let middleFour = ""
+    +   "</table></tbody>"
+    +   "</div></div>"
+    
+    let end = "<div style='padding: 1em; padding-top: 0'><table><tbody><td><b>Additional Match Comments</b><td><td>" + d["27"] + "</td></tbody></table></div>"
 
     let names = $("#MatchDataAverageNames").text().split(",")
     Object.keys(d).forEach((key) => {
@@ -39,7 +41,7 @@ function format (d) {
     middleThree += ("<tr><td><b>" + "Can Carry Other Robots" + "</b></td><td style='padding-left: 2em'>" + d["25"] + "</td></tr>")
     middleThree += ("<tr><td><b>" + "Additional Comments" + "</b></td><td style='padding-left: 2em'>" + d["26"] + "</td></tr>")
 
-    return beginning + middleOne + middleTwo + middleThree + end;
+    return beginning + middleOne + middleTwo + middleThree + middleFour + end;
 }
 
 $(document).ready(function() {
@@ -53,7 +55,7 @@ $(document).ready(function() {
             "orderable":      false,
             "data":           null,
             "defaultContent": ""
-        }, {}, {}, {}, {}]
+        }, {}, {}, {}, {}, {visible: true}]
     }
 
     for(i = 0; i < parseInt($("#numOfMatchDataAverages").text()); i++){
